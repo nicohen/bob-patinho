@@ -29,4 +29,9 @@ public class StockDaoImpl extends CustomHibernateDaoSupport implements StockDao 
 	return (Stock) list.get(0);
     }
 
+    @Override
+    public List<Stock> findAll() {
+	return getHibernateTemplate().find("from Stock");
+    }
+
 }

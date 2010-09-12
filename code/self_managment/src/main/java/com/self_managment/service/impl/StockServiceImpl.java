@@ -1,5 +1,7 @@
 package com.self_managment.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,11 @@ public class StockServiceImpl implements StockService {
 
     public Stock findByStockCode(String stockCode) {
 	return stockDao.findByStockCode(stockCode);
+    }
+
+    @Override
+    public List<Stock> findAll() {
+	return stockDao.findAll();
     }
 
 }
