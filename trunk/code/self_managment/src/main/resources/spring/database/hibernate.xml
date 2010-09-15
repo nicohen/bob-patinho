@@ -18,12 +18,15 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>				
 			</props>
 		</property>
 
 		<property name="annotatedClasses">
 			<list>
 				<value>com.self_managment.model.entity.Stock</value>
+				<value>com.self_managment.model.entity.Agent</value>
+				<value>com.self_managment.model.entity.Campaign</value>
 			</list>
 		</property>
 
