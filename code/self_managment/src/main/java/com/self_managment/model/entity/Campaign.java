@@ -7,11 +7,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -34,9 +34,13 @@ public class Campaign implements java.io.Serializable {
     @Column(name = "CAMPAIGN_NAME", unique = true, nullable = false, length = 20)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
     private List<Agent> agents;
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "campaign_metric", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "METRIC_ID"))
+    private List<Metric> metrics;
 
     public Integer getId() {
 	return id;
@@ -68,6 +72,14 @@ public class Campaign implements java.io.Serializable {
 
     public void setAgents(List<Agent> agents) {
 	this.agents = agents;
+    }
+
+    public List<Metric> getMetrics() {
+	return metrics;
+    }
+
+    public void setMetrics(List<Metric> metrics) {
+	this.metrics = metrics;
     }
 
 }
