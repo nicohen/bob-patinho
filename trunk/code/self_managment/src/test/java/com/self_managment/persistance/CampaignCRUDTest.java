@@ -1,8 +1,6 @@
 package com.self_managment.persistance;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -11,7 +9,6 @@ import junit.framework.TestSuite;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.Campaign;
 import com.self_managment.service.CRUDService;
 
@@ -55,22 +52,6 @@ public class CampaignCRUDTest extends TestCase {
 
 	assertEquals(campaign.getCode(), service.findAllByProperty("code",
 		"12345").get(0).getCode());
-
-	service.delete(campaign);
-
-	// Campaign with agents
-	campaign = new Campaign();
-	campaign.setCode("12345");
-	campaign.setName("12345");
-	List<Agent> agents = new ArrayList<Agent>();
-	Agent agent = new Agent();
-	agent.setId(1);
-	agents.add(agent);
-	campaign.setAgents(agents);
-
-	Integer id = (Integer) service.save(campaign);
-	assertEquals(service.findById(id).getAgents().get(0).getId(), agent
-		.getId());
 
 	service.delete(campaign);
     }

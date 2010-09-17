@@ -27,6 +27,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 				<value>com.self_managment.model.entity.Stock</value>
 				<value>com.self_managment.model.entity.Agent</value>
 				<value>com.self_managment.model.entity.Campaign</value>
+				<value>com.self_managment.model.entity.Metric</value>
 			</list>
 		</property>
 
