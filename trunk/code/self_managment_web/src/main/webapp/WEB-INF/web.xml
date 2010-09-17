@@ -20,14 +20,28 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/applicationContext*.xml</param-value>
+		<param-value>
+			/WEB-INF/spring/applicationContext*.xml
+		</param-value>
 	</context-param>
-	
+
 	<!-- Plugging the "Blue Sky" skin into the project -->
 	<context-param>
 		<param-name>org.richfaces.SKIN</param-name>
 		<param-value>blueSky</param-value>
 	</context-param>
+
+	<!-- View Filter -->
+	<filter>
+		<filter-name>Open Session in View Filter</filter-name>
+		<filter-class>
+			com.self_managment.web.util.MySessionFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Open Session in View Filter</filter-name>
+		<url-pattern>*.jsf</url-pattern>
+	</filter-mapping>
 
 	<listener>
 		<listener-class>
