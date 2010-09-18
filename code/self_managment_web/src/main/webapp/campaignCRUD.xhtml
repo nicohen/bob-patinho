@@ -147,9 +147,39 @@
 				</f:facet>
 				<rich:column width="200">
 					<f:facet name="header">
-						<h:outputText value="Id" />
+						<h:outputText value="docket" />
 					</f:facet>
-					<h:outputText value="#{agent.id}" />
+					<h:outputText value="#{agent.docket}" />
+				</rich:column>
+				<rich:column width="200">
+					<f:facet name="header">
+						<h:outputText value="DNI" />
+					</f:facet>
+					<h:outputText value="#{agent.dni}" />
+				</rich:column>
+				<rich:column width="200">
+					<f:facet name="header">
+						<h:outputText value="Name" />
+					</f:facet>
+					<h:outputText value="#{agent.name}" />
+				</rich:column>
+				<rich:column width="200">
+					<f:facet name="header">
+						<h:outputText value="Surname" />
+					</f:facet>
+					<h:outputText value="#{agent.surname}" />
+				</rich:column>
+				<rich:column width="200">
+					<f:facet name="header">
+						<h:outputText value="Status" />
+					</f:facet>
+					<h:outputText value="#{agent.status}" />
+				</rich:column>
+				<rich:column width="200">
+					<f:facet name="header">
+						<h:outputText value="Entry Date" />
+					</f:facet>
+					<h:outputText value="#{agent.entryDate}" />
 				</rich:column>
 				<rich:column width="50" style="text-align:center">
 					<f:facet name="header">
@@ -191,8 +221,8 @@
 			<h:panelGrid columns="1">
 				<a4j:outputPanel ajaxRendered="true">
 					<h:panelGrid columns="2">
-						<h:outputText value="Id" />
-						<h:inputText value="#{campaignBean.agent.id}" size="25"
+						<h:outputText value="Docket" />
+						<h:inputText value="#{campaignBean.agent.docket}" size="25"
 							maxlength="10" required="true" />
 					</h:panelGrid>
 				</a4j:outputPanel>
