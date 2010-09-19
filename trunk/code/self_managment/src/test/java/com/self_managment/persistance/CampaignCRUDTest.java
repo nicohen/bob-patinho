@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.self_managment.model.entity.Campaign;
+import com.self_managment.model.entity.Campaign.CampaignType;
 import com.self_managment.service.CRUDService;
 
 public class CampaignCRUDTest extends TestCase {
@@ -47,6 +48,7 @@ public class CampaignCRUDTest extends TestCase {
 	Campaign campaign = new Campaign();
 	campaign.setCode("12345");
 	campaign.setName("12345");
+	campaign.setType(CampaignType.INBOUND);
 
 	service.save(campaign);
 
@@ -60,6 +62,7 @@ public class CampaignCRUDTest extends TestCase {
 	Campaign campaign = new Campaign();
 	campaign.setCode("12345");
 	campaign.setName("12345");
+	campaign.setType(CampaignType.INBOUND);
 
 	Integer id = (Integer) service.save(campaign);
 
