@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,6 +25,10 @@ import javax.persistence.UniqueConstraint;
 public class Campaign implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
+    public enum CampaignType {
+	INBOUND, OUTBOUND;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "CAMPAIGN_ID", unique = true, nullable = false)
@@ -33,6 +39,10 @@ public class Campaign implements java.io.Serializable {
 
     @Column(name = "CAMPAIGN_NAME", unique = true, nullable = false, length = 20)
     private String name;
+
+    @Column(name = "TYPE", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private CampaignType type;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
@@ -80,6 +90,14 @@ public class Campaign implements java.io.Serializable {
 
     public void setMetrics(List<Metric> metrics) {
 	this.metrics = metrics;
+    }
+
+    public CampaignType getType() {
+	return type;
+    }
+
+    public void setType(CampaignType type) {
+	this.type = type;
     }
 
 }

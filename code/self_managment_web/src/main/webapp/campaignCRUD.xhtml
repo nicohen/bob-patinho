@@ -33,6 +33,12 @@
 				</f:facet>
 				<h:outputText value="#{campaign.name}" />
 			</rich:column>
+			<rich:column width="250">
+				<f:facet name="header">
+					<h:outputText value="Type" />
+				</f:facet>
+				<h:outputText value="#{campaign.type}" />
+			</rich:column>
 			<rich:column width="50" style="text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Action" />
@@ -83,6 +89,12 @@
 						<h:outputText value="Name" />
 						<h:inputText value="#{campaignBean.campaign.name}" size="25"
 							maxlength="20" required="true" />
+						<h:outputText value="Type" />
+						<rich:comboBox value="#{campaignBean.campaign.type}"
+							defaultLabel="Enter some value" size="25" required="true">
+							<f:selectItem itemValue="INBOUND" />
+							<f:selectItem itemValue="OUTBOUND" />
+						</rich:comboBox>
 					</h:panelGrid>
 
 					<p />
@@ -134,18 +146,19 @@
 		<h:form>
 			<rich:dataTable id="gridAgents" width="500" rows="10" var="agent"
 				value="#{campaignBean.campaign.agents}">
-				<f:facet name="header">
-					<h:panelGroup>
-						<a4j:commandLink ajaxSingle="true" id="LnkAddAgent"
-							action="#{campaignBean.createAgent}"
-							oncomplete="#{rich:component('addAgentPanel')}.show()">
-							<h:graphicImage value="/images/Add-icon.png" style="border:0" />
-						</a4j:commandLink>
-						<rich:toolTip for="LnkNewAgent" value="New" />
-						<h:outputText value="Agent" />
-					</h:panelGroup>
-				</f:facet>
-				<rich:column width="200">
+				<!--ESTO SE COMENTA XQ LOS AGENTES SE DAN DE ALTA EN EL ARCHIVO HF-->
+				<!--				<f:facet name="header">-->
+				<!--					<h:panelGroup>-->
+				<!--						<a4j:commandLink ajaxSingle="true" id="LnkAddAgent"-->
+				<!--							action="#{campaignBean.createAgent}"-->
+				<!--							oncomplete="#{rich:component('addAgentPanel')}.show()">-->
+				<!--							<h:graphicImage value="/images/Add-icon.png" style="border:0" />-->
+				<!--						</a4j:commandLink>-->
+				<!--						<rich:toolTip for="LnkNewAgent" value="New" />-->
+				<!--						<h:outputText value="Agent" />-->
+				<!--					</h:panelGroup>-->
+				<!--				</f:facet>-->
+				<rich:column width="200" filterBy="#{agent.docket}">
 					<f:facet name="header">
 						<h:outputText value="docket" />
 					</f:facet>
@@ -179,21 +192,24 @@
 					<f:facet name="header">
 						<h:outputText value="Entry Date" />
 					</f:facet>
-					<h:outputText value="#{agent.entryDate}" />
+					<h:outputText value="#{agent.entryDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</rich:column>
-				<rich:column width="50" style="text-align:center">
-					<f:facet name="header">
-						<h:outputText value="Action" />
-					</f:facet>
-
-					<a4j:commandLink ajaxSingle="true" id="LnkDeleteAgent"
-						oncomplete="#{rich:component('deleteAgentPanel')}.show()">
-						<h:graphicImage value="/images/Delete-icon.png" style="border:0" />
-						<f:setPropertyActionListener value="#{agent}"
-							target="#{campaignBean.agent}" />
-					</a4j:commandLink>
-					<rich:toolTip for="LnkDelete" value="Delete" />
-				</rich:column>
+				<!--ESTO SE COMENTA XQ LOS AGENTES SE DAN DE BAJA EN EL ARCHIVO HF-->
+				<!--				<rich:column width="50" style="text-align:center">-->
+				<!--					<f:facet name="header">-->
+				<!--						<h:outputText value="Action" />-->
+				<!--					</f:facet>-->
+				<!---->
+				<!--					<a4j:commandLink ajaxSingle="true" id="LnkDeleteAgent"-->
+				<!--						oncomplete="#{rich:component('deleteAgentPanel')}.show()">-->
+				<!--						<h:graphicImage value="/images/Delete-icon.png" style="border:0" />-->
+				<!--						<f:setPropertyActionListener value="#{agent}"-->
+				<!--							target="#{campaignBean.agent}" />-->
+				<!--					</a4j:commandLink>-->
+				<!--					<rich:toolTip for="LnkDelete" value="Delete" />-->
+				<!--				</rich:column>-->
 				<f:facet name="footer">
 					<rich:datascroller for="gridAgents" maxPages="15"
 						reRender="gridAgents" />
