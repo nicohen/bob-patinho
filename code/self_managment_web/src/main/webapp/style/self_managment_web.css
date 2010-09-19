@@ -1,0 +1,15 @@
+.rich-messages-marker img {
+	padding-right: 7px;
+}
+
+.rich-messages-label {
+	font-style: italic;
+}
+
+.info {
+	color: green;
+}
+
+.error {
+	color: red;
+}

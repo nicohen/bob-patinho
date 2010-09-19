@@ -4,9 +4,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<link rel="stylesheet" type="text/css"
+	href="style/self_managment_web.css" />
+</head>
 <body>
 
 <f:view>
+	<f:loadBundle basename="messages" var="msg" />
 	<h:form id="form">
 		<rich:dataTable id="grid" width="500" rows="10" var="campaign"
 			value="#{campaignBean.campaigns}">
@@ -17,25 +23,25 @@
 						oncomplete="#{rich:component('editPanel')}.show()">
 						<h:graphicImage value="/images/Add-icon.png" style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkNew" value="New" />
-					<h:outputText value="Campaign" />
+					<rich:toolTip for="LnkNew" value="#{msg['label.new']}" />
+					<h:outputText value="#{msg['label.campaign']}" />
 				</h:panelGroup>
 			</f:facet>
 			<rich:column width="200">
 				<f:facet name="header">
-					<h:outputText value="Code" />
+					<h:outputText value="#{msg['label.campaign.code']}" />
 				</f:facet>
 				<h:outputText value="#{campaign.code}" />
 			</rich:column>
 			<rich:column width="250">
 				<f:facet name="header">
-					<h:outputText value="Name" />
+					<h:outputText value="#{msg['label.campaign.name']}" />
 				</f:facet>
 				<h:outputText value="#{campaign.name}" />
 			</rich:column>
 			<rich:column width="250">
 				<f:facet name="header">
-					<h:outputText value="Type" />
+					<h:outputText value="#{msg['label.campaign.type']}" />
 				</f:facet>
 				<h:outputText value="#{campaign.type}" />
 			</rich:column>
@@ -50,7 +56,7 @@
 					<f:setPropertyActionListener value="#{campaign}"
 						target="#{campaignBean.campaign}" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkEdit" value="Edit" />
+				<rich:toolTip for="LnkEdit" value="#{msg['label.edit']}" />
 
 				<a4j:commandLink ajaxSingle="true" id="LnkDelete"
 					oncomplete="#{rich:component('deletePanel')}.show()">
@@ -58,7 +64,7 @@
 					<f:setPropertyActionListener value="#{campaign}"
 						target="#{campaignBean.campaign}" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkDelete" value="Delete" />
+				<rich:toolTip for="LnkDelete" value="#{msg['label.delete']}" />
 			</rich:column>
 			<f:facet name="footer">
 				<rich:datascroller for="grid" maxPages="15" reRender="grid" />
@@ -68,7 +74,7 @@
 
 	<rich:modalPanel id="editPanel" autosized="true" width="300">
 		<f:facet name="header">
-			<h:outputText value="Campaign" />
+			<h:outputText value="#{msg['label.campaign']}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
@@ -79,19 +85,31 @@
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
-			<rich:messages style="color:red;" />
+			<rich:messages errorClass="error" tooltip="true" showSummary="true">
+				<f:facet name="errorMarker">
+					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+				</f:facet>
+				<f:facet name="infoMarker">
+					<h:graphicImage url="/image/info.png" />
+				</f:facet>
+			</rich:messages>
 			<h:panelGrid columns="1">
 				<a4j:outputPanel ajaxRendered="true">
 					<h:panelGrid columns="2">
-						<h:outputText value="Code" />
+						<h:outputText value="#{msg['label.campaign.code']}" />
 						<h:inputText value="#{campaignBean.campaign.code}" size="25"
-							maxlength="10" required="true" />
-						<h:outputText value="Name" />
+							maxlength="10" required="true"
+							label="#{msg['label.campaign.code']}" />
+
+						<h:outputText value="#{msg['label.campaign.name']}" />
 						<h:inputText value="#{campaignBean.campaign.name}" size="25"
-							maxlength="20" required="true" />
-						<h:outputText value="Type" />
+							maxlength="20" required="true"
+							label="#{msg['label.campaign.name']}" />
+
+						<h:outputText value="#{msg['label.campaign.type']}" />
 						<rich:comboBox value="#{campaignBean.campaign.type}"
-							defaultLabel="Enter some value" size="25" required="true">
+							defaultLabel="#{msg['label.comboBox.default']}" size="25"
+							required="true" label="#{msg['label.campaign.type']}">
 							<f:selectItem itemValue="INBOUND" />
 							<f:selectItem itemValue="OUTBOUND" />
 						</rich:comboBox>
@@ -99,7 +117,7 @@
 
 					<p />
 
-					<h:outputText value="View Agents" />
+					<h:outputText value="#{msg['label.view.agents']}" />
 					<a4j:commandLink ajaxSingle="true" id="LnkViewAgents"
 						reRender="viewAgentsPanel"
 						oncomplete="#{rich:component('viewAgentsPanel')}.show()">
@@ -116,14 +134,14 @@
 						<h:graphicImage value="/images/Button-Save-icon.png"
 							style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkUpdate" value="Save" />
+					<rich:toolTip for="LnkUpdate" value="#{msg['label.save']}" />
 
 					<a4j:commandLink id="LnkCancel"
 						onclick="#{rich:component('editPanel')}.hide(); return false;">
 						<h:graphicImage value="/images/Button-Close-icon.png"
 							style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkCancel" value="Cancel" />
+					<rich:toolTip for="LnkCancel" value="#{msg['label.cancel']}" />
 				</h:panelGrid>
 			</h:panelGrid>
 		</h:form>
@@ -132,7 +150,7 @@
 	<!-- View Agents Panel -->
 	<rich:modalPanel id="viewAgentsPanel" autosized="true" width="300">
 		<f:facet name="header">
-			<h:outputText value="Agent" />
+			<h:outputText value="#{msg['label.agent']}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
@@ -155,45 +173,45 @@
 				<!--							<h:graphicImage value="/images/Add-icon.png" style="border:0" />-->
 				<!--						</a4j:commandLink>-->
 				<!--						<rich:toolTip for="LnkNewAgent" value="New" />-->
-				<!--						<h:outputText value="Agent" />-->
+				<!--						<h:outputText value="#{msg['label.agent']}" />-->
 				<!--					</h:panelGroup>-->
 				<!--				</f:facet>-->
 				<rich:column width="200" filterBy="#{agent.docket}">
 					<f:facet name="header">
-						<h:outputText value="docket" />
+						<h:outputText value="#{msg['label.agent.docket']}" />
 					</f:facet>
 					<h:outputText value="#{agent.docket}" />
 				</rich:column>
 				<rich:column width="200">
 					<f:facet name="header">
-						<h:outputText value="DNI" />
+						<h:outputText value="#{msg['label.agent.dni']}" />
 					</f:facet>
 					<h:outputText value="#{agent.dni}" />
 				</rich:column>
 				<rich:column width="200">
 					<f:facet name="header">
-						<h:outputText value="Name" />
+						<h:outputText value="#{msg['label.agent.name']}" />
 					</f:facet>
 					<h:outputText value="#{agent.name}" />
 				</rich:column>
 				<rich:column width="200">
 					<f:facet name="header">
-						<h:outputText value="Surname" />
+						<h:outputText value="#{msg['label.agent.surname']}" />
 					</f:facet>
 					<h:outputText value="#{agent.surname}" />
 				</rich:column>
 				<rich:column width="200">
 					<f:facet name="header">
-						<h:outputText value="Status" />
+						<h:outputText value="#{msg['label.agent.status']}" />
 					</f:facet>
 					<h:outputText value="#{agent.status}" />
 				</rich:column>
 				<rich:column width="200">
 					<f:facet name="header">
-						<h:outputText value="Entry Date" />
+						<h:outputText value="#{msg['label.agent.entryDate']}" />
 					</f:facet>
 					<h:outputText value="#{agent.entryDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" />
+						<f:convertDateTime pattern="#{msg['date.format']}" />
 					</h:outputText>
 				</rich:column>
 				<!--ESTO SE COMENTA XQ LOS AGENTES SE DAN DE BAJA EN EL ARCHIVO HF-->
@@ -222,7 +240,7 @@
 	<!-- Add Agents Panel -->
 	<rich:modalPanel id="addAgentPanel" autosized="true" width="300">
 		<f:facet name="header">
-			<h:outputText value="Agent" />
+			<h:outputText value="#{msg['label.agent']}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
@@ -249,14 +267,14 @@
 						oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('addAgentPanel')}.hide();">
 						<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkAddAgent" value="OK" />
+					<rich:toolTip for="LnkAddAgent" value="#{msg['label.accept']}" />
 
 					<a4j:commandLink id="LnkAgentCancel"
 						onclick="#{rich:component('addAgentPanel')}.hide(); return false;">
 						<h:graphicImage value="/images/Button-Close-icon.png"
 							style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkAgentCancel" value="Cancel" />
+					<rich:toolTip for="LnkAgentCancel" value="#{msg['label.cancel']}" />
 				</h:panelGrid>
 			</h:panelGrid>
 		</h:form>
@@ -285,14 +303,16 @@
 					reRender="gridAgents, status" id="LnkConfirmDeleteAgent">
 					<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkConfirmDeleteAgent" value="OK" />
+				<rich:toolTip for="LnkConfirmDeleteAgent"
+					value="#{msg['label.accept']}" />
 
 				<a4j:commandLink id="LnkNotConfirmDeleteAgent"
 					onclick="#{rich:component('deleteAgentPanel')}.hide(); return false;">
 					<h:graphicImage value="/images/Button-Close-icon.png"
 						style="border:0" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkNotConfirmDeleteAgent" value="Cancel" />
+				<rich:toolTip for="LnkNotConfirmDeleteAgent"
+					value="#{msg['label.cancel']}" />
 			</h:panelGrid>
 		</h:form>
 	</rich:modalPanel>
@@ -318,14 +338,16 @@
 					reRender="grid, status">
 					<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkConfirmDeleteCampaign" value="OK" />
+				<rich:toolTip for="LnkConfirmDeleteCampaign"
+					value="#{msg['label.accept']}" />
 
 				<a4j:commandLink id="LnkNotConfirmDelteCampaign"
 					onclick="#{rich:component('deletePanel')}.hide(); return false;">
 					<h:graphicImage value="/images/Button-Close-icon.png"
 						style="border:0" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkNotConfirmDelteCampaign" value="Cancel" />
+				<rich:toolTip for="LnkNotConfirmDelteCampaign"
+					value="#{msg['label.cancel']}" />
 			</h:panelGrid>
 		</h:form>
 	</rich:modalPanel>
