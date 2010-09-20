@@ -1,0 +1,61 @@
+<mockup version="1.0" skin="sketch" measuredW="538" measuredH="341" mockupW="338" mockupH="294">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="190" y="37" w="338" h="294" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Campa%F1a</text>
+        <minimize>true</minimize>
+        <dragger>false</dragger>
+        <maximizeRestore>true</maximizeRestore>
+        <topheight>26</topheight>
+        <close>true</close>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TextInput" x="277" y="76" w="209" h="-1" measuredW="22" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Label" x="212" y="79" w="-1" h="-1" measuredW="50" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>C%F3digo%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::TextInput" x="277" y="113" w="209" h="-1" measuredW="57" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Nicol%E1s</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Label" x="212" y="116" w="-1" h="-1" measuredW="59" measuredH="25" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Nombre%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Label" x="212" y="156" w="-1" h="-1" measuredW="36" measuredH="25" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tipo%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::ComboBox" x="277" y="155" w="134" h="-1" measuredW="99" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>INBOUND</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="212" y="196" w="82" h="25" measuredW="82" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5BVer%20Agentes%5D</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::IconLabel" x="359" y="235" w="-1" h="-1" measuredW="59" measuredH="57" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancelar</text>
+        <icon>CircledXIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::IconLabel" x="294" y="234" w="-1" h="-1" measuredW="56" measuredH="57" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Guardar</text>
+        <icon>SaveIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
