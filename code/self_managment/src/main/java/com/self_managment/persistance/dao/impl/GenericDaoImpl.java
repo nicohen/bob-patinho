@@ -49,14 +49,17 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> extends
 
     public void update(E transientObject) {
 	getHibernateTemplate().update(transientObject);
+	getSession().flush();
     }
 
     public void saveOrUpdate(E transientObject) {
 	getHibernateTemplate().saveOrUpdate(transientObject);
+	getSession().flush();
     }
 
     public void delete(E persistentObject) {
 	getHibernateTemplate().delete(persistentObject);
+	getSession().flush();
     }
 
     protected abstract Class<E> getEntityClass();

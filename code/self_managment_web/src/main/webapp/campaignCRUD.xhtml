@@ -20,7 +20,8 @@
 				<h:panelGroup>
 					<a4j:commandLink ajaxSingle="true" id="LnkNew"
 						action="#{campaignBean.create}"
-						oncomplete="#{rich:component('editPanel')}.show()">
+						oncomplete="#{rich:component('editPanel')}.show()"
+						reRender="editPanel">
 						<h:graphicImage value="/images/Add-icon.png" style="border:0" />
 					</a4j:commandLink>
 					<rich:toolTip for="LnkNew" value="#{msg['label.new']}" />
@@ -51,7 +52,7 @@
 				</f:facet>
 				<a4j:commandLink ajaxSingle="true" id="LnkEdit"
 					oncomplete="#{rich:component('editPanel')}.show()"
-					action="#{campaignBean.refreshCampaign}">
+					action="#{campaignBean.refreshCampaign}" reRender="editPanel">
 					<h:graphicImage value="/images/Edit-icon.png" style="border:0" />
 					<f:setPropertyActionListener value="#{campaign}"
 						target="#{campaignBean.campaign}" />
@@ -59,7 +60,8 @@
 				<rich:toolTip for="LnkEdit" value="#{msg['label.edit']}" />
 
 				<a4j:commandLink ajaxSingle="true" id="LnkDelete"
-					oncomplete="#{rich:component('deletePanel')}.show()">
+					oncomplete="#{rich:component('deletePanel')}.show()"
+					action="#{campaignBean.refreshCampaign}">
 					<h:graphicImage value="/images/Delete-icon.png" style="border:0" />
 					<f:setPropertyActionListener value="#{campaign}"
 						target="#{campaignBean.campaign}" />
@@ -115,15 +117,66 @@
 						</rich:comboBox>
 					</h:panelGrid>
 
-					<p />
-
-					<h:outputText value="#{msg['label.view.agents']}" />
-					<a4j:commandLink ajaxSingle="true" id="LnkViewAgents"
-						reRender="viewAgentsPanel"
-						oncomplete="#{rich:component('viewAgentsPanel')}.show()">
-						<h:graphicImage value="/images/Eye-icon.png" style="border:0" />
-					</a4j:commandLink>
+					<!--					<p />-->
+					<!---->
+					<!--					<h:outputText value="#{msg['label.view.agents']}" />-->
+					<!--					<a4j:commandLink ajaxSingle="true" id="LnkViewAgents"-->
+					<!--						reRender="viewAgentsPanel"-->
+					<!--						oncomplete="#{rich:component('viewAgentsPanel')}.show()">-->
+					<!--						<h:graphicImage value="/images/Eye-icon.png" style="border:0" />-->
+					<!--					</a4j:commandLink>-->
 				</a4j:outputPanel>
+
+				<p />
+
+				<rich:dataTable id="gridAgents" width="500" rows="5" var="agent"
+					value="#{campaignBean.campaign.agents}">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.agent']}" />
+					</f:facet>
+					<rich:column width="200" filterBy="#{agent.docket}">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent.docket']}" />
+						</f:facet>
+						<h:outputText value="#{agent.docket}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent.dni']}" />
+						</f:facet>
+						<h:outputText value="#{agent.dni}" />
+					</rich:column>
+					<rich:column width="200" filterBy="#{agent.name}">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent.name']}" />
+						</f:facet>
+						<h:outputText value="#{agent.name}" />
+					</rich:column>
+					<rich:column width="200" filterBy="#{agent.surname}">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent.surname']}" />
+						</f:facet>
+						<h:outputText value="#{agent.surname}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent.status']}" />
+						</f:facet>
+						<h:outputText value="#{agent.status}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent.entryDate']}" />
+						</f:facet>
+						<h:outputText value="#{agent.entryDate}">
+							<f:convertDateTime pattern="#{msg['date.format']}" />
+						</h:outputText>
+					</rich:column>
+					<f:facet name="footer">
+						<rich:datascroller for="gridAgents" maxPages="15"
+							reRender="gridAgents" />
+					</f:facet>
+				</rich:dataTable>
 
 				<p />
 
