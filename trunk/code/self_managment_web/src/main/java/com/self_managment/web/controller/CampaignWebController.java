@@ -57,22 +57,22 @@ public class CampaignWebController {
 
     public String update() {
 	try {
-	    if (campaign.getId() == null)
-		service.save(campaign);
-	    else
-		service.update(campaign);
+	    service.saveOrUpdate(campaign);
+	    campaigns = service.findAll();
 	    setCampaign(new Campaign());
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    JSFUtil.addErrorMessage("Error");
-	} finally {
-	    campaigns = service.findAll();
 	}
 	return "";
     }
 
     public String refreshCampaign() {
 	campaign = service.findById(campaign.getId());
+	if (campaign == null) {
+	    setCampaign(new Campaign());
+	    JSFUtil.addErrorMessage("Campaña inexistente");
+	}
 	return "";
     }
 
@@ -105,13 +105,13 @@ public class CampaignWebController {
     public String delete() {
 	try {
 	    service.delete(campaign);
-	    campaigns.remove(campaign);
 	} catch (Exception e) {
 	    JSFUtil.addErrorMessage("Error");
 	    e.printStackTrace();
-	}/*
-	 * finally { campaigns = service.findAll(); }
-	 */
+	} finally {
+	    campaigns = service.findAll();
+	}
+
 	return "";
     }
 }
