@@ -13,3 +13,6 @@ https://javaserverfaces.dev.java.net/
 Rich faces:
 http://livedemo.exadel.com/richfaces-demo/richfaces/inplaceInput.jsf?c=inplaceInput
 http://www.ibm.com/developerworks/web/library/j-richfaces/index.html
+
+Job Scheduler:
+http://www.quartz-scheduler.org/
