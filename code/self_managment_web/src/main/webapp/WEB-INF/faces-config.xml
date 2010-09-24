@@ -15,9 +15,16 @@
 			<supported-locale>es</supported-locale>
 			<supported-locale>en</supported-locale>
 		</locale-config>
-		<message-bundle>
-			messages
-		</message-bundle>
+		<message-bundle>messages</message-bundle>
 	</application>
+
+	<converter>
+		<converter-id>
+			com.self_managment.web.converter.MetricConverter
+		</converter-id>		
+		<converter-class>
+			com.self_managment.web.converter.MetricConverter
+		</converter-class>
+	</converter>
 
 </faces-config>

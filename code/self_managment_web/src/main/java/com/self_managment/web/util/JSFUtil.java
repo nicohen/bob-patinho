@@ -1,9 +1,11 @@
 package com.self_managment.web.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 public class JSFUtil {
     public static void addErrorMessages(List<String> messages) {
@@ -22,5 +24,13 @@ public class JSFUtil {
 	FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO,
 		msg, msg);
 	FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+    }
+
+    public static List<SelectItem> getSelectItems(List<?> entities) {
+	List<SelectItem> items = new ArrayList<SelectItem>();
+	for (Object x : entities) {
+	    items.add(new SelectItem(x, x.toString()));
+	}
+	return items;
     }
 }
