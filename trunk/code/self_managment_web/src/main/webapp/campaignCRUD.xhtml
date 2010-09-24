@@ -129,12 +129,15 @@
 
 				<p />
 
+				<!-- Agents -->
 				<rich:dataTable id="gridAgents" width="500" rows="5" var="agent"
-					value="#{campaignBean.campaign.agents}">
+					value="#{campaignBean.campaign.agents}"
+					reRender="gridAgentsScroller">
 					<f:facet name="header">
 						<h:outputText value="#{msg['label.agent']}" />
 					</f:facet>
-					<rich:column width="200" filterBy="#{agent.docket}">
+					<rich:column width="200" filterBy="#{agent.docket}"
+						filterEvent="onkeyup">
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.agent.docket']}" />
 						</f:facet>
@@ -146,13 +149,15 @@
 						</f:facet>
 						<h:outputText value="#{agent.dni}" />
 					</rich:column>
-					<rich:column width="200" filterBy="#{agent.name}">
+					<rich:column width="200" filterBy="#{agent.name}"
+						filterEvent="onkeyup">
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.agent.name']}" />
 						</f:facet>
 						<h:outputText value="#{agent.name}" />
 					</rich:column>
-					<rich:column width="200" filterBy="#{agent.surname}">
+					<rich:column width="200" filterBy="#{agent.surname}"
+						filterEvent="onkeyup">
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.agent.surname']}" />
 						</f:facet>
@@ -173,10 +178,84 @@
 						</h:outputText>
 					</rich:column>
 					<f:facet name="footer">
-						<rich:datascroller for="gridAgents" maxPages="15"
-							reRender="gridAgents" />
+						<rich:datascroller id="gridAgentsScroller" for="gridAgents"
+							maxPages="15" reRender="gridAgents" />
 					</f:facet>
 				</rich:dataTable>
+				<!-- Agents -->
+
+				<p />
+
+				<!-- Metrics -->
+				<rich:dataTable id="gridMetrics" width="500" rows="3"
+					var="campaignMetric"
+					value="#{campaignBean.campaign.campaignMetric}">
+
+					<f:facet name="header">
+						<h:panelGroup>
+							<a4j:commandLink ajaxSingle="true" id="LnkMetricNew"
+								action="#{campaignBean.createMetric}"
+								oncomplete="#{rich:component('editMetricPanel')}.show()">
+								<h:graphicImage value="/images/Add-icon.png" style="border:0" />
+							</a4j:commandLink>
+							<rich:toolTip for="LnkMetricNew" value="New" />
+							<h:outputText value="#{msg['label.metric']}" />
+						</h:panelGroup>
+					</f:facet>
+
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.metric.code']}" />
+						</f:facet>
+						<h:outputText value="#{campaignMetric.metric.code}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.metric.optim']}" />
+						</f:facet>
+						<h:outputText value="#{campaignMetric.optim}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.metric.objective']}" />
+						</f:facet>
+						<h:outputText value="#{campaignMetric.objective}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.metric.minimum']}" />
+						</f:facet>
+						<h:outputText value="#{campaignMetric.minimum}" />
+					</rich:column>
+					<rich:column width="200">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+						</f:facet>
+						<h:outputText value="#{campaignMetric.unsatisfactory}" />
+					</rich:column>
+					<rich:column width="50" style="text-align:center">
+						<f:facet name="header">
+							<h:outputText value="Action" />
+						</f:facet>
+						<a4j:commandLink ajaxSingle="true" id="LnkMetricEdit"
+							oncomplete="#{rich:component('editMetricPanel')}.show()"
+							reRender="editMetricPanel">
+							<h:graphicImage value="/images/Edit-icon.png" style="border:0" />
+							<f:setPropertyActionListener value="#{campaignMetric}"
+								target="#{campaignBean.campaignMetric}" />
+						</a4j:commandLink>
+						<rich:toolTip for="LnkMetricEdit" value="#{msg['label.edit']}" />
+
+						<a4j:commandLink ajaxSingle="true" id="LnkMetricDelete"
+							oncomplete="#{rich:component('deleteMetricPanel')}.show()">
+							<h:graphicImage value="/images/Delete-icon.png" style="border:0" />
+							<f:setPropertyActionListener value="#{campaignMetric}"
+								target="#{campaignBean.campaignMetric}" />
+						</a4j:commandLink>
+						<rich:toolTip for="LnkMetricDelete" value="#{msg['label.delete']}" />
+					</rich:column>
+				</rich:dataTable>
+				<!-- Metrics -->
 
 				<p />
 
@@ -267,109 +346,125 @@
 						<f:convertDateTime pattern="#{msg['date.format']}" />
 					</h:outputText>
 				</rich:column>
-				<!--ESTO SE COMENTA XQ LOS AGENTES SE DAN DE BAJA EN EL ARCHIVO HF-->
-				<!--				<rich:column width="50" style="text-align:center">-->
-				<!--					<f:facet name="header">-->
-				<!--						<h:outputText value="Action" />-->
-				<!--					</f:facet>-->
-				<!---->
-				<!--					<a4j:commandLink ajaxSingle="true" id="LnkDeleteAgent"-->
-				<!--						oncomplete="#{rich:component('deleteAgentPanel')}.show()">-->
-				<!--						<h:graphicImage value="/images/Delete-icon.png" style="border:0" />-->
-				<!--						<f:setPropertyActionListener value="#{agent}"-->
-				<!--							target="#{campaignBean.agent}" />-->
-				<!--					</a4j:commandLink>-->
-				<!--					<rich:toolTip for="LnkDelete" value="Delete" />-->
-				<!--				</rich:column>-->
 				<f:facet name="footer">
-					<rich:datascroller for="gridAgents" maxPages="15"
-						reRender="gridAgents" />
+					<rich:datascroller id="gridAgentsScroller" for="gridAgents"
+						maxPages="15" />
 				</f:facet>
 			</rich:dataTable>
+
 		</h:form>
 	</rich:modalPanel>
 	<!-- View Agents Panel -->
 
-	<!-- Add Agents Panel -->
-	<rich:modalPanel id="addAgentPanel" autosized="true" width="300">
+	<!-- Edit Metric Panel -->
+	<rich:modalPanel id="editMetricPanel" autosized="true" width="400">
 		<f:facet name="header">
-			<h:outputText value="#{msg['label.agent']}" />
+			<h:outputText value="#{msg['label.metric']}" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
 				<h:graphicImage value="/images/Button-X-icon.gif"
-					id="LnkCloseAddAgentPanel" style="cursor:pointer" />
-				<rich:componentControl for="addAgentPanel"
-					attachTo="LnkCloseAddAgentPanel" operation="hide" event="onclick" />
+					id="LnkEditMetricPanelClose" style="cursor:pointer" />
+				<rich:componentControl for="editMetricPanel"
+					attachTo="LnkEditMetricPanelClose" operation="hide" event="onclick" />
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
-			<rich:messages style="color:red;" />
+
+			<rich:messages errorClass="error" tooltip="true" showSummary="true">
+				<f:facet name="errorMarker">
+					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+				</f:facet>
+				<f:facet name="infoMarker">
+					<h:graphicImage url="/image/info.png" />
+				</f:facet>
+			</rich:messages>
+
 			<h:panelGrid columns="1">
 				<a4j:outputPanel ajaxRendered="true">
 					<h:panelGrid columns="2">
-						<h:outputText value="Docket" />
-						<h:inputText value="#{campaignBean.agent.docket}" size="25"
-							maxlength="10" required="true" />
+						<h:outputText value="#{msg['label.metric.code']}" />
+						<rich:comboBox value="#{campaignBean.campaignMetric.pk.metric}"
+							defaultLabel="#{msg['label.comboBox.default']}" size="25"							
+							required="true" label="#{msg['label.metric.code']}"
+							converter="com.self_managment.web.converter.MetricConverter">
+							<f:selectItems value="#{campaignBean.metrics}" />
+						</rich:comboBox>
+
+						<h:outputText value="#{msg['label.metric.optim']}" />
+						<h:inputText value="#{campaignBean.campaignMetric.optim}"
+							size="25" maxlength="10" required="true" />
+
+						<h:outputText value="#{msg['label.metric.objective']}" />
+						<h:inputText value="#{campaignBean.campaignMetric.objective}"
+							size="25" maxlength="10" required="true" />
+
+						<h:outputText value="#{msg['label.metric.minimum']}" />
+						<h:inputText value="#{campaignBean.campaignMetric.minimum}"
+							size="25" maxlength="10" required="true" />
+
+						<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+						<h:inputText value="#{campaignBean.campaignMetric.unsatisfactory}"
+							size="25" maxlength="10" required="true" />
 					</h:panelGrid>
 				</a4j:outputPanel>
 
 				<h:panelGrid columns="4">
-					<a4j:commandLink id="LnkAddAgent" reRender="gridAgents, status"
-						action="#{campaignBean.addAgent}"
-						oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('addAgentPanel')}.hide();">
+					<a4j:commandLink id="LnkMetricAdd" reRender="gridMetrics, status"
+						action="#{campaignBean.addMetric}"
+						oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editMetricPanel')}.hide();">
 						<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkAddAgent" value="#{msg['label.accept']}" />
+					<rich:toolTip for="LnkMetricAdd" value="#{msg['label.accept']}" />
 
-					<a4j:commandLink id="LnkAgentCancel"
-						onclick="#{rich:component('addAgentPanel')}.hide(); return false;">
+					<a4j:commandLink id="LnkMetricCancel"
+						onclick="#{rich:component('editMetricPanel')}.hide(); return false;">
 						<h:graphicImage value="/images/Button-Close-icon.png"
 							style="border:0" />
 					</a4j:commandLink>
-					<rich:toolTip for="LnkAgentCancel" value="#{msg['label.cancel']}" />
+					<rich:toolTip for="LnkMetricCancel" value="#{msg['label.cancel']}" />
 				</h:panelGrid>
 			</h:panelGrid>
 		</h:form>
 	</rich:modalPanel>
-	<!-- Add Agents Panel -->
+	<!-- Edit Metric Panel -->
 
-	<!-- Delete Agent Panel -->
-	<rich:modalPanel id="deleteAgentPanel" autosized="true" width="100">
+	<!-- Delete Metric Panel -->
+	<rich:modalPanel id="deleteMetricPanel" autosized="true" width="100">
 		<f:facet name="header">
 			<h:outputText value="Are you sure?" style="padding-right:15px;" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
 				<h:graphicImage value="/images/Button-X-icon.gif"
-					id="LnkCloseDeleteAgentPanel" style="cursor:pointer" />
-				<rich:componentControl for="deleteAgentPanel"
-					attachTo="LnkCloseDeleteAgentPanel" operation="hide"
+					id="LnkDeleteMetricPanelClose" style="cursor:pointer" />
+				<rich:componentControl for="deleteMetricPanel"
+					attachTo="LnkDeleteMetricPanelClose" operation="hide"
 					event="onclick" />
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
 			<h:panelGrid columns="4">
-				<a4j:commandLink action="#{campaignBean.deleteAgent}"
+				<a4j:commandLink action="#{campaignBean.deleteMetric}"
 					ajaxSingle="true"
-					oncomplete="#{rich:component('deleteAgentPanel')}.hide();"
-					reRender="gridAgents, status" id="LnkConfirmDeleteAgent">
+					oncomplete="#{rich:component('deleteMetricPanel')}.hide();"
+					reRender="gridMetrics, status" id="LnkConfirmDeleteMetric">
 					<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkConfirmDeleteAgent"
+				<rich:toolTip for="LnkConfirmDeleteMetric"
 					value="#{msg['label.accept']}" />
 
-				<a4j:commandLink id="LnkNotConfirmDeleteAgent"
-					onclick="#{rich:component('deleteAgentPanel')}.hide(); return false;">
+				<a4j:commandLink id="LnkNotConfirmDeleteMetric"
+					onclick="#{rich:component('deleteMetricPanel')}.hide(); return false;">
 					<h:graphicImage value="/images/Button-Close-icon.png"
 						style="border:0" />
 				</a4j:commandLink>
-				<rich:toolTip for="LnkNotConfirmDeleteAgent"
+				<rich:toolTip for="LnkNotConfirmDeleteMetric"
 					value="#{msg['label.cancel']}" />
 			</h:panelGrid>
 		</h:form>
 	</rich:modalPanel>
-	<!-- Delete Agent Panel -->
+	<!-- Delete Metric Panel -->
 
 	<rich:modalPanel id="deletePanel" autosized="true" width="100">
 		<f:facet name="header">

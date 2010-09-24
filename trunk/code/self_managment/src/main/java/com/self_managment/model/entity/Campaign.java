@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "campaign", catalog = "self_managment", uniqueConstraints = {
@@ -48,9 +51,19 @@ public class Campaign implements java.io.Serializable {
     @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
     private List<Agent> agents;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "campaign_metric", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "METRIC_ID"))
-    private List<Metric> metrics;
+    /*
+     * @OneToMany(cascade = CascadeType.PERSIST) @JoinTable(name =
+     * "campaign_metric", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"),
+     * inverseJoinColumns = @JoinColumn(name = "METRIC_ID")) private List<Metric>
+     * metrics;
+     */
+
+    // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.campaign", cascade = {
+	    CascadeType.PERSIST, CascadeType.MERGE })
+    @Cascade( { org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+	    org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
+    private List<CampaignMetric> campaignMetric;
 
     public Integer getId() {
 	return id;
@@ -84,13 +97,11 @@ public class Campaign implements java.io.Serializable {
 	this.agents = agents;
     }
 
-    public List<Metric> getMetrics() {
-	return metrics;
-    }
-
-    public void setMetrics(List<Metric> metrics) {
-	this.metrics = metrics;
-    }
+    /*
+     * public List<Metric> getMetrics() { return metrics; }
+     * 
+     * public void setMetrics(List<Metric> metrics) { this.metrics = metrics; }
+     */
 
     public CampaignType getType() {
 	return type;
@@ -123,6 +134,14 @@ public class Campaign implements java.io.Serializable {
 	} else if (!id.equals(other.id))
 	    return false;
 	return true;
+    }
+
+    public List<CampaignMetric> getCampaignMetric() {
+	return campaignMetric;
+    }
+
+    public void setCampaignMetric(List<CampaignMetric> campaignMetric) {
+	this.campaignMetric = campaignMetric;
     }
 
 }

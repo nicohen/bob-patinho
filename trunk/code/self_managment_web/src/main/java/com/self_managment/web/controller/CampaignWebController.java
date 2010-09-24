@@ -1,10 +1,10 @@
 package com.self_managment.web.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -13,7 +13,10 @@ import org.springframework.web.jsf.FacesContextUtils;
 
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.Campaign;
-import com.self_managment.service.CRUDService;
+import com.self_managment.model.entity.CampaignMetric;
+import com.self_managment.model.entity.Metric;
+import com.self_managment.service.CampaignService;
+import com.self_managment.service.MetricService;
 import com.self_managment.web.util.JSFUtil;
 
 @Component("campaignBean")
@@ -21,16 +24,27 @@ import com.self_managment.web.util.JSFUtil;
 public class CampaignWebController {
     private List<Campaign> campaigns;
     private Campaign campaign = new Campaign();
-    private CRUDService<Campaign, Serializable> service;
+    private CampaignService service;
+    private MetricService metricService;
     private Agent agent;
+    private CampaignMetric campaignMetric;
+    private List<SelectItem> metrics;
 
     @SuppressWarnings("unchecked")
     public CampaignWebController() {
 	ApplicationContext ctx = FacesContextUtils
 		.getWebApplicationContext(FacesContext.getCurrentInstance());
 
-	service = (CRUDService<Campaign, Serializable>) ctx
-		.getBean("campaignService");
+	service = (CampaignService) ctx.getBean("campaignService");
+
+	metricService = (MetricService) ctx.getBean("metricService");
+    }
+
+    public List<SelectItem> getMetrics() {
+	if (metrics == null) {
+	    metrics = JSFUtil.getSelectItems(metricService.findAll());
+	}
+	return metrics;
     }
 
     public List<Campaign> getCampaigns() {
@@ -86,6 +100,26 @@ public class CampaignWebController {
 	return "";
     }
 
+    public String createMetric() {
+	CampaignMetric campaignMetric = new CampaignMetric();
+	campaignMetric.setMetric(new Metric());
+	campaignMetric.setCampaign(campaign);
+	setCampaignMetric(campaignMetric);
+	return "";
+    }
+
+    public String addMetric() {
+	if (campaign.getCampaignMetric() == null) {
+	    List<CampaignMetric> metrics = new ArrayList<CampaignMetric>();
+	    metrics.add(campaignMetric);
+	    campaign.setCampaignMetric(metrics);
+	} else {
+	    if (!campaign.getCampaignMetric().contains(campaignMetric))
+		campaign.getCampaignMetric().add(campaignMetric);
+	}
+	return "";
+    }
+
     public String addAgent() {
 	if (campaign.getAgents() == null) {
 	    List<Agent> agents = new ArrayList<Agent>();
@@ -94,6 +128,11 @@ public class CampaignWebController {
 	} else {
 	    campaign.getAgents().add(agent);
 	}
+	return "";
+    }
+
+    public String deleteMetric() {
+	campaign.getCampaignMetric().remove(campaignMetric);
 	return "";
     }
 
@@ -113,5 +152,13 @@ public class CampaignWebController {
 	}
 
 	return "";
+    }
+
+    public CampaignMetric getCampaignMetric() {
+	return campaignMetric;
+    }
+
+    public void setCampaignMetric(CampaignMetric campaignMetric) {
+	this.campaignMetric = campaignMetric;
     }
 }

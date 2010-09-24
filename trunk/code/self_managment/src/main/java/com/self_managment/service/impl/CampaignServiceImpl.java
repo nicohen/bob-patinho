@@ -7,17 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.self_managment.model.entity.Campaign;
-import com.self_managment.persistance.dao.impl.GenericDaoImpl;
-import com.self_managment.service.CRUDService;
+import com.self_managment.persistance.dao.CampaignDao;
+import com.self_managment.service.CampaignService;
 
 @Service("campaignService")
-public class CampaignServiceImpl implements CRUDService<Campaign, Serializable> {
+public class CampaignServiceImpl implements CampaignService {
 
     @Autowired
-    GenericDaoImpl<Campaign, Serializable> campaingDao;
+    CampaignDao campaingDao;
 
-    public void setCampaingDao(
-	    GenericDaoImpl<Campaign, Serializable> campaingDao) {
+    public void setCampaingDao(CampaignDao campaingDao) {
 	this.campaingDao = campaingDao;
     }
 
@@ -55,5 +54,4 @@ public class CampaignServiceImpl implements CRUDService<Campaign, Serializable> 
     public void update(Campaign transientObject) {
 	campaingDao.update(transientObject);
     }
-
 }
