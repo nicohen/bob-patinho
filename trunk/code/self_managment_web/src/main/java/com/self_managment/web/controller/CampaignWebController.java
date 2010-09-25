@@ -29,6 +29,7 @@ public class CampaignWebController {
     private Agent agent;
     private CampaignMetric campaignMetric;
     private List<SelectItem> metrics;
+    private boolean canAddMetric;
 
     @SuppressWarnings("unchecked")
     public CampaignWebController() {
@@ -160,5 +161,10 @@ public class CampaignWebController {
 
     public void setCampaignMetric(CampaignMetric campaignMetric) {
 	this.campaignMetric = campaignMetric;
+    }
+
+    public boolean isCanAddMetric() {
+	return (campaign != null && campaign.getCampaignMetric() != null && campaign
+		.getCampaignMetric().size() == 3) ? true : false;
     }
 }

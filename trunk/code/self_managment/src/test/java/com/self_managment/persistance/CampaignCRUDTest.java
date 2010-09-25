@@ -49,6 +49,10 @@ public class CampaignCRUDTest extends TestCase {
 	campaign.setCode("12345");
 	campaign.setName("12345");
 	campaign.setType(CampaignType.INBOUND);
+	campaign.setOptimValue(0d);
+	campaign.setObjetiveValue(0d);
+	campaign.setMinimumValue(0d);
+	campaign.setUnsatisfactoryValue(0d);
 
 	service.save(campaign);
 
@@ -63,6 +67,10 @@ public class CampaignCRUDTest extends TestCase {
 	campaign.setCode("12345");
 	campaign.setName("12345");
 	campaign.setType(CampaignType.INBOUND);
+	campaign.setOptimValue(0d);
+	campaign.setObjetiveValue(0d);
+	campaign.setMinimumValue(0d);
+	campaign.setUnsatisfactoryValue(0d);
 
 	Integer id = (Integer) service.save(campaign);
 
