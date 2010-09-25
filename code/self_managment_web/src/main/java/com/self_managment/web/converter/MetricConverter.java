@@ -1,5 +1,7 @@
 package com.self_managment.web.converter;
 
+import java.util.List;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -7,6 +9,7 @@ import javax.faces.convert.Converter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
 
+import com.self_managment.model.entity.Metric;
 import com.self_managment.service.MetricService;
 
 public class MetricConverter implements Converter {
@@ -21,7 +24,10 @@ public class MetricConverter implements Converter {
 	MetricService metricService = (MetricService) ctx
 		.getBean("metricService");
 
-	return metricService.findAllByProperty("code", string).get(0);
+	List<Metric> l = metricService.findAllByProperty("code", string);
+
+	return l.isEmpty() ? null : l.get(0);
+
     }
 
     @Override

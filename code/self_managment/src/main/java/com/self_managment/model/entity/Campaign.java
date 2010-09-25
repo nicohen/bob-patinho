@@ -47,16 +47,21 @@ public class Campaign implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
     private CampaignType type;
 
+    @Column(name = "OPTIM_VALUE", nullable = false)
+    private Double optimValue;
+
+    @Column(name = "OBJETIVE_VALUE", nullable = false)
+    private Double objetiveValue;
+
+    @Column(name = "MINIMUM_VALUE", nullable = false)
+    private Double minimumValue;
+
+    @Column(name = "UNSATISFACTORY_VALUE", nullable = false)
+    private Double unsatisfactoryValue;
+
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
     private List<Agent> agents;
-
-    /*
-     * @OneToMany(cascade = CascadeType.PERSIST) @JoinTable(name =
-     * "campaign_metric", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"),
-     * inverseJoinColumns = @JoinColumn(name = "METRIC_ID")) private List<Metric>
-     * metrics;
-     */
 
     // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.campaign", cascade = {
@@ -142,6 +147,38 @@ public class Campaign implements java.io.Serializable {
 
     public void setCampaignMetric(List<CampaignMetric> campaignMetric) {
 	this.campaignMetric = campaignMetric;
+    }
+
+    public Double getOptimValue() {
+	return optimValue;
+    }
+
+    public void setOptimValue(Double optimValue) {
+	this.optimValue = optimValue;
+    }
+
+    public Double getObjetiveValue() {
+	return objetiveValue;
+    }
+
+    public void setObjetiveValue(Double objetiveValue) {
+	this.objetiveValue = objetiveValue;
+    }
+
+    public Double getMinimumValue() {
+	return minimumValue;
+    }
+
+    public void setMinimumValue(Double minimumValue) {
+	this.minimumValue = minimumValue;
+    }
+
+    public Double getUnsatisfactoryValue() {
+	return unsatisfactoryValue;
+    }
+
+    public void setUnsatisfactoryValue(Double unsatisfactoryValue) {
+	this.unsatisfactoryValue = unsatisfactoryValue;
     }
 
 }

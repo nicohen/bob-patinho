@@ -1,5 +1,13 @@
 ﻿DELETE FROM campaign_agent;
 DELETE FROM agent;
+DELETE FROM metric;
+
+/* METRICS */
+INSERT INTO metric VALUES(1, 'I2C_PCT');
+INSERT INTO metric VALUES(2, 'AVG_HLD_TM');
+INSERT INTO metric VALUES(3, 'ACW_PCT');
+INSERT INTO metric VALUES(4, 'AUX_TM');
+INSERT INTO metric VALUES(5, 'AVAIL_PCT');
 
 /* AGENTS */
 INSERT INTO agent VALUES(1, 1, '2010-09-09', 'BOB', 'ACTIVO', 'PATINHO');
@@ -24,7 +32,7 @@ INSERT INTO agent VALUES(19, 19, '2010-09-09', 'MARTIN', 'ACTIVO', 'PRINCE');
 INSERT INTO agent VALUES(20, 20, '2010-09-09', 'APU', 'ACTIVO', 'NAHASAPEEMAPETILON');
 
 /* CAMPAIGN_AGENT */
-INSERT INTO campaign_agent VALUES(1, 1);
+/*INSERT INTO campaign_agent VALUES(1, 1);
 INSERT INTO campaign_agent VALUES(1, 2);
 INSERT INTO campaign_agent VALUES(1, 3);
 INSERT INTO campaign_agent VALUES(1, 4);
@@ -43,4 +51,4 @@ INSERT INTO campaign_agent VALUES(1, 16);
 INSERT INTO campaign_agent VALUES(1, 17);
 INSERT INTO campaign_agent VALUES(1, 18);
 INSERT INTO campaign_agent VALUES(1, 19);
-INSERT INTO campaign_agent VALUES(1, 20);
+INSERT INTO campaign_agent VALUES(1, 20);*/

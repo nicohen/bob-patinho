@@ -14,7 +14,7 @@
 <f:view>
 	<f:loadBundle basename="messages" var="msg" />
 	<h:form id="form">
-		<rich:dataTable id="grid" width="500" rows="10" var="campaign"
+		<rich:dataTable id="grid" width="100%" rows="20" var="campaign"
 			value="#{campaignBean.campaigns}">
 			<f:facet name="header">
 				<h:panelGroup>
@@ -48,7 +48,7 @@
 			</rich:column>
 			<rich:column width="50" style="text-align:center">
 				<f:facet name="header">
-					<h:outputText value="Action" />
+					<h:outputText value="#{msg['label.action']}" />
 				</f:facet>
 				<a4j:commandLink ajaxSingle="true" id="LnkEdit"
 					oncomplete="#{rich:component('editPanel')}.show()"
@@ -74,7 +74,7 @@
 		</rich:dataTable>
 	</h:form>
 
-	<rich:modalPanel id="editPanel" autosized="true" width="300">
+	<rich:modalPanel id="editPanel" autosized="true" width="900">
 		<f:facet name="header">
 			<h:outputText value="#{msg['label.campaign']}" />
 		</f:facet>
@@ -87,7 +87,8 @@
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
-			<rich:messages errorClass="error" tooltip="true" showSummary="true">
+			<rich:messages errorClass="error" tooltip="true"
+				showSummary="true">
 				<f:facet name="errorMarker">
 					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
 				</f:facet>
@@ -95,7 +96,7 @@
 					<h:graphicImage url="/image/info.png" />
 				</f:facet>
 			</rich:messages>
-			<h:panelGrid columns="1">
+			<h:panelGrid columns="1" width="100%">
 				<a4j:outputPanel ajaxRendered="true">
 					<h:panelGrid columns="2">
 						<h:outputText value="#{msg['label.campaign.code']}" />
@@ -127,10 +128,10 @@
 					<!--					</a4j:commandLink>-->
 				</a4j:outputPanel>
 
-				<p />
+				<rich:separator />
 
 				<!-- Agents -->
-				<rich:dataTable id="gridAgents" width="500" rows="5" var="agent"
+				<rich:dataTable id="gridAgents" width="100%" rows="3" var="agent"
 					value="#{campaignBean.campaign.agents}"
 					reRender="gridAgentsScroller">
 					<f:facet name="header">
@@ -184,10 +185,10 @@
 				</rich:dataTable>
 				<!-- Agents -->
 
-				<p />
+				<rich:separator />
 
 				<!-- Metrics -->
-				<rich:dataTable id="gridMetrics" width="500" rows="3"
+				<rich:dataTable id="gridMetrics" width="100%" rows="3"
 					var="campaignMetric"
 					value="#{campaignBean.campaign.campaignMetric}">
 
@@ -195,7 +196,8 @@
 						<h:panelGroup>
 							<a4j:commandLink ajaxSingle="true" id="LnkMetricNew"
 								action="#{campaignBean.createMetric}"
-								oncomplete="#{rich:component('editMetricPanel')}.show()">
+								oncomplete="#{rich:component('editMetricPanel')}.show()"
+								disabled="#{campaignBean.canAddMetric}">
 								<h:graphicImage value="/images/Add-icon.png" style="border:0" />
 							</a4j:commandLink>
 							<rich:toolTip for="LnkMetricNew" value="New" />
@@ -235,7 +237,7 @@
 					</rich:column>
 					<rich:column width="50" style="text-align:center">
 						<f:facet name="header">
-							<h:outputText value="Action" />
+							<h:outputText value="#{msg['label.action']}" />
 						</f:facet>
 						<a4j:commandLink ajaxSingle="true" id="LnkMetricEdit"
 							oncomplete="#{rich:component('editMetricPanel')}.show()"
@@ -257,7 +259,44 @@
 				</rich:dataTable>
 				<!-- Metrics -->
 
-				<p />
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.metric.value']}" />
+					</f:facet>
+					<a4j:outputPanel ajaxRendered="true">
+						<h:panelGrid columns="8">
+							<h:outputText value="#{msg['label.metric.optim']}" />
+							<h:inputText value="#{campaignBean.campaign.optimValue}"
+								size="10" maxlength="10" required="true"
+								label="#{msg['label.metric.optim']}">
+								<f:validateDoubleRange minimum="0" />
+							</h:inputText>
+
+							<h:outputText value="#{msg['label.metric.objective']}" />
+							<h:inputText value="#{campaignBean.campaign.objetiveValue}"
+								size="10" maxlength="10" required="true"
+								label="#{msg['label.metric.objective']}">
+								<f:validateDoubleRange minimum="0" />
+							</h:inputText>
+
+							<h:outputText value="#{msg['label.metric.minimum']}" />
+							<h:inputText value="#{campaignBean.campaign.minimumValue}"
+								size="10" maxlength="10" required="true"
+								label="#{msg['label.metric.minimum']}">
+								<f:validateDoubleRange minimum="0" />
+							</h:inputText>
+
+							<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+							<h:inputText value="#{campaignBean.campaign.unsatisfactoryValue}"
+								size="10" maxlength="10" required="true"
+								label="#{msg['label.metric.unsatisfactory']}">
+								<f:validateDoubleRange minimum="0" />
+							</h:inputText>
+						</h:panelGrid>
+					</a4j:outputPanel>
+				</rich:panel>
+
+				<rich:separator />
 
 				<h:panelGrid columns="4">
 					<a4j:commandLink id="LnkUpdate" reRender="grid, status"
@@ -371,7 +410,8 @@
 		</f:facet>
 		<h:form>
 
-			<rich:messages errorClass="error" tooltip="true" showSummary="true">
+			<rich:messages errorClass="error"
+				tooltip="true" showSummary="true">
 				<f:facet name="errorMarker">
 					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
 				</f:facet>
@@ -385,7 +425,7 @@
 					<h:panelGrid columns="2">
 						<h:outputText value="#{msg['label.metric.code']}" />
 						<rich:comboBox value="#{campaignBean.campaignMetric.pk.metric}"
-							defaultLabel="#{msg['label.comboBox.default']}" size="25"							
+							defaultLabel="#{msg['label.comboBox.default']}" size="25"
 							required="true" label="#{msg['label.metric.code']}"
 							converter="com.self_managment.web.converter.MetricConverter">
 							<f:selectItems value="#{campaignBean.metrics}" />
@@ -393,21 +433,35 @@
 
 						<h:outputText value="#{msg['label.metric.optim']}" />
 						<h:inputText value="#{campaignBean.campaignMetric.optim}"
-							size="25" maxlength="10" required="true" />
+							label="#{msg['label.metric.optim']}" size="25" maxlength="10"
+							required="true">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
 
 						<h:outputText value="#{msg['label.metric.objective']}" />
 						<h:inputText value="#{campaignBean.campaignMetric.objective}"
-							size="25" maxlength="10" required="true" />
+							label="#{msg['label.metric.objective']}" size="25" maxlength="10"
+							required="true">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
 
 						<h:outputText value="#{msg['label.metric.minimum']}" />
 						<h:inputText value="#{campaignBean.campaignMetric.minimum}"
-							size="25" maxlength="10" required="true" />
+							label="#{msg['label.metric.minimum']}" size="25" maxlength="10"
+							required="true">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
 
 						<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
 						<h:inputText value="#{campaignBean.campaignMetric.unsatisfactory}"
-							size="25" maxlength="10" required="true" />
+							label="#{msg['label.metric.unsatisfactory']}" size="25"
+							maxlength="10" required="true">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
 					</h:panelGrid>
 				</a4j:outputPanel>
+
+				<rich:separator />
 
 				<h:panelGrid columns="4">
 					<a4j:commandLink id="LnkMetricAdd" reRender="gridMetrics, status"
@@ -432,7 +486,7 @@
 	<!-- Delete Metric Panel -->
 	<rich:modalPanel id="deleteMetricPanel" autosized="true" width="100">
 		<f:facet name="header">
-			<h:outputText value="Are you sure?" style="padding-right:15px;" />
+			<h:outputText value="#{msg['label.delete.cofirmation']}" style="padding-right:15px;" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
@@ -468,7 +522,7 @@
 
 	<rich:modalPanel id="deletePanel" autosized="true" width="100">
 		<f:facet name="header">
-			<h:outputText value="Are you sure?" style="padding-right:15px;" />
+			<h:outputText value="#{msg['label.delete.cofirmation']}" style="padding-right:15px;" />
 		</f:facet>
 		<f:facet name="controls">
 			<h:panelGroup>
