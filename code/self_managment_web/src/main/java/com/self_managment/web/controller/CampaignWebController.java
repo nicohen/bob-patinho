@@ -86,7 +86,7 @@ public class CampaignWebController {
 	campaign = service.findById(campaign.getId());
 	if (campaign == null) {
 	    setCampaign(new Campaign());
-	    JSFUtil.addErrorMessage("Campaña inexistente");
+	    JSFUtil.addErrorMessage("Campania inexistente");
 	}
 	return "";
     }
