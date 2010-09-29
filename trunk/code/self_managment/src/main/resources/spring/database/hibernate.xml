@@ -18,7 +18,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>				
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>				
 			</props>
 		</property>
 
@@ -30,6 +30,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 				<value>com.self_managment.model.entity.Metric</value>
 				<value>com.self_managment.model.entity.CampaignMetric</value>
 				<value>com.self_managment.model.entity.CampaignMetricPk</value>
+				<value>com.self_managment.model.entity.Supervisor</value>
 			</list>
 		</property>
 

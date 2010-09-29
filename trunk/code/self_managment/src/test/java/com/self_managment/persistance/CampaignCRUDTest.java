@@ -46,6 +46,7 @@ public class CampaignCRUDTest extends TestCase {
 
     public void testAdd() {
 	Campaign campaign = new Campaign();
+	campaign.setId(1);
 	campaign.setCode("12345");
 	campaign.setName("12345");
 	campaign.setType(CampaignType.INBOUND);
@@ -64,6 +65,7 @@ public class CampaignCRUDTest extends TestCase {
 
     public void testGet() {
 	Campaign campaign = new Campaign();
+	campaign.setId(1);
 	campaign.setCode("12345");
 	campaign.setName("12345");
 	campaign.setType(CampaignType.INBOUND);
