@@ -12,9 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -23,162 +20,164 @@ import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "campaign", catalog = "self_managment", uniqueConstraints = {
-	@UniqueConstraint(columnNames = "CAMPAIGN_CODE"),
-	@UniqueConstraint(columnNames = "CAMPAIGN_NAME") })
+		@UniqueConstraint(columnNames = "CAMPAIGN_CODE"),
+		@UniqueConstraint(columnNames = "CAMPAIGN_NAME") })
 public class Campaign implements java.io.Serializable {
-    private static final long serialVersionUID = 1L;
+	public enum CampaignType {
+		INBOUND, OUTBOUND;
+	}
 
-    public enum CampaignType {
-	INBOUND, OUTBOUND;
-    }
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "CAMPAIGN_ID", unique = true, nullable = false)
-    private Integer id;
+	@Id
+	//@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "CAMPAIGN_ID", unique = true, nullable = false)
+	private Integer id;
 
-    @Column(name = "CAMPAIGN_CODE", unique = true, nullable = false, length = 10)
-    private String code;
+	@Column(name = "CAMPAIGN_CODE", unique = true, nullable = false, length = 10)
+	private String code;
 
-    @Column(name = "CAMPAIGN_NAME", unique = true, nullable = false, length = 20)
-    private String name;
+	@Column(name = "CAMPAIGN_NAME", unique = true, nullable = false, length = 20)
+	private String name;
 
-    @Column(name = "TYPE", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CampaignType type;
+	@Column(name = "TYPE", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private CampaignType type;
 
-    @Column(name = "OPTIM_VALUE", nullable = false)
-    private Double optimValue;
+	@Column(name = "OPTIM_VALUE", nullable = false)
+	private Double optimValue;
 
-    @Column(name = "OBJETIVE_VALUE", nullable = false)
-    private Double objetiveValue;
+	@Column(name = "OBJETIVE_VALUE", nullable = false)
+	private Double objetiveValue;
 
-    @Column(name = "MINIMUM_VALUE", nullable = false)
-    private Double minimumValue;
+	@Column(name = "MINIMUM_VALUE", nullable = false)
+	private Double minimumValue;
 
-    @Column(name = "UNSATISFACTORY_VALUE", nullable = false)
-    private Double unsatisfactoryValue;
+	@Column(name = "UNSATISFACTORY_VALUE", nullable = false)
+	private Double unsatisfactoryValue;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name = "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
-    private List<Agent> agents;
+	// @ManyToMany(cascade = CascadeType.PERSIST)
+	// @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name =
+	// "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
+	@OneToMany(mappedBy = "campaign")
+	private List<Agent> agents;
 
-    // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.campaign", cascade = {
-	    CascadeType.PERSIST, CascadeType.MERGE })
-    @Cascade( { org.hibernate.annotations.CascadeType.SAVE_UPDATE,
-	    org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    private List<CampaignMetric> campaignMetric;
+	// @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.campaign", cascade = {
+			CascadeType.PERSIST, CascadeType.MERGE })
+	@Cascade( { org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+			org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
+	private List<CampaignMetric> campaignMetric;
 
-    public Integer getId() {
-	return id;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Campaign other = (Campaign) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public List<Agent> getAgents() {
+		return agents;
+	}
 
-    public String getCode() {
-	return code;
-    }
+	public List<CampaignMetric> getCampaignMetric() {
+		return campaignMetric;
+	}
 
-    public void setCode(String code) {
-	this.code = code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public String getName() {
-	return name;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public Double getMinimumValue() {
+		return minimumValue;
+	}
 
-    public List<Agent> getAgents() {
-	return agents;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setAgents(List<Agent> agents) {
-	this.agents = agents;
-    }
+	public Double getObjetiveValue() {
+		return objetiveValue;
+	}
 
-    /*
-     * public List<Metric> getMetrics() { return metrics; }
-     * 
-     * public void setMetrics(List<Metric> metrics) { this.metrics = metrics; }
-     */
+	/*
+	 * public List<Metric> getMetrics() { return metrics; }
+	 * 
+	 * public void setMetrics(List<Metric> metrics) { this.metrics = metrics; }
+	 */
 
-    public CampaignType getType() {
-	return type;
-    }
+	public Double getOptimValue() {
+		return optimValue;
+	}
 
-    public void setType(CampaignType type) {
-	this.type = type;
-    }
+	public CampaignType getType() {
+		return type;
+	}
 
-    @Override
-    public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((id == null) ? 0 : id.hashCode());
-	return result;
-    }
+	public Double getUnsatisfactoryValue() {
+		return unsatisfactoryValue;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-	if (this == obj)
-	    return true;
-	if (obj == null)
-	    return false;
-	if (getClass() != obj.getClass())
-	    return false;
-	final Campaign other = (Campaign) obj;
-	if (id == null) {
-	    if (other.id != null)
-		return false;
-	} else if (!id.equals(other.id))
-	    return false;
-	return true;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    public List<CampaignMetric> getCampaignMetric() {
-	return campaignMetric;
-    }
+	public void setAgents(List<Agent> agents) {
+		this.agents = agents;
+	}
 
-    public void setCampaignMetric(List<CampaignMetric> campaignMetric) {
-	this.campaignMetric = campaignMetric;
-    }
+	public void setCampaignMetric(List<CampaignMetric> campaignMetric) {
+		this.campaignMetric = campaignMetric;
+	}
 
-    public Double getOptimValue() {
-	return optimValue;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setOptimValue(Double optimValue) {
-	this.optimValue = optimValue;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Double getObjetiveValue() {
-	return objetiveValue;
-    }
+	public void setMinimumValue(Double minimumValue) {
+		this.minimumValue = minimumValue;
+	}
 
-    public void setObjetiveValue(Double objetiveValue) {
-	this.objetiveValue = objetiveValue;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Double getMinimumValue() {
-	return minimumValue;
-    }
+	public void setObjetiveValue(Double objetiveValue) {
+		this.objetiveValue = objetiveValue;
+	}
 
-    public void setMinimumValue(Double minimumValue) {
-	this.minimumValue = minimumValue;
-    }
+	public void setOptimValue(Double optimValue) {
+		this.optimValue = optimValue;
+	}
 
-    public Double getUnsatisfactoryValue() {
-	return unsatisfactoryValue;
-    }
+	public void setType(CampaignType type) {
+		this.type = type;
+	}
 
-    public void setUnsatisfactoryValue(Double unsatisfactoryValue) {
-	this.unsatisfactoryValue = unsatisfactoryValue;
-    }
+	public void setUnsatisfactoryValue(Double unsatisfactoryValue) {
+		this.unsatisfactoryValue = unsatisfactoryValue;
+	}
 
 }

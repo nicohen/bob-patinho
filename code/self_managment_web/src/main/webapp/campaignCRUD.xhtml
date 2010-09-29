@@ -99,6 +99,11 @@
 			<h:panelGrid columns="1" width="100%">
 				<a4j:outputPanel ajaxRendered="true">
 					<h:panelGrid columns="2">
+						<h:outputText value="#{msg['label.campaign.id']}" />
+						<h:inputText value="#{campaignBean.campaign.id}" size="25"
+							maxlength="10" required="true"
+							label="#{msg['label.campaign.id']}" />
+							
 						<h:outputText value="#{msg['label.campaign.code']}" />
 						<h:inputText value="#{campaignBean.campaign.code}" size="25"
 							maxlength="10" required="true"
