@@ -7,6 +7,7 @@
 <body>
 
 <f:view>
+	<f:loadBundle basename="messages" var="msg" />
 	<h:form id="form">
 		<rich:dataTable id="grid" width="500" rows="10" var="stock"
 			value="#{stockBean.stocks}">
@@ -78,10 +79,10 @@
 					<h:panelGrid columns="2">
 						<h:outputText value="Code" />
 						<h:inputText value="#{stockBean.stock.stockCode}" size="25"
-							maxlength="10" required="true" />
+							maxlength="10" required="true" label="Code" />
 						<h:outputText value="Name" />
 						<h:inputText value="#{stockBean.stock.stockName}" size="25"
-							maxlength="20" required="true" />
+							maxlength="20" required="true" label="Name" />
 					</h:panelGrid>
 				</a4j:outputPanel>
 				<h:panelGrid columns="4">
