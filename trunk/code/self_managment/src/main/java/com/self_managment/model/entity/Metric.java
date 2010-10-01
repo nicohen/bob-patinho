@@ -23,6 +23,27 @@ public class Metric implements Serializable {
 
     @Column(name = "METRIC_CODE", unique = true, nullable = false)
     private String code;
+    
+    @Column(name = "METRIC_UNIT", unique = false, nullable = false)
+    private String unit;
+    
+    @Column(name = "OPTIM_SIGN", unique = false, nullable = false)
+    private String optimSign;
+    
+    @Column(name = "OBJETIVE_SIGN", unique = false, nullable = false)
+    private String objetiveSign;
+    
+    @Column(name = "MINIMUM_SIGN", unique = false, nullable = false)
+    private String minimumSign;
+    
+    @Column(name = "UNSATISFACTORY_SIGN", unique = false, nullable = false)
+    private String unsatisfactorySign;
+    
+    @Column(name = "MIN_VALUE", unique = false, nullable = false)
+    private Double minValue;
+    
+    @Column(name = "MAX_VALUE", unique = false, nullable = false)
+    private Double maxValue;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.metric")
     private List<CampaignMetric> campaignMetric;
@@ -46,6 +67,62 @@ public class Metric implements Serializable {
     public void setCode(String code) {
 	this.code = code;
     }
+    
+    public String getUnit() {
+	return unit;
+    }
+
+    public void setUnit(String unit) {
+	this.unit = unit;
+    }
+    
+    public String getOptimSign() {
+	return optimSign;
+    }
+
+    public void setOptimSign(String optimSign) {
+	this.optimSign = optimSign;
+    }
+
+    public String getObjetiveSign() {
+	return objetiveSign;
+    }
+
+    public void setObjetiveSign(String objetiveSign) {
+	this.objetiveSign = objetiveSign;
+    }
+    
+    public String getMinimumSign() {
+	return minimumSign;
+    }
+
+    public void setMinimumSign(String minimumSign) {
+	this.minimumSign = minimumSign;
+    }
+    
+    public String getUnsatisfactorySign() {
+	return unsatisfactorySign;
+    }
+
+    public void setUnsatisfactorySign(String unsatisfactorySign) {
+	this.unsatisfactorySign = unsatisfactorySign;
+    }
+    
+	public void setMinValue(Double minValue) {
+		this.minValue = minValue;
+	}
+
+	public Double getMinValue() {
+		return minValue;
+	}
+	
+	public void setMaxValue(Double maxValue) {
+		this.maxValue = maxValue;
+	}
+
+	public Double getMaxValue() {
+		return maxValue;
+	}
 
     public List<CampaignMetric> getCampaignMetric() {
 	return campaignMetric;
