@@ -220,25 +220,25 @@
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.metric.optim']}" />
 						</f:facet>
-						<h:outputText value="#{campaignMetric.optim}" />
+						<h:outputText value="#{campaignMetric.metric.optimSign}#{campaignMetric.optim}#{campaignMetric.metric.unit}" />
 					</rich:column>
 					<rich:column width="200">
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.metric.objective']}" />
 						</f:facet>
-						<h:outputText value="#{campaignMetric.objective}" />
+						<h:outputText value="#{campaignMetric.metric.objetiveSign}#{campaignMetric.objective}#{campaignMetric.metric.unit}" />
 					</rich:column>
 					<rich:column width="200">
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.metric.minimum']}" />
 						</f:facet>
-						<h:outputText value="#{campaignMetric.minimum}" />
+						<h:outputText value="#{campaignMetric.metric.minimumSign}#{campaignMetric.minimum}#{campaignMetric.metric.unit}" />
 					</rich:column>
 					<rich:column width="200">
 						<f:facet name="header">
 							<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
 						</f:facet>
-						<h:outputText value="#{campaignMetric.unsatisfactory}" />
+						<h:outputText value="#{campaignMetric.metric.unsatisfactorySign}#{campaignMetric.unsatisfactory}#{campaignMetric.metric.unit}" />
 					</rich:column>
 					<rich:column width="50" style="text-align:center">
 						<f:facet name="header">
@@ -266,7 +266,7 @@
 
 				<rich:panel>
 					<f:facet name="header">
-						<h:outputText value="#{msg['label.metric.value']}" />
+						<h:outputText value="#{msg['label.metric.value']}" /> 
 					</f:facet>
 					<a4j:outputPanel ajaxRendered="true">
 						<h:panelGrid columns="8">
@@ -276,7 +276,6 @@
 								label="#{msg['label.metric.optim']}">
 								<f:validateDoubleRange minimum="0" />
 							</h:inputText>
-
 							<h:outputText value="#{msg['label.metric.objective']}" />
 							<h:inputText value="#{campaignBean.campaign.objetiveValue}"
 								size="10" maxlength="10" required="true"
