@@ -42,9 +42,27 @@
 			</rich:column>
 			<rich:column width="250">
 				<f:facet name="header">
+					<h:outputText value="#{msg['label.campaign.description']}" />
+				</f:facet>
+				<h:outputText value="#{campaign.description}" />
+			</rich:column>
+			<rich:column width="250">
+				<f:facet name="header">
 					<h:outputText value="#{msg['label.campaign.type']}" />
 				</f:facet>
 				<h:outputText value="#{campaign.type}" />
+			</rich:column>
+			<rich:column width="250">
+				<f:facet name="header">
+					<h:outputText value="#{msg['label.campaign.startDate']}" />
+				</f:facet>
+				<h:outputText value="#{campaign.startDate}"/>
+			</rich:column>
+			<rich:column width="250">
+				<f:facet name="header">
+					<h:outputText value="#{msg['label.campaign.endDate']}" />
+				</f:facet>
+				<h:outputText value="#{campaign.endDate}"/>
 			</rich:column>
 			<rich:column width="50" style="text-align:center">
 				<f:facet name="header">
@@ -59,14 +77,6 @@
 				</a4j:commandLink>
 				<rich:toolTip for="LnkEdit" value="#{msg['label.edit']}" />
 
-				<a4j:commandLink ajaxSingle="true" id="LnkDelete"
-					oncomplete="#{rich:component('deletePanel')}.show()"
-					action="#{campaignBean.refreshCampaign}">
-					<h:graphicImage value="/images/Delete-icon.png" style="border:0" />
-					<f:setPropertyActionListener value="#{campaign}"
-						target="#{campaignBean.campaign}" />
-				</a4j:commandLink>
-				<rich:toolTip for="LnkDelete" value="#{msg['label.delete']}" />
 			</rich:column>
 			<f:facet name="footer">
 				<rich:datascroller for="grid" maxPages="15" reRender="grid" />
@@ -118,6 +128,16 @@
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
 							</f:facet>
 						</rich:message>
+						
+						<h:outputText value="#{msg['label.campaign.description']}" />
+						<h:inputText id="description" value="#{campaignBean.campaign.description}" size="25"
+							maxlength="20" required="false"
+							label="#{msg['label.campaign.description']}" />
+						<rich:message for="description" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
 
 						<h:outputText value="#{msg['label.campaign.type']}" />
 						<rich:comboBox id="type" value="#{campaignBean.campaign.type}"
@@ -131,6 +151,39 @@
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
 							</f:facet>
 						</rich:message>
+						
+						<h:outputText value="#{msg['label.campaign.startDate']}" />
+	                    <rich:calendar id="startDate" value="#{campaignBean.campaign.startDate}"
+                        locale="ES"
+                        popup="true"
+                        datePattern="MMMMMMMMMMM yyyy"
+                        showApplyButton="false" 
+                        cellWidth="24px" 
+                        cellHeight="22px" 
+                        style="width:200px"
+                        required="true"/>
+						<rich:message for="startDate" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						
+						<h:outputText value="#{msg['label.campaign.endDate']}" />
+						<rich:calendar id="endDate" value="#{campaignBean.campaign.endDate}"
+                        locale="ES"
+                        popup="true"
+                        datePattern="MMMMMMMMMMM yyyy"
+                        showApplyButton="false" 
+                        cellWidth="24px" 
+                        cellHeight="22px" 
+                        style="width:200px"
+                        required="false"/>
+						<rich:message for="endDate" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						
 					</h:panelGrid>
 
 					<!--					<p />-->

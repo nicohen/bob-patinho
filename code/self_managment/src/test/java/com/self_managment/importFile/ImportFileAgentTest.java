@@ -1,6 +1,7 @@
 package com.self_managment.importFile;
 
 import java.io.IOException;
+import java.util.Date;
 
 import junit.framework.TestCase;
 
@@ -55,6 +56,7 @@ public class ImportFileAgentTest extends TestCase {
 		campaign34.setObjetiveValue(0d);
 		campaign34.setMinimumValue(0d);
 		campaign34.setUnsatisfactoryValue(0d);
+		campaign34.setStartDate(new Date());
 		campaignService.save(campaign34);
 
 		importFile.importFile();
