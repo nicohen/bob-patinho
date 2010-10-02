@@ -28,12 +28,6 @@
 					<h:outputText value="#{msg['label.campaign']}" />
 				</h:panelGroup>
 			</f:facet>
-			<rich:column width="200">
-				<f:facet name="header">
-					<h:outputText value="#{msg['label.campaign.code']}" />
-				</f:facet>
-				<h:outputText value="#{campaign.code}" />
-			</rich:column>
 			<rich:column width="250">
 				<f:facet name="header">
 					<h:outputText value="#{msg['label.campaign.name']}" />
@@ -104,11 +98,6 @@
 							maxlength="10" required="true"
 							label="#{msg['label.campaign.id']}" />
 							
-						<h:outputText value="#{msg['label.campaign.code']}" />
-						<h:inputText value="#{campaignBean.campaign.code}" size="25"
-							maxlength="10" required="true"
-							label="#{msg['label.campaign.code']}" />
-
 						<h:outputText value="#{msg['label.campaign.name']}" />
 						<h:inputText value="#{campaignBean.campaign.name}" size="25"
 							maxlength="20" required="true"
