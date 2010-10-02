@@ -487,7 +487,7 @@
 							required="true" label="#{msg['label.metric.code']}"
 							converter="com.self_managment.web.converter.MetricConverter"
 							valueChangeListener="#{campaignBean.change}">
-							<a4j:support event="onselect" ajaxSingle="true" reRender="outtext" />
+							<a4j:support event="onselect" ajaxSingle="true" />
 							<f:selectItems value="#{campaignBean.metrics}" />
 						</rich:comboBox>
 						<rich:message for="metricCode" errorClass="error">
