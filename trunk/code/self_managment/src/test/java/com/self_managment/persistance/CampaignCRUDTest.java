@@ -1,6 +1,7 @@
 package com.self_managment.persistance;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -53,6 +54,7 @@ public class CampaignCRUDTest extends TestCase {
 		campaign.setObjetiveValue(0d);
 		campaign.setMinimumValue(0d);
 		campaign.setUnsatisfactoryValue(0d);
+		campaign.setStartDate(new Date());
 
 		service.save(campaign);
 
@@ -71,6 +73,7 @@ public class CampaignCRUDTest extends TestCase {
 		campaign.setObjetiveValue(0d);
 		campaign.setMinimumValue(0d);
 		campaign.setUnsatisfactoryValue(0d);
+		campaign.setStartDate(new Date());
 
 		Integer id = (Integer) service.save(campaign);
 

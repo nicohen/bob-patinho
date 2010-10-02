@@ -1,5 +1,6 @@
 package com.self_managment.model.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -36,6 +37,9 @@ public class Campaign implements java.io.Serializable {
 
 	@Column(name = "CAMPAIGN_NAME", unique = true, nullable = false, length = 20)
 	private String name;
+	
+	@Column(name = "CAMPAIGN_DESCRIPTION", nullable = true)
+	private String description;
 
 	@Column(name = "TYPE", nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -52,6 +56,12 @@ public class Campaign implements java.io.Serializable {
 
 	@Column(name = "UNSATISFACTORY_VALUE", nullable = false)
 	private Double unsatisfactoryValue;
+	
+	@Column(name = "START_DATE", nullable = false)
+	private Date startDate;
+	
+	@Column(name = "END_DATE", nullable = true)
+	private Date endDate;
 
 	// @ManyToMany(cascade = CascadeType.PERSIST)
 	// @JoinTable(name = "campaign_agent", joinColumns = @JoinColumn(name =
@@ -161,6 +171,14 @@ public class Campaign implements java.io.Serializable {
 		this.name = name;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
 	public void setObjetiveValue(Double objetiveValue) {
 		this.objetiveValue = objetiveValue;
 	}
@@ -175,6 +193,22 @@ public class Campaign implements java.io.Serializable {
 
 	public void setUnsatisfactoryValue(Double unsatisfactoryValue) {
 		this.unsatisfactoryValue = unsatisfactoryValue;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+	
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }
