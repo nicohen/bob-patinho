@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.springframework.context.ApplicationContext;
@@ -27,6 +28,7 @@ public class CampaignWebController {
     private CampaignService service;
     private MetricService metricService;
     private Agent agent;
+    private Metric metric;
     private CampaignMetric campaignMetric;
     private List<SelectItem> metrics;
     private boolean canAddMetric;
@@ -69,7 +71,22 @@ public class CampaignWebController {
     public void setAgent(Agent agent) {
 	this.agent = agent;
     }
-
+    
+    public Metric getMetric()
+    {
+    return metric;
+    }
+    
+    public void setMetric(Metric metric)
+    {
+    this.metric = metric;
+    }
+    
+    public void change(ValueChangeEvent event)
+    {
+    	setMetric((Metric)event.getNewValue());
+    }
+    
     public String update() {
 	try {
 	    service.saveOrUpdate(campaign);
@@ -102,6 +119,7 @@ public class CampaignWebController {
     }
 
     public String createMetric() {
+	this.setMetric(null);
 	CampaignMetric campaignMetric = new CampaignMetric();
 	campaignMetric.setMetric(new Metric());
 	campaignMetric.setCampaign(campaign);
@@ -161,6 +179,7 @@ public class CampaignWebController {
 
     public void setCampaignMetric(CampaignMetric campaignMetric) {
 	this.campaignMetric = campaignMetric;
+	this.metric = campaignMetric.getMetric();
     }
 
     public boolean isCanAddMetric() {
