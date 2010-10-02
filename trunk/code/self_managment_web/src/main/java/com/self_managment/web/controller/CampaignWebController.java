@@ -3,9 +3,11 @@ package com.self_managment.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
+import javax.faces.validator.ValidatorException;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +21,7 @@ import com.self_managment.model.entity.Metric;
 import com.self_managment.service.CampaignService;
 import com.self_managment.service.MetricService;
 import com.self_managment.web.util.JSFUtil;
+import com.sun.faces.util.MessageUtils;
 
 @Component("campaignBean")
 @Scope("session")
@@ -71,22 +74,19 @@ public class CampaignWebController {
     public void setAgent(Agent agent) {
 	this.agent = agent;
     }
-    
-    public Metric getMetric()
-    {
-    return metric;
+
+    public Metric getMetric() {
+	return metric;
     }
-    
-    public void setMetric(Metric metric)
-    {
-    this.metric = metric;
+
+    public void setMetric(Metric metric) {
+	this.metric = metric;
     }
-    
-    public void change(ValueChangeEvent event)
-    {
-    	setMetric((Metric)event.getNewValue());
+
+    public void change(ValueChangeEvent event) {
+	setMetric((Metric) event.getNewValue());
     }
-    
+
     public String update() {
 	try {
 	    service.saveOrUpdate(campaign);
@@ -185,5 +185,17 @@ public class CampaignWebController {
     public boolean isCanAddMetric() {
 	return (campaign != null && campaign.getCampaignMetric() != null && campaign
 		.getCampaignMetric().size() == 3) ? true : false;
+    }
+
+    public void validateMetric(FacesContext context, UIComponent component,
+	    Object input) throws ValidatorException {
+	Double var = (Double) input;
+
+	if (metric != null && metric.getMinValue() != null
+		&& metric.getMaxValue() != null)
+	    if (var < metric.getMinValue() || var > metric.getMaxValue())
+		throw new ValidatorException(MessageUtils.getExceptionMessage(
+			"error.metric.range", metric.getMinValue(), metric
+				.getMaxValue()));
     }
 }

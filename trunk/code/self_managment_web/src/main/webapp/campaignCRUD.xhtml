@@ -502,8 +502,7 @@
 						<h:outputText value="#{campaignBean.metric.optimSign}" />
 						<h:inputText id="metricOptim" value="#{campaignBean.campaignMetric.optim}"
 							label="#{msg['label.metric.optim']}" size="5" maxlength="10"
-							required="true">
-							<f:validateDoubleRange minimum="0" />
+							required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricOptim" errorClass="error">
@@ -519,8 +518,7 @@
 						<h:outputText value="#{campaignBean.metric.objetiveSign}" />
 						<h:inputText id="metricObjective" value="#{campaignBean.campaignMetric.objective}"
 							label="#{msg['label.metric.objective']}" size="5" maxlength="10"
-							required="true">
-							<f:validateDoubleRange minimum="0" />
+							required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricObjective" errorClass="error">
@@ -536,8 +534,7 @@
 						<h:outputText value="#{campaignBean.metric.minimumSign}" />
 						<h:inputText id="metricMinimum" value="#{campaignBean.campaignMetric.minimum}"
 							label="#{msg['label.metric.minimum']}" size="5" maxlength="10"
-							required="true">
-							<f:validateDoubleRange minimum="0" />
+							required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricMinimum" errorClass="error">
@@ -553,8 +550,7 @@
 						<h:outputText value="#{campaignBean.metric.unsatisfactorySign}" />
 						<h:inputText id="metricUnsatisfactory" value="#{campaignBean.campaignMetric.unsatisfactory}"
 							label="#{msg['label.metric.unsatisfactory']}" size="5"
-							maxlength="10" required="true">
-							<f:validateDoubleRange minimum="0" />
+							maxlength="10" required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricUnsatisfactory" errorClass="error">
