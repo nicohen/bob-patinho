@@ -14,8 +14,8 @@
 <f:view>
 	<f:loadBundle basename="messages" var="msg" />
 	<h:form id="form">
-		<rich:dataTable id="grid" width="100%" rows="20" var="campaign"
-			value="#{campaignBean.campaigns}">
+		<rich:dataTable id="grid" width="70%" rows="20" var="campaign"
+			value="#{campaignBean.campaigns}" align="center">
 			<f:facet name="header">
 				<h:panelGroup>
 					<a4j:commandLink ajaxSingle="true" id="LnkNew"
@@ -28,6 +28,12 @@
 					<h:outputText value="#{msg['label.campaign']}" />
 				</h:panelGroup>
 			</f:facet>
+			<rich:column width="30">
+				<f:facet name="header">
+					<h:outputText value="#{msg['label.campaign.id']}" />
+				</f:facet>
+				<h:outputText value="#{campaign.id}" />
+			</rich:column>
 			<rich:column width="250">
 				<f:facet name="header">
 					<h:outputText value="#{msg['label.campaign.name']}" />
@@ -82,7 +88,7 @@
 		</f:facet>
 		<h:form>
 			<rich:messages errorClass="error" tooltip="true"
-				showSummary="true">
+				showSummary="true" globalOnly="true">
 				<f:facet name="errorMarker">
 					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
 				</f:facet>
@@ -92,24 +98,39 @@
 			</rich:messages>
 			<h:panelGrid columns="1" width="100%">
 				<a4j:outputPanel ajaxRendered="true">
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="3">
 						<h:outputText value="#{msg['label.campaign.id']}" />
-						<h:inputText value="#{campaignBean.campaign.id}" size="25"
+						<h:inputText id="id" value="#{campaignBean.campaign.id}" size="25"
 							maxlength="10" required="true"
 							label="#{msg['label.campaign.id']}" />
-							
+						<rich:message for="id" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+
 						<h:outputText value="#{msg['label.campaign.name']}" />
-						<h:inputText value="#{campaignBean.campaign.name}" size="25"
+						<h:inputText id="name" value="#{campaignBean.campaign.name}" size="25"
 							maxlength="20" required="true"
 							label="#{msg['label.campaign.name']}" />
+						<rich:message for="name" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
 
 						<h:outputText value="#{msg['label.campaign.type']}" />
-						<rich:comboBox value="#{campaignBean.campaign.type}"
+						<rich:comboBox id="type" value="#{campaignBean.campaign.type}"
 							defaultLabel="#{msg['label.comboBox.default']}" size="25"
 							required="true" label="#{msg['label.campaign.type']}">
 							<f:selectItem itemValue="INBOUND" />
 							<f:selectItem itemValue="OUTBOUND" />
 						</rich:comboBox>
+						<rich:message for="type" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
 					</h:panelGrid>
 
 					<!--					<p />-->
@@ -258,33 +279,78 @@
 						<h:outputText value="#{msg['label.metric.value']}" /> 
 					</f:facet>
 					<a4j:outputPanel ajaxRendered="true">
-						<h:panelGrid columns="8">
-							<h:outputText value="#{msg['label.metric.optim']}" />
-							<h:inputText value="#{campaignBean.campaign.optimValue}"
-								size="10" maxlength="10" required="true"
-								label="#{msg['label.metric.optim']}">
-								<f:validateDoubleRange minimum="0" />
-							</h:inputText>
-							<h:outputText value="#{msg['label.metric.objective']}" />
-							<h:inputText value="#{campaignBean.campaign.objetiveValue}"
-								size="10" maxlength="10" required="true"
-								label="#{msg['label.metric.objective']}">
-								<f:validateDoubleRange minimum="0" />
-							</h:inputText>
+						<h:panelGrid columns="4">
+							<h:panelGrid rows="2">
+								<h:panelGrid columns="2">
+									<h:outputText value="#{msg['label.metric.optim']}" />
+									<h:inputText id="optimValue" value="#{campaignBean.campaign.optimValue}"
+										size="10" maxlength="10" required="true"
+										label="#{msg['label.metric.optim']}">
+										<f:validateDoubleRange minimum="0" />
+									</h:inputText>
+								</h:panelGrid>
+								<h:panelGrid rows="1">
+									<rich:message for="optimValue" errorClass="error">
+										<f:facet name="errorMarker">
+											<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+										</f:facet>
+									</rich:message>
+								</h:panelGrid>
+							</h:panelGrid>
+	
+							<h:panelGrid rows="2">
+								<h:panelGrid columns="2">
+									<h:outputText value="#{msg['label.metric.objective']}" />
+									<h:inputText id="objetiveValue" value="#{campaignBean.campaign.objetiveValue}"
+										size="10" maxlength="10" required="true"
+										label="#{msg['label.metric.objective']}">
+										<f:validateDoubleRange minimum="0" />
+									</h:inputText>
+								</h:panelGrid>
+								<h:panelGrid rows="1">
+									<rich:message for="objetiveValue" errorClass="error">
+										<f:facet name="errorMarker">
+											<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+										</f:facet>
+									</rich:message>
+								</h:panelGrid>
+							</h:panelGrid>
 
-							<h:outputText value="#{msg['label.metric.minimum']}" />
-							<h:inputText value="#{campaignBean.campaign.minimumValue}"
-								size="10" maxlength="10" required="true"
-								label="#{msg['label.metric.minimum']}">
-								<f:validateDoubleRange minimum="0" />
-							</h:inputText>
+							<h:panelGrid rows="2">
+								<h:panelGrid columns="2">
+									<h:outputText value="#{msg['label.metric.minimum']}" />
+									<h:inputText id="minimumValue" value="#{campaignBean.campaign.minimumValue}"
+										size="10" maxlength="10" required="true"
+										label="#{msg['label.metric.minimum']}">
+										<f:validateDoubleRange minimum="0" />
+									</h:inputText>
+								</h:panelGrid>
+								<h:panelGrid rows="1">
+									<rich:message for="minimumValue" errorClass="error">
+										<f:facet name="errorMarker">
+											<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+										</f:facet>
+									</rich:message>
+								</h:panelGrid>
+							</h:panelGrid>
 
-							<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
-							<h:inputText value="#{campaignBean.campaign.unsatisfactoryValue}"
-								size="10" maxlength="10" required="true"
-								label="#{msg['label.metric.unsatisfactory']}">
-								<f:validateDoubleRange minimum="0" />
-							</h:inputText>
+							<h:panelGrid rows="2">
+								<h:panelGrid columns="2">
+									<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+									<h:inputText id="unsatisfactoryValue" value="#{campaignBean.campaign.unsatisfactoryValue}"
+										size="10" maxlength="10" required="true"
+										label="#{msg['label.metric.unsatisfactory']}">
+										<f:validateDoubleRange minimum="0" />
+									</h:inputText>
+								</h:panelGrid>
+								<h:panelGrid rows="1">
+									<rich:message for="unsatisfactoryValue" errorClass="error">
+										<f:facet name="errorMarker">
+											<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+										</f:facet>
+									</rich:message>
+								</h:panelGrid>
+							</h:panelGrid>
 						</h:panelGrid>
 					</a4j:outputPanel>
 				</rich:panel>
@@ -389,7 +455,7 @@
 	<!-- View Agents Panel -->
 
 	<!-- Edit Metric Panel -->
-	<rich:modalPanel id="editMetricPanel" autosized="true" width="400">
+	<rich:modalPanel id="editMetricPanel" autosized="true" width="250">
 		<f:facet name="header">
 			<h:outputText value="#{msg['label.metric']}" />
 		</f:facet>
@@ -402,9 +468,8 @@
 			</h:panelGroup>
 		</f:facet>
 		<h:form>
-
-			<rich:messages errorClass="error"
-				tooltip="true" showSummary="true">
+			<rich:messages errorClass="error" tooltip="true"
+				showSummary="true" globalOnly="true">
 				<f:facet name="errorMarker">
 					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
 				</f:facet>
@@ -417,7 +482,7 @@
 				<a4j:outputPanel ajaxRendered="true">
 					<h:panelGrid columns="2">
 						<h:outputText value="#{msg['label.metric.code']}" />
-						<rich:comboBox value="#{campaignBean.campaignMetric.pk.metric}"
+						<rich:comboBox id="metricCode" value="#{campaignBean.campaignMetric.pk.metric}"
 							defaultLabel="#{msg['label.comboBox.default']}" size="25"
 							required="true" label="#{msg['label.metric.code']}"
 							converter="com.self_managment.web.converter.MetricConverter"
@@ -425,43 +490,82 @@
 							<a4j:support event="onselect" ajaxSingle="true" reRender="outtext" />
 							<f:selectItems value="#{campaignBean.metrics}" />
 						</rich:comboBox>
+						<rich:message for="metricCode" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
 					</h:panelGrid>
 					<h:panelGrid columns="4">
 						<h:outputText value="#{msg['label.metric.optim']}"/>
 						<h:outputText value="#{campaignBean.metric.optimSign}" />
-						<h:inputText value="#{campaignBean.campaignMetric.optim}"
-							label="#{msg['label.metric.optim']}" size="25" maxlength="10"
+						<h:inputText id="metricOptim" value="#{campaignBean.campaignMetric.optim}"
+							label="#{msg['label.metric.optim']}" size="5" maxlength="10"
 							required="true">
 							<f:validateDoubleRange minimum="0" />
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricOptim" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
 
 						<h:outputText value="#{msg['label.metric.objective']}" />
 						<h:outputText value="#{campaignBean.metric.objetiveSign}" />
-						<h:inputText value="#{campaignBean.campaignMetric.objective}"
-							label="#{msg['label.metric.objective']}" size="25" maxlength="10"
+						<h:inputText id="metricObjective" value="#{campaignBean.campaignMetric.objective}"
+							label="#{msg['label.metric.objective']}" size="5" maxlength="10"
 							required="true">
 							<f:validateDoubleRange minimum="0" />
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricObjective" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
 
 						<h:outputText value="#{msg['label.metric.minimum']}" />
 						<h:outputText value="#{campaignBean.metric.minimumSign}" />
-						<h:inputText value="#{campaignBean.campaignMetric.minimum}"
-							label="#{msg['label.metric.minimum']}" size="25" maxlength="10"
+						<h:inputText id="metricMinimum" value="#{campaignBean.campaignMetric.minimum}"
+							label="#{msg['label.metric.minimum']}" size="5" maxlength="10"
 							required="true">
 							<f:validateDoubleRange minimum="0" />
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricMinimum" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
 
 						<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
 						<h:outputText value="#{campaignBean.metric.unsatisfactorySign}" />
-						<h:inputText value="#{campaignBean.campaignMetric.unsatisfactory}"
-							label="#{msg['label.metric.unsatisfactory']}" size="25"
+						<h:inputText id="metricUnsatisfactory" value="#{campaignBean.campaignMetric.unsatisfactory}"
+							label="#{msg['label.metric.unsatisfactory']}" size="5"
 							maxlength="10" required="true">
 							<f:validateDoubleRange minimum="0" />
 						</h:inputText>
 						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricUnsatisfactory" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />   
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+
 					</h:panelGrid>
 				</a4j:outputPanel>
 

@@ -2,8 +2,17 @@
 	padding-right: 7px;
 }
 
+.rich-message-marker img {
+	padding-right: 7px;
+}
+
 .rich-messages-label {
 	font-style: italic;
+}
+
+.rich-message-label {
+	font-style: italic;
+	font-size: 11;
 }
 
 .info {
