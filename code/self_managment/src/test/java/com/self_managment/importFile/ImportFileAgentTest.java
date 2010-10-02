@@ -49,8 +49,7 @@ public class ImportFileAgentTest extends TestCase {
 		// Save campaign
 		Campaign campaign34 = new Campaign();
 		campaign34.setId(34);
-		campaign34.setCode("12345");
-		campaign34.setName("12345");
+		campaign34.setName("campaign34");
 		campaign34.setType(CampaignType.INBOUND);
 		campaign34.setOptimValue(0d);
 		campaign34.setObjetiveValue(0d);
@@ -60,6 +59,7 @@ public class ImportFileAgentTest extends TestCase {
 
 		importFile.importFile();
 		
-		assertEquals(agentService.findById(34).getDni(), new Long(30345235l));		
+		assertEquals(agentService.findById(34).getDni(), new Long(30345235l));
+		
 	}
 }
