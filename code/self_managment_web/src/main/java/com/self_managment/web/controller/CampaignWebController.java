@@ -35,6 +35,7 @@ public class CampaignWebController {
     private CampaignMetric campaignMetric;
     private List<SelectItem> metrics;
     private boolean canAddMetric;
+    private boolean editMode;
 
     @SuppressWarnings("unchecked")
     public CampaignWebController() {
@@ -46,69 +47,35 @@ public class CampaignWebController {
 	metricService = (MetricService) ctx.getBean("metricService");
     }
 
-    public List<SelectItem> getMetrics() {
-	if (metrics == null) {
-	    metrics = JSFUtil.getSelectItems(metricService.findAll());
+    public String addAgent() {
+	if (campaign.getAgents() == null) {
+	    List<Agent> agents = new ArrayList<Agent>();
+	    agents.add(agent);
+	    campaign.setAgents(agents);
+	} else {
+	    campaign.getAgents().add(agent);
 	}
-	return metrics;
+	return "";
     }
 
-    public List<Campaign> getCampaigns() {
-	if (campaigns == null)
-	    campaigns = service.findAll();
-	return campaigns;
-    }
-
-    public Campaign getCampaign() {
-	return campaign;
-    }
-
-    public void setCampaign(Campaign campaign) {
-	this.campaign = campaign;
-    }
-
-    public Agent getAgent() {
-	return agent;
-    }
-
-    public void setAgent(Agent agent) {
-	this.agent = agent;
-    }
-
-    public Metric getMetric() {
-	return metric;
-    }
-
-    public void setMetric(Metric metric) {
-	this.metric = metric;
+    public String addMetric() {
+	if (campaign.getCampaignMetric() == null) {
+	    List<CampaignMetric> metrics = new ArrayList<CampaignMetric>();
+	    metrics.add(campaignMetric);
+	    campaign.setCampaignMetric(metrics);
+	} else {
+	    if (!campaign.getCampaignMetric().contains(campaignMetric))
+		campaign.getCampaignMetric().add(campaignMetric);
+	}
+	return "";
     }
 
     public void change(ValueChangeEvent event) {
 	setMetric((Metric) event.getNewValue());
     }
 
-    public String update() {
-	try {
-	    service.saveOrUpdate(campaign);
-	    campaigns = service.findAll();
-	    setCampaign(new Campaign());
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    JSFUtil.addErrorMessage("Error");
-	}
-	return "";
-    }
-
-    public String refreshCampaign() {
-	campaign = service.findById(campaign.getId());
-	if (campaign == null) {
-	    setCampaign(new Campaign());
-	    JSFUtil.addErrorMessage("Campania inexistente");
-	}
-	return "";
-    }
-
     public String create() {
+	setEditMode(false);
 	setCampaign(new Campaign());
 	return "";
     }
@@ -127,39 +94,6 @@ public class CampaignWebController {
 	return "";
     }
 
-    public String addMetric() {
-	if (campaign.getCampaignMetric() == null) {
-	    List<CampaignMetric> metrics = new ArrayList<CampaignMetric>();
-	    metrics.add(campaignMetric);
-	    campaign.setCampaignMetric(metrics);
-	} else {
-	    if (!campaign.getCampaignMetric().contains(campaignMetric))
-		campaign.getCampaignMetric().add(campaignMetric);
-	}
-	return "";
-    }
-
-    public String addAgent() {
-	if (campaign.getAgents() == null) {
-	    List<Agent> agents = new ArrayList<Agent>();
-	    agents.add(agent);
-	    campaign.setAgents(agents);
-	} else {
-	    campaign.getAgents().add(agent);
-	}
-	return "";
-    }
-
-    public String deleteMetric() {
-	campaign.getCampaignMetric().remove(campaignMetric);
-	return "";
-    }
-
-    public String deleteAgent() {
-	campaign.getAgents().remove(agent);
-	return "";
-    }
-
     public String delete() {
 	try {
 	    service.delete(campaign);
@@ -173,8 +107,70 @@ public class CampaignWebController {
 	return "";
     }
 
+    public String deleteAgent() {
+	campaign.getAgents().remove(agent);
+	return "";
+    }
+
+    public String deleteMetric() {
+	campaign.getCampaignMetric().remove(campaignMetric);
+	return "";
+    }
+
+    public Agent getAgent() {
+	return agent;
+    }
+
+    public Campaign getCampaign() {
+	return campaign;
+    }
+
     public CampaignMetric getCampaignMetric() {
 	return campaignMetric;
+    }
+
+    public List<Campaign> getCampaigns() {
+	if (campaigns == null)
+	    campaigns = service.findAll();
+	return campaigns;
+    }
+
+    public Metric getMetric() {
+	return metric;
+    }
+
+    public List<SelectItem> getMetrics() {
+	if (metrics == null) {
+	    metrics = JSFUtil.getSelectItems(metricService.findAll());
+	}
+	return metrics;
+    }
+
+    public boolean isCanAddMetric() {
+	return (campaign != null && campaign.getCampaignMetric() != null && campaign
+		.getCampaignMetric().size() == 3) ? true : false;
+    }
+
+    public boolean isEditMode() {
+	return editMode;
+    }
+
+    public String refreshCampaign() {
+	setEditMode(true);
+	campaign = service.findById(campaign.getId());
+	if (campaign == null) {
+	    setCampaign(new Campaign());
+	    JSFUtil.addErrorMessage("Campania inexistente");
+	}
+	return "";
+    }
+
+    public void setAgent(Agent agent) {
+	this.agent = agent;
+    }
+
+    public void setCampaign(Campaign campaign) {
+	this.campaign = campaign;
     }
 
     public void setCampaignMetric(CampaignMetric campaignMetric) {
@@ -182,9 +178,24 @@ public class CampaignWebController {
 	this.metric = campaignMetric.getMetric();
     }
 
-    public boolean isCanAddMetric() {
-	return (campaign != null && campaign.getCampaignMetric() != null && campaign
-		.getCampaignMetric().size() == 3) ? true : false;
+    public void setEditMode(boolean editMode) {
+	this.editMode = editMode;
+    }
+
+    public void setMetric(Metric metric) {
+	this.metric = metric;
+    }
+
+    public String update() {
+	try {
+	    service.saveOrUpdate(campaign);
+	    campaigns = service.findAll();
+	    setCampaign(new Campaign());
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    JSFUtil.addErrorMessage("Error");
+	}
+	return "";
     }
 
     public void validateMetric(FacesContext context, UIComponent component,
