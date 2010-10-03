@@ -187,11 +187,11 @@
 								</f:facet>
 							</rich:message>
 	
-							<h:outputText value="#{msg['label.metric.optim']}" />
+							<h:outputText value="#{msg['label.metric.valueoptim']}" />
 							<h:inputText id="optimValue"
 								value="#{campaignBean.campaign.optimValue}" size="15"
 								maxlength="10" required="true"
-								label="#{msg['label.metric.optim']}">
+								label="#{msg['label.metric.valueoptim']}">
 								<f:validateDoubleRange minimum="0" />
 							</h:inputText>
 							<rich:message for="optimValue" errorClass="error">
@@ -201,11 +201,11 @@
 								</f:facet>
 							</rich:message>
 
-							<h:outputText value="#{msg['label.metric.objective']}" />
+							<h:outputText value="#{msg['label.metric.valueobjective']}" />
 							<h:inputText id="objetiveValue"
 								value="#{campaignBean.campaign.objetiveValue}" size="15"
 								maxlength="10" required="true"
-								label="#{msg['label.metric.objective']}">
+								label="#{msg['label.metric.valueobjective']}">
 								<f:validateDoubleRange minimum="0" />
 							</h:inputText>
 							<rich:message for="objetiveValue" errorClass="error">
@@ -215,11 +215,11 @@
 								</f:facet>
 							</rich:message>
 	
-							<h:outputText value="#{msg['label.metric.minimum']}" />
+							<h:outputText value="#{msg['label.metric.valueminimum']}" />
 							<h:inputText id="minimumValue"
 								value="#{campaignBean.campaign.minimumValue}" size="15"
 								maxlength="10" required="true"
-								label="#{msg['label.metric.minimum']}">
+								label="#{msg['label.metric.valueminimum']}">
 								<f:validateDoubleRange minimum="0" />
 							</h:inputText>
 							<rich:message for="minimumValue" errorClass="error">
@@ -229,11 +229,11 @@
 								</f:facet>
 							</rich:message>
 	
-							<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+							<h:outputText value="#{msg['label.metric.valueunsatisfactory']}" />
 							<h:inputText id="unsatisfactoryValue"
 								value="#{campaignBean.campaign.unsatisfactoryValue}" size="15"
 								maxlength="10" required="true"
-								label="#{msg['label.metric.unsatisfactory']}">
+								label="#{msg['label.metric.valueunsatisfactory']}">
 								<f:validateDoubleRange minimum="0" />
 							</h:inputText>
 							<rich:message for="unsatisfactoryValue" errorClass="error">
