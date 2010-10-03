@@ -117,7 +117,8 @@
 						<h:outputText value="#{msg['label.campaign.id']}" />
 						<h:inputText id="id" value="#{campaignBean.campaign.id}" size="25"
 							maxlength="10" required="true"
-							label="#{msg['label.campaign.id']}" />
+							label="#{msg['label.campaign.id']}"
+							disabled="#{campaignBean.editMode}" />
 						<rich:message for="id" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
