@@ -561,7 +561,7 @@
 						</rich:message>
 						<h:outputText></h:outputText>
 					</h:panelGrid>
-					<h:panelGrid columns="4">
+					<h:panelGrid columns="5">
 						<h:outputText value="#{msg['label.metric.optim']}" />
 						<h:outputText value="#{campaignBean.metric.optimSign}" />
 						<h:inputText id="metricOptim"
@@ -569,12 +569,19 @@
 							label="#{msg['label.metric.optim']}" size="5" maxlength="10"
 							required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
+						<rich:toolTip for="metricOptim">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricOptim" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 							</f:facet>
 						</rich:message>
+						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
@@ -586,12 +593,19 @@
 							label="#{msg['label.metric.objective']}" size="5" maxlength="10"
 							required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
+						<rich:toolTip for="metricObjective">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricObjective" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 							</f:facet>
 						</rich:message>
+						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
@@ -603,12 +617,19 @@
 							label="#{msg['label.metric.minimum']}" size="5" maxlength="10"
 							required="true" validator="#{campaignBean.validateMetric}">
 						</h:inputText>
+						<rich:toolTip for="metricMinimum">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricMinimum" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 							</f:facet>
 						</rich:message>
+						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
@@ -621,12 +642,19 @@
 							maxlength="10" required="true"
 							validator="#{campaignBean.validateMetric}">
 						</h:inputText>
+						<rich:toolTip for="metricUnsatisfactory">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
 						<rich:message for="metricUnsatisfactory" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 							</f:facet>
 						</rich:message>
+						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
 						<h:outputText></h:outputText>
