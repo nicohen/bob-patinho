@@ -86,11 +86,11 @@ public class CampaignWebController {
     }
 
     public String createMetric() {
-	this.setMetric(null);
 	CampaignMetric campaignMetric = new CampaignMetric();
 	campaignMetric.setMetric(new Metric());
 	campaignMetric.setCampaign(campaign);
 	setCampaignMetric(campaignMetric);
+	this.setMetric(null);
 	return "";
     }
 
@@ -196,7 +196,8 @@ public class CampaignWebController {
 	    
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    JSFUtil.addErrorMessage("Error");
+	    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+			"error.metric.nometric").getSummary());
 	}
 	return "";
     }
