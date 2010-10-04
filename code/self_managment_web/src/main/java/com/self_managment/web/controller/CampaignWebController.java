@@ -188,9 +188,12 @@ public class CampaignWebController {
 
     public String update() {
 	try {
-	    service.saveOrUpdate(campaign);
-	    campaigns = service.findAll();
-	    setCampaign(new Campaign());
+		if (campaign.getCampaignMetric().size() >= 1){
+		    service.saveOrUpdate(campaign);
+		    campaigns = service.findAll();
+		    setCampaign(new Campaign());
+			}
+	    
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    JSFUtil.addErrorMessage("Error");

@@ -56,12 +56,13 @@ public class CampaignCRUDTest extends TestCase {
 		campaign.setUnsatisfactoryValue(0d);
 		campaign.setStartDate(new Date());
 
-		service.save(campaign);
+		//service.save(campaign);
+		service.update(campaign);
 
 		assertEquals(campaign.getId(), service.findAllByProperty("id", 1)
 				.get(0).getId());
 
-		service.delete(campaign);
+		//service.delete(campaign);
 	}
 
 	public void testGet() {
