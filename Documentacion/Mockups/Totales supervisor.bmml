@@ -15,7 +15,7 @@
         <text>Hola%20Supervisor</text>
       </controlProperties>
     </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::MenuBar" x="192" y="211" w="-1" h="-1" measuredW="324" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::MenuBar" x="210" y="209" w="-1" h="-1" measuredW="324" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
         <selectedIndex>1</selectedIndex>
         <text>Home%2C%20Sueldo%20agentes%2C%20Totales%2C%20Ayuda</text>
@@ -27,38 +27,38 @@
         <text>Self%20Management</text>
       </controlProperties>
     </control>
-    <control controlID="8" controlTypeID="com.balsamiq.mockups::SubTitle" x="192" y="255" w="-1" h="-1" measuredW="180" measuredH="40" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::SubTitle" x="208" y="243" w="-1" h="-1" measuredW="180" measuredH="40" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Sueldo%20agentes</text>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::DateChooser" x="270" y="307" w="-1" h="-1" measuredW="112" measuredH="29" zOrder="6" locked="false" isInGroup="-1">
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::DateChooser" x="270" y="283" w="-1" h="-1" measuredW="112" measuredH="29" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Sep-2010</text>
       </controlProperties>
     </control>
-    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="208" y="309" w="-1" h="-1" measuredW="51" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Label" x="208" y="285" w="-1" h="-1" measuredW="51" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Per%EDodo</text>
       </controlProperties>
     </control>
-    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="397" y="308" w="-1" h="-1" measuredW="58" measuredH="25" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="397" y="284" w="-1" h="-1" measuredW="58" measuredH="25" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Campa%F1a</text>
       </controlProperties>
     </control>
-    <control controlID="14" controlTypeID="com.balsamiq.mockups::TextInput" x="467" y="308" w="-1" h="-1" measuredW="67" measuredH="29" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::TextInput" x="467" y="284" w="-1" h="-1" measuredW="67" measuredH="29" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <color>13421772</color>
         <text>Movistar</text>
       </controlProperties>
     </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="552" y="308" w="-1" h="-1" measuredW="75" measuredH="25" zOrder="10" locked="false" isInGroup="-1">
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="210" y="319" w="-1" h="-1" measuredW="75" measuredH="25" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Sueldo%20fijo</text>
       </controlProperties>
     </control>
-    <control controlID="17" controlTypeID="com.balsamiq.mockups::TextInput" x="638" y="306" w="-1" h="-1" measuredW="54" measuredH="29" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::TextInput" x="296" y="317" w="-1" h="-1" measuredW="54" measuredH="29" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <color>13421772</color>
         <text>%243500</text>
@@ -71,12 +71,12 @@
         <text/>
       </controlProperties>
     </control>
-    <control controlID="19" controlTypeID="com.balsamiq.mockups::Label" x="703" y="307" w="-1" h="-1" measuredW="158" measuredH="25" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Label" x="361" y="318" w="-1" h="-1" measuredW="232" measuredH="25" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Sueldo%20variable%20promedio</text>
+        <text>Sueldo%20variable%20promedio%20proyectado</text>
       </controlProperties>
     </control>
-    <control controlID="20" controlTypeID="com.balsamiq.mockups::TextInput" x="872" y="305" w="-1" h="-1" measuredW="46" measuredH="29" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::TextInput" x="604" y="316" w="-1" h="-1" measuredW="46" measuredH="29" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <color>13421772</color>
         <text>%24xxx</text>
