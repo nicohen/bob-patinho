@@ -66,23 +66,31 @@ public class CampaignCRUDTest extends TestCase {
 	}
 
 	public void testGet() {
-		Campaign campaign = new Campaign();
-		campaign.setId(3);
-		campaign.setName("testGet");
-		campaign.setType(CampaignType.INBOUND);
-		campaign.setOptimValue(0d);
-		campaign.setObjetiveValue(0d);
-		campaign.setMinimumValue(0d);
-		campaign.setUnsatisfactoryValue(0d);
-		campaign.setStartDate(new Date());
-
-		Integer id = (Integer) service.save(campaign);
-
-		assertEquals(campaign.getId(), service.findById(id).getId());
-
-		service.delete(campaign);
-
-		assertNull(service.findById(2));
+		Campaign campaign = service.findById(3);
+		if(campaign == null)
+		{
+			campaign = new Campaign();		
+			campaign.setId(3);
+			campaign.setName("testGet");
+			campaign.setType(CampaignType.INBOUND);
+			campaign.setOptimValue(0d);
+			campaign.setObjetiveValue(0d);
+			campaign.setMinimumValue(0d);
+			campaign.setUnsatisfactoryValue(0d);
+			campaign.setStartDate(new Date());
+	
+			Integer id = (Integer) service.save(campaign);
+	
+			assertEquals(campaign.getId(), service.findById(id).getId());
+	
+			service.delete(campaign);
+	
+			assertNull(service.findById(3));
+		}
+		else
+		{
+			assertEquals(campaign.getId(), service.findById(3).getId());
+		}
 	}
 
 }
