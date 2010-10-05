@@ -62,7 +62,7 @@ public class CampaignCRUDTest extends TestCase {
 		assertEquals(campaign.getId(), service.findAllByProperty("id", 1)
 				.get(0).getId());
 
-		//service.delete(campaign);
+		service.delete(campaign);
 	}
 
 	public void testGet() {
