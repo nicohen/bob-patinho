@@ -186,12 +186,26 @@ public class CampaignWebController {
 	this.metric = metric;
     }
 
+    public boolean validateValues(){
+    	if (campaign.getOptimValue()>=campaign.getObjetiveValue()	&& campaign.getObjetiveValue()>=campaign.getMinimumValue() 
+    			&& campaign.getMinimumValue()>=campaign.getUnsatisfactoryValue())    		
+    		return true;
+    	else
+    		return false;
+    		
+    }
     public String update() {
 	try {
 		if (campaign.getCampaignMetric().size() >= 1){
+			if (validateValues()){
 		    service.saveOrUpdate(campaign);
 		    campaigns = service.findAll();
-		    setCampaign(new Campaign());
+		    setCampaign(new Campaign());}
+			else
+			{
+				JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+				"error.metric.values").getSummary());
+			}
 			}
 	    
 	} catch (Exception e) {
