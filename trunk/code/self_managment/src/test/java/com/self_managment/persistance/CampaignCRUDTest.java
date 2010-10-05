@@ -57,7 +57,7 @@ public class CampaignCRUDTest extends TestCase {
 		campaign.setStartDate(new Date());
 
 		//service.save(campaign);
-		service.update(campaign);
+		service.saveOrUpdate(campaign);
 
 		assertEquals(campaign.getId(), service.findAllByProperty("id", 1)
 				.get(0).getId());
@@ -67,7 +67,7 @@ public class CampaignCRUDTest extends TestCase {
 
 	public void testGet() {
 		Campaign campaign = new Campaign();
-		campaign.setId(2);
+		campaign.setId(3);
 		campaign.setName("testGet");
 		campaign.setType(CampaignType.INBOUND);
 		campaign.setOptimValue(0d);

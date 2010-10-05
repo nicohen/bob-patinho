@@ -43,11 +43,11 @@ public class ImportFileAgentTest extends TestCase {
 		Supervisor supervisor121 = new Supervisor();
 		supervisor121.setId(121);
 		//supervisorService.save(supervisor121);
-		supervisorService.update(supervisor121);
+		supervisorService.saveOrUpdate(supervisor121);
 		Supervisor supervisor131 = new Supervisor();
 		supervisor131.setId(131);
 		//supervisorService.save(supervisor131);
-		supervisorService.update(supervisor131);
+		supervisorService.saveOrUpdate(supervisor131);
 
 		// Save campaign
 		Campaign campaign34 = new Campaign();
@@ -59,8 +59,8 @@ public class ImportFileAgentTest extends TestCase {
 		campaign34.setMinimumValue(0d);
 		campaign34.setUnsatisfactoryValue(0d);
 		campaign34.setStartDate(new Date());
-		campaignService.update(campaign34);
-//		campaignService.save(campaign34);
+		campaignService.saveOrUpdate(campaign34);
+	//	campaignService.save(campaign34);
 
 		importFile.importFile();
 		
