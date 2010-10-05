@@ -43,12 +43,6 @@
 			</rich:column>
 			<rich:column width="250">
 				<f:facet name="header">
-					<h:outputText value="#{msg['label.campaign.description']}" />
-				</f:facet>
-				<h:outputText value="#{campaign.description}" />
-			</rich:column>
-			<rich:column width="250">
-				<f:facet name="header">
 					<h:outputText value="#{msg['label.campaign.type']}" />
 				</f:facet>
 				<h:outputText value="#{campaign.type}" />
@@ -129,14 +123,13 @@
 								</f:facet>
 							</rich:message>
 							
-							<h:outputText value="#{msg['label.campaign.type']}" />
-							<rich:comboBox id="type" value="#{campaignBean.campaign.type}"
-								defaultLabel="#{msg['label.comboBox.default']}" width="120"
-								required="true" label="#{msg['label.campaign.type']}">
-								<f:selectItem itemValue="INBOUND" />
-								<f:selectItem itemValue="OUTBOUND" />
-							</rich:comboBox>
-							<rich:message for="type" errorClass="error">
+							<h:outputText value="#{msg['label.campaign.startDate']}" />
+							<rich:calendar id="startDate"
+								value="#{campaignBean.campaign.startDate}" locale="ES"
+								popup="true" datePattern="MMMMMMMMMMM yyyy"
+								showApplyButton="false" cellWidth="24px" cellHeight="22px"
+								style="width:200px" required="true" inputSize="15" />
+							<rich:message for="startDate" errorClass="error">
 								<f:facet name="errorMarker">
 									<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 								</f:facet>
@@ -152,29 +145,6 @@
 								</f:facet>
 							</rich:message>
 							
-							<h:outputText value="#{msg['label.campaign.startDate']}" />
-							<rich:calendar id="startDate"
-								value="#{campaignBean.campaign.startDate}" locale="ES"
-								popup="true" datePattern="MMMMMMMMMMM yyyy"
-								showApplyButton="false" cellWidth="24px" cellHeight="22px"
-								style="width:200px" required="true" inputSize="15" />
-							<rich:message for="startDate" errorClass="error">
-								<f:facet name="errorMarker">
-									<h:graphicImage value="/images/Error-icon.png" style="border:0" />
-								</f:facet>
-							</rich:message>
-	
-							<h:outputText value="#{msg['label.campaign.description']}" />
-							<h:inputText id="description"
-								value="#{campaignBean.campaign.description}" size="15"
-								maxlength="20" required="false"
-								label="#{msg['label.campaign.description']}" />
-							<rich:message for="description" errorClass="error">
-								<f:facet name="errorMarker">
-									<h:graphicImage value="/images/Error-icon.png" style="border:0" />
-								</f:facet>
-							</rich:message>
-	
 							<h:outputText value="#{msg['label.campaign.endDate']}" />
 							<rich:calendar id="endDate"
 								value="#{campaignBean.campaign.endDate}" locale="ES" popup="true"
@@ -186,7 +156,36 @@
 									<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 								</f:facet>
 							</rich:message>
-	
+
+							<h:outputText value="#{msg['label.campaign.type']}" />
+							<rich:comboBox id="type" value="#{campaignBean.campaign.type}"
+								defaultLabel="#{msg['label.comboBox.default']}" width="120"
+								required="true" label="#{msg['label.campaign.type']}">
+								<f:selectItem itemValue="INBOUND" />
+								<f:selectItem itemValue="OUTBOUND" />
+							</rich:comboBox>
+							<rich:message for="type" errorClass="error">
+								<f:facet name="errorMarker">
+									<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+								</f:facet>
+							</rich:message>
+							
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+							
+							<h:outputText value="#{msg['label.campaign.description']}" />
+							<h:inputTextarea id="description" required="false" rows="1"
+								value="#{campaignBean.campaign.description}" cols="90"
+								label="#{msg['label.campaign.description']}" />
+							<rich:message for="description" errorClass="error">
+								<f:facet name="errorMarker">
+									<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+								</f:facet>
+							</rich:message>
+							
+						</h:panelGrid>
+						<h:panelGrid columns="6">
+
 							<h:outputText value="#{msg['label.metric.valueoptim']}" />
 							<h:inputText id="optimValue"
 								value="#{campaignBean.campaign.optimValue}" size="15"

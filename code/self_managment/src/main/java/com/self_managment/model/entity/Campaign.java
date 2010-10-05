@@ -68,6 +68,9 @@ public class Campaign implements java.io.Serializable {
 	// "CAMPAIGN_ID"), inverseJoinColumns = @JoinColumn(name = "AGENT_ID"))
 	@OneToMany(mappedBy = "campaign")
 	private List<Agent> agents;
+	
+	@OneToMany(mappedBy = "campaign")
+	private List<Supervisor> supervisors;
 
 	// @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.campaign", cascade = {
@@ -95,6 +98,10 @@ public class Campaign implements java.io.Serializable {
 
 	public List<Agent> getAgents() {
 		return agents;
+	}
+	
+	public List<Supervisor> getSupervisors() {
+		return supervisors;
 	}
 
 	public List<CampaignMetric> getCampaignMetric() {
@@ -149,6 +156,10 @@ public class Campaign implements java.io.Serializable {
 
 	public void setAgents(List<Agent> agents) {
 		this.agents = agents;
+	}
+	
+	public void setSupervisors(List<Supervisor> supervisors) {
+		this.supervisors = supervisors;
 	}
 
 	public void setCampaignMetric(List<CampaignMetric> campaignMetric) {

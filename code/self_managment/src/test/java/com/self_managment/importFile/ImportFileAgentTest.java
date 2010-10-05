@@ -42,10 +42,16 @@ public class ImportFileAgentTest extends TestCase {
 		// Save supervisor
 		Supervisor supervisor121 = new Supervisor();
 		supervisor121.setId(121);
+		supervisor121.setDni((long) 33223332);
+		supervisor121.setName("Pedro");
+		supervisor121.setSurname("Picapiedras");
 		//supervisorService.save(supervisor121);
 		supervisorService.saveOrUpdate(supervisor121);
 		Supervisor supervisor131 = new Supervisor();
 		supervisor131.setId(131);
+		supervisor131.setDni((long) 32332223);
+		supervisor131.setName("Pepe");
+		supervisor131.setSurname("Biondi");
 		//supervisorService.save(supervisor131);
 		supervisorService.saveOrUpdate(supervisor131);
 
