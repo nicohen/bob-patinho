@@ -38,23 +38,7 @@ public class ImportFileAgentTest extends TestCase {
 	}
 
 	public void testImportFile() throws IOException {
-
-		// Save supervisor
-		Supervisor supervisor121 = new Supervisor();
-		supervisor121.setId(121);
-		supervisor121.setDni((long) 33223332);
-		supervisor121.setName("Pedro");
-		supervisor121.setSurname("Picapiedras");
-		//supervisorService.save(supervisor121);
-		supervisorService.saveOrUpdate(supervisor121);
-		Supervisor supervisor131 = new Supervisor();
-		supervisor131.setId(131);
-		supervisor131.setDni((long) 32332223);
-		supervisor131.setName("Pepe");
-		supervisor131.setSurname("Biondi");
-		//supervisorService.save(supervisor131);
-		supervisorService.saveOrUpdate(supervisor131);
-
+		
 		// Save campaign
 		Campaign campaign34 = new Campaign();
 		campaign34.setId(34);
@@ -66,7 +50,25 @@ public class ImportFileAgentTest extends TestCase {
 		campaign34.setUnsatisfactoryValue(0d);
 		campaign34.setStartDate(new Date());
 		campaignService.saveOrUpdate(campaign34);
-	//	campaignService.save(campaign34);
+		//campaignService.save(campaign34);
+		
+		// Save supervisor
+		Supervisor supervisor121 = new Supervisor();
+		supervisor121.setId(121);
+		supervisor121.setDni((long) 33223332);
+		supervisor121.setName("Pedro");
+		supervisor121.setSurname("Picapiedras");
+		supervisor121.setCampaign(campaign34);
+		//supervisorService.save(supervisor121);
+		supervisorService.saveOrUpdate(supervisor121);
+		Supervisor supervisor131 = new Supervisor();
+		supervisor131.setId(131);
+		supervisor131.setDni((long) 32332223);
+		supervisor131.setName("Pepe");
+		supervisor131.setSurname("Biondi");
+		supervisor131.setCampaign(campaign34);
+		//supervisorService.save(supervisor131);
+		supervisorService.saveOrUpdate(supervisor131);
 
 		importFile.importFile();
 		

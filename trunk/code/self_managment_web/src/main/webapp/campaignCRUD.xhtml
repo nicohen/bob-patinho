@@ -254,10 +254,46 @@
 								</h:panelGrid>
 							</a4j:outputPanel>
 						</rich:panel>
+						
+						<!-- Supervisors -->
+						<h:outputText value="#{msg['label.supervisor.empty']}" rendered="#{empty campaignBean.campaign.supervisors}" />
+						<rich:dataTable id="gridSupervisors" width="100%" rows="3" var="supervisor"
+							value="#{campaignBean.campaign.supervisors}" rendered="#{not empty campaignBean.campaign.supervisors}"
+							reRender="gridSupervisorsScroller">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.supervisor']}" />
+							</f:facet>
+							<rich:column width="200">
+								<f:facet name="header">
+									<h:outputText value="#{msg['label.supervisor.dni']}" />
+								</f:facet>
+								<h:outputText value="#{supervisor.dni}" />
+							</rich:column>
+							<rich:column width="200" filterBy="#{supervisor.name}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{msg['label.supervisor.name']}" />
+								</f:facet>
+								<h:outputText value="#{supervisor.name}" />
+							</rich:column>
+							<rich:column width="200" filterBy="#{supervisor.surname}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{msg['label.supervisor.surname']}" />
+								</f:facet>
+								<h:outputText value="#{supervisor.surname}" />
+							</rich:column>
+							<f:facet name="footer">
+								<rich:datascroller id="gridSupervisorsScroller" for="gridSupervisors"
+									maxPages="15" reRender="gridSupervisors" renderIfSinglePage="false" />
+							</f:facet>
+						</rich:dataTable>
+						<!-- Supervisors -->
 
 						<!-- Agents -->
+						<h:outputText value="#{msg['label.agent.empty']}" rendered="#{empty campaignBean.campaign.agents}" />
 						<rich:dataTable id="gridAgents" width="100%" rows="3" var="agent"
-							value="#{campaignBean.campaign.agents}"
+							value="#{campaignBean.campaign.agents}" rendered="#{not empty campaignBean.campaign.agents}"
 							reRender="gridAgentsScroller">
 							<f:facet name="header">
 								<h:outputText value="#{msg['label.agent']}" />
@@ -311,10 +347,19 @@
 						<!-- Agents -->
 
 						<!-- Metrics -->
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msg['label.metric.empty']}" rendered="#{empty campaignBean.campaign.campaignMetric}" />
+							<a4j:commandLink ajaxSingle="true" id="LnkMetricNew2"
+								action="#{campaignBean.createMetric}" rendered="#{empty campaignBean.campaign.campaignMetric}"
+								oncomplete="#{rich:component('editMetricPanel')}.show()"
+								disabled="#{campaignBean.canAddMetric}">
+								<h:outputText value="#{msg['label.metric.new']}"/>
+							</a4j:commandLink>
+						</h:panelGrid>
+						
 						<rich:dataTable id="gridMetrics" width="100%" rows="3"
-							var="campaignMetric"
+							var="campaignMetric" rendered="#{not empty campaignBean.campaign.campaignMetric}"
 							value="#{campaignBean.campaign.campaignMetric}">
-
 							<f:facet name="header">
 								<h:panelGroup>
 									<a4j:commandLink ajaxSingle="true" id="LnkMetricNew"
