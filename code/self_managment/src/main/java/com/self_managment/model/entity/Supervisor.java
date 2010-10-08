@@ -116,7 +116,9 @@ public class Supervisor implements Serializable{
 	
 	@Override
     public String toString() {
-	return name;
+		if(this.id==null)
+			return "";
+		return this.id.toString() + " - " + this.name;
     }
 
 }

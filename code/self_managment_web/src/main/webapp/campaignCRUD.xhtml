@@ -291,7 +291,13 @@
 										<h:outputText value="#{msg['label.supervisor']}" />
 									</h:panelGroup>
 								</f:facet>
-								<rich:column width="200">
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText value="#{msg['label.supervisor.id']}" />
+									</f:facet>
+									<h:outputText value="#{supervisor.id}" />
+								</rich:column>
+								<rich:column>
 									<f:facet name="header">
 										<h:outputText value="#{msg['label.supervisor.dni']}" />
 									</f:facet>
@@ -515,12 +521,12 @@
 					<h:panelGrid columns="1">
 						<a4j:outputPanel ajaxRendered="true">
 							<h:panelGrid columns="3">
-								<h:outputText value="#{msg['label.supervisor.name']}" />								
+								<h:outputText value="#{msg['label.supervisor.id']} - #{msg['label.supervisor.name']}" />								
 								<rich:comboBox id="supervisorName"
 									value="#{campaignBean.supervisor}"
 									defaultLabel="#{msg['label.comboBox.default']}" size="25"
 									converter="com.self_managment.web.converter.SupervisorConverter"
-									label="#{msg['label.supervisor.name']}" required="true">
+									label="#{msg['label.supervisor.id']} - #{msg['label.supervisor.name']}" required="true">
 									<a4j:support event="onselect" ajaxSingle="true" />
 									<f:selectItems value="#{campaignBean.freeSupervisors}" />
 								</rich:comboBox>

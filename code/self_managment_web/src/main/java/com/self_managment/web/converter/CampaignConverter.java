@@ -24,9 +24,9 @@ public class CampaignConverter implements Converter {
 	CampaignService campaignService = (CampaignService) ctx
 		.getBean("campaignService");
 
-	List<Campaign> l = campaignService.findAllByProperty("id", string);
+	List<Campaign> l = campaignService.findAllByProperty("id", Integer.parseInt(string.split(" - ")[0]));
 
-	return l.isEmpty() ? null : l.get(0);
+	return l.isEmpty() ? null : l.get(0).getId();
 
     }
 
