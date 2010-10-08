@@ -3,6 +3,7 @@ package com.self_managment.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,12 @@ public class SupervisorServiceImpl implements SupervisorService {
 	@Override
 	public void update(Supervisor transientObject) {
 		supervisorDao.update(transientObject);
+	}
+	
+	@Override
+	public List<Supervisor> findAllSupervisorsWithoutCampaign()
+	{
+		return supervisorDao.findAllSupervisorsWithoutCampaign();
 	}
 
 }

@@ -1,9 +1,6 @@
 package com.self_managment.model.entity;
 
 import java.io.Serializable;
-
-
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +34,7 @@ public class Supervisor implements Serializable{
 	@Column(name = "SURNAME", nullable = false, length = 30)
 	private String surname;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "CAMPAIGN_ID")
 	private Campaign campaign;
 	
@@ -116,5 +113,10 @@ public class Supervisor implements Serializable{
 		}
 		return true;
 	}
+	
+	@Override
+    public String toString() {
+	return name;
+    }
 
 }

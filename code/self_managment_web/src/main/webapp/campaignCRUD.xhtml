@@ -271,8 +271,8 @@
 							<h:panelGrid columns="2">
 								<h:outputText value="#{msg['label.supervisor.empty']}" rendered="#{empty campaignBean.campaign.supervisors}" />
 								<a4j:commandLink ajaxSingle="true" id="LnkSupervisorNew2"
-									action="#{campaignBean.createMetric}" rendered="#{empty campaignBean.campaign.supervisors}"
-									oncomplete="#{rich:component('editMetricPanel')}.show()">
+									action="#{campaignBean.createSupervisor}" rendered="#{empty campaignBean.campaign.supervisors}"
+									oncomplete="#{rich:component('editSupervisorsPanel')}.show()">
 									<h:outputText value="#{msg['label.supervisor.add']}"/>
 								</a4j:commandLink>
 							</h:panelGrid>
@@ -283,8 +283,8 @@
 								<f:facet name="header">
 									<h:panelGroup>
 										<a4j:commandLink ajaxSingle="true" id="LnkSupervisorNew"
-											action="#{campaignBean.createMetric}"
-											oncomplete="#{rich:component('editMetricPanel')}.show()">
+											action="#{campaignBean.createSupervisor}"
+											oncomplete="#{rich:component('editSupervisorsPanel')}.show()">
 											<h:graphicImage value="/images/Add-icon.png" style="border:0" />
 										</a4j:commandLink>
 										<rich:toolTip for="LnkSupervisorNew" value="#{msg['label.supervisor.add']}" />
@@ -310,6 +310,20 @@
 										<h:outputText value="#{msg['label.supervisor.surname']}" />
 									</f:facet>
 									<h:outputText value="#{supervisor.surname}" />
+								</rich:column>
+								<rich:column width="50" style="text-align:center">
+									<f:facet name="header">
+										<h:outputText value="#{msg['label.action']}" />
+									</f:facet>
+									<a4j:commandLink ajaxSingle="true" id="LnkSupervisorDelete"
+										oncomplete="#{rich:component('deleteSupervisorPanel')}.show()">
+										<h:graphicImage value="/images/Delete-icon.png"
+											style="border:0" />
+										<f:setPropertyActionListener value="#{supervisor}"
+											target="#{campaignBean.supervisor}" />
+									</a4j:commandLink>
+									<rich:toolTip for="LnkSupervisorDelete"
+										value="#{msg['label.delete']}" />
 								</rich:column>
 								<f:facet name="footer">
 									<rich:datascroller id="gridSupervisorsScroller" for="gridSupervisors"
@@ -483,82 +497,84 @@
 				</h:form>
 			</rich:modalPanel>
 
-			<!-- View Agents Panel -->
-			<rich:modalPanel id="viewAgentsPanel" autosized="true" width="300">
+			<!-- Edit Supervisors Panel -->
+			<rich:modalPanel id="editSupervisorsPanel" autosized="true" width="300">
 				<f:facet name="header">
-					<h:outputText value="#{msg['label.agent']}" />
+					<h:outputText value="#{msg['label.supervisor']}" />
 				</f:facet>
 				<f:facet name="controls">
 					<h:panelGroup>
 						<h:graphicImage value="/images/Button-X-icon.gif"
-							id="LnkCloseAgentPanel" style="cursor:pointer" />
-						<rich:componentControl for="viewAgentsPanel"
-							attachTo="LnkCloseAgentPanel" operation="hide" event="onclick" />
+							id="LnkCloseSupervisorPanel" style="cursor:pointer" />
+						<rich:componentControl for="editSupervisorsPanel"
+							attachTo="LnkCloseSupervisorPanel" operation="hide" event="onclick" />
 					</h:panelGroup>
 				</f:facet>
 
 				<h:form>
-					<rich:dataTable id="gridAgents" width="500" rows="10" var="agent"
-						value="#{campaignBean.campaign.agents}">
-						<!--ESTO SE COMENTA XQ LOS AGENTES SE DAN DE ALTA EN EL ARCHIVO HF-->
-						<!--				<f:facet name="header">-->
-						<!--					<h:panelGroup>-->
-						<!--						<a4j:commandLink ajaxSingle="true" id="LnkAddAgent"-->
-						<!--							action="#{campaignBean.createAgent}"-->
-						<!--							oncomplete="#{rich:component('addAgentPanel')}.show()">-->
-						<!--							<h:graphicImage value="/images/Add-icon.png" style="border:0" />-->
-						<!--						</a4j:commandLink>-->
-						<!--						<rich:toolTip for="LnkNewAgent" value="New" />-->
-						<!--						<h:outputText value="#{msg['label.agent']}" />-->
-						<!--					</h:panelGroup>-->
-						<!--				</f:facet>-->
-						<rich:column width="200" filterBy="#{agent.docket}">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.agent.docket']}" />
-							</f:facet>
-							<h:outputText value="#{agent.docket}" />
-						</rich:column>
-						<rich:column width="200">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.agent.dni']}" />
-							</f:facet>
-							<h:outputText value="#{agent.dni}" />
-						</rich:column>
-						<rich:column width="200">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.agent.name']}" />
-							</f:facet>
-							<h:outputText value="#{agent.name}" />
-						</rich:column>
-						<rich:column width="200">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.agent.surname']}" />
-							</f:facet>
-							<h:outputText value="#{agent.surname}" />
-						</rich:column>
-						<rich:column width="200">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.agent.status']}" />
-							</f:facet>
-							<h:outputText value="#{agent.status}" />
-						</rich:column>
-						<rich:column width="200">
-							<f:facet name="header">
-								<h:outputText value="#{msg['label.agent.entryDate']}" />
-							</f:facet>
-							<h:outputText value="#{agent.entryDate}">
-								<f:convertDateTime pattern="#{msg['date.format']}" />
-							</h:outputText>
-						</rich:column>
-						<f:facet name="footer">
-							<rich:datascroller id="gridAgentsScroller" for="gridAgents"
-								maxPages="15" />
-						</f:facet>
-					</rich:dataTable>
+					<h:panelGrid columns="1">
+						<a4j:outputPanel ajaxRendered="true">
+							<h:panelGrid columns="3">
+								<h:outputText value="#{msg['label.supervisor.name']}" />								
+								<rich:comboBox id="supervisorName"
+									value="#{campaignBean.supervisor}"
+									defaultLabel="#{msg['label.comboBox.default']}" size="25"
+									converter="com.self_managment.web.converter.SupervisorConverter"
+									label="#{msg['label.supervisor.name']}" required="true">
+									<a4j:support event="onselect" ajaxSingle="true" />
+									<f:selectItems value="#{campaignBean.freeSupervisors}" />
+								</rich:comboBox>
+								<rich:message for="supervisorName" errorClass="error">
+									<f:facet name="errorMarker">
+										<h:graphicImage value="/images/Error-icon.png"
+											style="border:0" />
+									</f:facet>
+								</rich:message>
+								<h:outputText value="#{msg['label.supervisor.surname']}" />
+								<h:inputText id="supervisorSurname" readonly="true"
+									value="#{campaignBean.supervisor.surname}"
+									label="#{msg['label.supervisor.surname']}" size="5" maxlength="10">
+								</h:inputText>
+								<rich:message for="supervisorSurname" errorClass="error">
+									<f:facet name="errorMarker">
+										<h:graphicImage value="/images/Error-icon.png"
+											style="border:0" />
+									</f:facet>
+								</rich:message>
+								<h:outputText value="#{msg['label.supervisor.dni']}" />
+								<h:inputText id="supervisorDni" readonly="true"
+									value="#{campaignBean.supervisor.dni}"
+									label="#{msg['label.supervisor.dni']}" size="5" maxlength="10">
+								</h:inputText>
+								<rich:message for="supervisorDni" errorClass="error">
+									<f:facet name="errorMarker">
+										<h:graphicImage value="/images/Error-icon.png"
+											style="border:0" />
+									</f:facet>
+								</rich:message>
+							</h:panelGrid>
+						</a4j:outputPanel>
 
+						<h:panelGrid columns="4">
+							<a4j:commandLink id="LnkSupervisorAdd" action="#{campaignBean.addSupervisor}"
+								oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editSupervisorsPanel')}.hide();"
+								reRender="gridSupervisors, status">
+								<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
+							</a4j:commandLink>
+							<rich:toolTip for="LnkSupervisorAdd" value="#{msg['label.supervisor.add']}" />
+
+							<a4j:commandLink id="LnkSupervisorCancel"
+								onclick="#{rich:component('editSupervisorsPanel')}.hide(); return false;">
+								<h:graphicImage value="/images/Button-Close-icon.png"
+									style="border:0" />
+							</a4j:commandLink>
+							<rich:toolTip for="LnkSupervisorCancel"
+								value="#{msg['label.cancel']}" />
+						</h:panelGrid>
+					</h:panelGrid>
 				</h:form>
 			</rich:modalPanel>
-			<!-- View Agents Panel -->
+			<!-- Edit Suervisors Panel -->
 
 			<!-- Edit Metric Panel -->
 			<rich:modalPanel id="editMetricPanel" autosized="true" width="250">
@@ -594,7 +610,7 @@
 									defaultLabel="#{msg['label.comboBox.default']}" size="25"
 									required="true" label="#{msg['label.metric.code']}"
 									converter="com.self_managment.web.converter.MetricConverter"
-									valueChangeListener="#{campaignBean.change}">
+									valueChangeListener="#{campaignBean.changeMetric}">
 									<a4j:support event="onselect" ajaxSingle="true" />
 									<f:selectItems value="#{campaignBean.metrics}" />
 								</rich:comboBox>
@@ -771,7 +787,8 @@
 			</rich:modalPanel>
 			<!-- Delete Metric Panel -->
 
-			<rich:modalPanel id="deletePanel" autosized="true" width="100">
+			<!-- Delete Supervisor Panel -->
+			<rich:modalPanel id="deleteSupervisorPanel" autosized="true" width="100">
 				<f:facet name="header">
 					<h:outputText value="#{msg['label.delete.cofirmation']}"
 						style="padding-right:15px;" />
@@ -780,27 +797,27 @@
 					<h:panelGroup>
 						<h:graphicImage value="/images/Button-X-icon.gif" id="LnkClose2"
 							style="cursor:pointer" />
-						<rich:componentControl for="deletePanel" attachTo="LnkClose2"
+						<rich:componentControl for="deleteSupervisorPanel" attachTo="LnkClose2"
 							operation="hide" event="onclick" />
 					</h:panelGroup>
 				</f:facet>
 				<h:form>
 					<h:panelGrid columns="4">
-						<a4j:commandLink action="#{campaignBean.delete}" ajaxSingle="true"
-							id="LnkConfirmDeleteCampaign"
-							oncomplete="#{rich:component('deletePanel')}.hide();"
-							reRender="grid, status">
+						<a4j:commandLink action="#{campaignBean.deleteSupervisor}" ajaxSingle="true"
+							id="LnkConfirmDeleteSupervisor"
+							oncomplete="#{rich:component('deleteSupervisorPanel')}.hide();"
+							reRender="gridSupervisors, status">
 							<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
 						</a4j:commandLink>
-						<rich:toolTip for="LnkConfirmDeleteCampaign"
+						<rich:toolTip for="LnkConfirmDeleteSupervisor"
 							value="#{msg['label.accept']}" />
 
-						<a4j:commandLink id="LnkNotConfirmDelteCampaign"
-							onclick="#{rich:component('deletePanel')}.hide(); return false;">
+						<a4j:commandLink id="LnkCancelDelteSupervisor"
+							onclick="#{rich:component('deleteSupervisorPanel')}.hide(); return false;">
 							<h:graphicImage value="/images/Button-Close-icon.png"
 								style="border:0" />
 						</a4j:commandLink>
-						<rich:toolTip for="LnkNotConfirmDelteCampaign"
+						<rich:toolTip for="LnkCancelDelteSupervisor"
 							value="#{msg['label.cancel']}" />
 					</h:panelGrid>
 				</h:form>
