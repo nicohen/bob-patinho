@@ -14,12 +14,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.jsf.FacesContextUtils;
 
-import com.self_managment.model.entity.Agent;
-import com.self_managment.model.entity.Campaign;
-import com.self_managment.model.entity.CampaignMetric;
-import com.self_managment.model.entity.Metric;
-import com.self_managment.service.CampaignService;
-import com.self_managment.service.MetricService;
+import com.self_managment.model.entity.*;
+import com.self_managment.service.*;
 import com.self_managment.web.util.JSFUtil;
 import com.sun.faces.util.MessageUtils;
 
@@ -30,14 +26,15 @@ public class CampaignWebController {
     private Campaign campaign = new Campaign();
     private CampaignService service;
     private MetricService metricService;
-    private Agent agent;
+    private SupervisorService supervisorService;
+    private Supervisor supervisor;
+    private List<SelectItem> freeSupervisors;
     private Metric metric;
     private CampaignMetric campaignMetric;
     private List<SelectItem> metrics;
     private boolean canAddMetric;
     private boolean editMode;
 
-    @SuppressWarnings("unchecked")
     public CampaignWebController() {
 	ApplicationContext ctx = FacesContextUtils
 		.getWebApplicationContext(FacesContext.getCurrentInstance());
@@ -45,16 +42,20 @@ public class CampaignWebController {
 	service = (CampaignService) ctx.getBean("campaignService");
 
 	metricService = (MetricService) ctx.getBean("metricService");
+	
+	supervisorService = (SupervisorService) ctx.getBean("supervisorService");
     }
 
-    public String addAgent() {
-	if (campaign.getAgents() == null) {
-	    List<Agent> agents = new ArrayList<Agent>();
-	    agents.add(agent);
-	    campaign.setAgents(agents);
-	} else {
-	    campaign.getAgents().add(agent);
-	}
+    public String addSupervisor() {
+    	supervisor.setCampaign(campaign);
+    	if (campaign.getSupervisors() == null) 
+    	{
+    		List<Supervisor> supervisors = new ArrayList<Supervisor>();
+    		supervisors.add(supervisor);
+    		campaign.setSupervisors(supervisors);
+    	}
+    	else
+    		campaign.getSupervisors().add(supervisor);
 	return "";
     }
 
@@ -70,7 +71,7 @@ public class CampaignWebController {
 	return "";
     }
 
-    public void change(ValueChangeEvent event) {
+    public void changeMetric(ValueChangeEvent event) {
 	setMetric((Metric) event.getNewValue());
     }
 
@@ -80,8 +81,9 @@ public class CampaignWebController {
 	return "";
     }
 
-    public String createAgent() {
-	setAgent(new Agent());
+    public String createSupervisor() {
+	setSupervisor(new Supervisor());
+	supervisor.setCampaign(campaign);
 	return "";
     }
 
@@ -107,9 +109,10 @@ public class CampaignWebController {
 	return "";
     }
 
-    public String deleteAgent() {
-	campaign.getAgents().remove(agent);
-	return "";
+    public String deleteSupervisor() {
+    	campaign.getSupervisors().remove(supervisor);
+    	supervisor.setCampaign(null);
+    	return "";
     }
 
     public String deleteMetric() {
@@ -117,8 +120,8 @@ public class CampaignWebController {
 	return "";
     }
 
-    public Agent getAgent() {
-	return agent;
+    public Supervisor getSupervisor() {
+	return supervisor;
     }
 
     public Campaign getCampaign() {
@@ -145,6 +148,12 @@ public class CampaignWebController {
 	}
 	return metrics;
     }
+    
+    public List<SelectItem> getFreeSupervisors() {
+    	//if(freeSupervisors == null)
+		freeSupervisors = JSFUtil.getSelectItems(supervisorService.findAllSupervisorsWithoutCampaign());
+    	return freeSupervisors;
+    }
 
     public boolean isCanAddMetric() {
 	return (campaign != null && campaign.getCampaignMetric() != null && campaign
@@ -165,8 +174,8 @@ public class CampaignWebController {
 	return "";
     }
 
-    public void setAgent(Agent agent) {
-	this.agent = agent;
+    public void setSupervisor(Supervisor supervisor) {
+	this.supervisor = supervisor;
     }
 
     public void setCampaign(Campaign campaign) {
@@ -198,15 +207,15 @@ public class CampaignWebController {
 	try {
 		if (campaign.getCampaignMetric().size() >= 1){
 			if (validateValues()){
-		    service.saveOrUpdate(campaign);
-		    campaigns = service.findAll();
-		    setCampaign(new Campaign());}
+				service.saveOrUpdate(campaign);
+				campaigns = service.findAll();
+				setCampaign(new Campaign());}
 			else
 			{
 				JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
 				"error.metric.values").getSummary());
 			}
-			}
+		}
 	    
 	} catch (Exception e) {
 	    e.printStackTrace();

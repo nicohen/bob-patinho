@@ -2,7 +2,6 @@ package com.self_managment.model.entity;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -69,7 +68,7 @@ public class Campaign implements java.io.Serializable {
 	@OneToMany(mappedBy = "campaign")
 	private List<Agent> agents;
 	
-	@OneToMany(mappedBy = "campaign")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "campaign", cascade = {CascadeType.ALL })
 	private List<Supervisor> supervisors;
 
 	// @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")

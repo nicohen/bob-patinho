@@ -21,9 +21,18 @@
 	<converter>
 		<converter-id>
 			com.self_managment.web.converter.MetricConverter
-		</converter-id>		
+		</converter-id>				
 		<converter-class>
 			com.self_managment.web.converter.MetricConverter
+		</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>
+			com.self_managment.web.converter.SupervisorConverter
+		</converter-id>				
+		<converter-class>
+			com.self_managment.web.converter.SupervisorConverter
 		</converter-class>
 	</converter>
 
