@@ -223,7 +223,9 @@ public class Campaign implements java.io.Serializable {
 	
     @Override
     public String toString() {
-	return this.id.toString();
+    	if(this.id == null)
+    		return "";
+    	return this.id.toString() + " - " + this.name;
     }
 
 }

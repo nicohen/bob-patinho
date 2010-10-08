@@ -24,7 +24,7 @@ public class SupervisorConverter implements Converter {
 	SupervisorService supervisorService = (SupervisorService) ctx
 		.getBean("supervisorService");
 
-	List<Supervisor> l = supervisorService.findAllByProperty("name", string);
+	List<Supervisor> l = supervisorService.findAllByProperty("id", Integer.parseInt(string.split(" - ")[0]));
 
 	return l.isEmpty() ? null : l.get(0);
 
