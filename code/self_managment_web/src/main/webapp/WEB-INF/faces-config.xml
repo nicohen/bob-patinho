@@ -35,5 +35,14 @@
 			com.self_managment.web.converter.SupervisorConverter
 		</converter-class>
 	</converter>
-
+	
+	<converter>
+		<converter-id>
+			com.self_managment.web.converter.CampaignConverter
+		</converter-id>				
+		<converter-class>
+			com.self_managment.web.converter.CampaignConverter
+		</converter-class>
+	</converter>
+	
 </faces-config>

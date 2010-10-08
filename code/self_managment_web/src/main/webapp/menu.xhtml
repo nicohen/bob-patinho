@@ -10,18 +10,16 @@
 	<f:loadBundle basename="messages" var="msg" />
 	<a4j:form>
 		<rich:toolBar>
-			<rich:dropDownMenu value="#{msg['menu.supervisor']}">
-				<rich:menuItem submitMode="none">
-					<h:outputLink value="campaignCRUD.jsf">
-						<h:outputText value="#{msg['menu.campaigns']}" />
-					</h:outputLink>
-				</rich:menuItem>
-				<rich:menuItem submitMode="none">
-					<h:outputLink value="stockCRUD.jsf">
-						<h:outputText value="Stock (test)" />
-					</h:outputLink>
-				</rich:menuItem>
-			</rich:dropDownMenu>
+			<rich:menuItem submitMode="none">
+				<h:outputLink value="campaignCRUD.jsf">
+					<h:outputText value="#{msg['menu.campaigns']}" />
+				</h:outputLink>
+			</rich:menuItem>
+			<rich:menuItem submitMode="none">
+				<h:outputLink value="supervisorCRUD.jsf">
+					<h:outputText value="#{msg['menu.supervisors']}" />
+				</h:outputLink>
+			</rich:menuItem>
 		</rich:toolBar>
 	</a4j:form>
 	<rich:spacer height="5" />
