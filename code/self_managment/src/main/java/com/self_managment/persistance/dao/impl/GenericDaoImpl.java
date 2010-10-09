@@ -14,7 +14,9 @@ public abstract class GenericDaoImpl<E, PK extends Serializable> extends
 
     @SuppressWarnings("unchecked")
     public PK save(E newInstance) {
-	return (PK) getHibernateTemplate().save(newInstance);
+	PK pk = (PK) getHibernateTemplate().save(newInstance);
+	getSession().flush();
+	return pk;
     }
 
     @SuppressWarnings("unchecked")

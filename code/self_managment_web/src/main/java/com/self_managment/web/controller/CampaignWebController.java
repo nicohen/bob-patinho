@@ -205,41 +205,56 @@ public class CampaignWebController {
 	this.metric = metric;
     }
 
-    public boolean validateValues() {
+    public boolean validateCampaignValues() {
 	if (campaign.getOptimValue() >= campaign.getObjetiveValue()
 		&& campaign.getObjetiveValue() >= campaign.getMinimumValue()
 		&& campaign.getMinimumValue() >= campaign
 			.getUnsatisfactoryValue())
-	    return true;
-	else
 	    return false;
+	else {
+	    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+		    "error.metric.values").getSummary());
+	    return true;
+	}
 
+    }
+
+    private boolean campaignWithoutMetrics() {
+	if (campaign.getCampaignMetric() == null
+		|| campaign.getCampaignMetric().isEmpty()) {
+	    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+		    "error.metric.nometric").getSummary());
+	    return true;
+	}
+	return false;
+    }
+
+    private boolean validateCampaign() {
+	boolean error = validateCampaignValues();
+
+	return campaignWithoutMetrics() || error;
     }
 
     public String update() {
 	try {
-	    if (campaign.getCampaignMetric() != null
-		    && !campaign.getCampaignMetric().isEmpty()) {
-		if (validateValues()) {
-		    service.saveOrUpdate(campaign);
-		    for (Supervisor supervisor : deletedSupervisors) {
-			supervisorService.update(supervisor);
-		    }
-		    campaigns = service.findAll();
-		    setCampaign(new Campaign());
-		} else {
-		    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
-			    "error.metric.values").getSummary());
-		}
-	    } else {
-		JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
-			"error.metric.nometric").getSummary());
+	    if (validateCampaign())
+		return "";
+
+	    if (editMode)
+		service.update(campaign);
+	    else
+		service.save(campaign);
+
+	    for (Supervisor supervisor : deletedSupervisors) {
+		supervisorService.update(supervisor);
 	    }
 
+	    campaigns = service.findAll();
+
+	    setCampaign(new Campaign());
+
 	} catch (Exception e) {
-	    e.printStackTrace();
-	    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
-		    "error.metric.nometric").getSummary());
+	    JSFUtil.addErrorMessage("Error");
 	}
 	return "";
     }
