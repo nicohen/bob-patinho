@@ -1,0 +1,434 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<link rel="stylesheet" type="text/css"
+	href="style/self_managment_web.css" />
+</head>
+
+<body>
+
+<f:view>
+	<f:loadBundle basename="messages" var="msg" />
+
+	<rich:modalPanel id="editPanel" height="500" width="950">
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.campaign']}" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/images/Button-X-icon.gif" id="LnkClose"
+					style="cursor:pointer" />
+				<rich:componentControl for="editPanel" attachTo="LnkClose"
+					operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<h:form>
+			<rich:messages errorClass="error" tooltip="true" showSummary="true"
+				globalOnly="true">
+				<f:facet name="errorMarker">
+					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+				</f:facet>
+				<f:facet name="infoMarker">
+					<h:graphicImage url="/image/info.png" />
+				</f:facet>
+			</rich:messages>
+			<h:panelGrid columns="1" width="100%">
+				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.campaign.fields']}" />
+					</f:facet>
+					<h:panelGrid columns="6">
+						<h:outputText value="#{msg['label.campaign.id']}" />
+						<h:inputText id="id" value="#{campaignBean.campaign.id}" size="15"
+							maxlength="10" required="true"
+							label="#{msg['label.campaign.id']}"
+							disabled="#{campaignBean.editMode}" />
+						<rich:message for="id" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.campaign.startDate']}" />
+						<rich:calendar id="startDate"
+							value="#{campaignBean.campaign.startDate}" locale="ES"
+							popup="true" datePattern="MMMMMMMMMMM yyyy"
+							showApplyButton="false" cellWidth="24px" cellHeight="22px"
+							style="width:200px" required="true" inputSize="15" />
+						<rich:message for="startDate" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.campaign.name']}" />
+						<h:inputText id="name" value="#{campaignBean.campaign.name}"
+							size="15" maxlength="20" required="true"
+							label="#{msg['label.campaign.name']}" />
+						<rich:message for="name" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.campaign.endDate']}" />
+						<rich:calendar id="endDate"
+							value="#{campaignBean.campaign.endDate}" locale="ES" popup="true"
+							datePattern="MMMMMMMMMMM yyyy" showApplyButton="false"
+							cellWidth="24px" cellHeight="22px" style="width:200px"
+							required="false" inputSize="15" />
+						<rich:message for="endDate" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.campaign.type']}" />
+						<rich:comboBox id="type" value="#{campaignBean.campaign.type}"
+							defaultLabel="#{msg['label.comboBox.default']}" width="120"
+							required="true" label="#{msg['label.campaign.type']}">
+							<f:selectItem itemValue="INBOUND" />
+							<f:selectItem itemValue="OUTBOUND" />
+						</rich:comboBox>
+						<rich:message for="type" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+					</h:panelGrid>
+					<h:panelGrid columns="3">
+
+						<h:outputText value="#{msg['label.campaign.description']}" />
+						<h:inputTextarea id="description" required="false" rows="1"
+							value="#{campaignBean.campaign.description}" cols="90"
+							label="#{msg['label.campaign.description']}" />
+						<rich:message for="description" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+					</h:panelGrid>
+					<h:panelGrid columns="6">
+
+						<h:outputText value="#{msg['label.metric.valueoptim']}" />
+						<h:inputText id="optimValue"
+							value="#{campaignBean.campaign.optimValue}" size="15"
+							maxlength="10" required="true"
+							label="#{msg['label.metric.valueoptim']}">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
+						<rich:message for="optimValue" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.metric.valueobjective']}" />
+						<h:inputText id="objetiveValue"
+							value="#{campaignBean.campaign.objetiveValue}" size="15"
+							maxlength="10" required="true"
+							label="#{msg['label.metric.valueobjective']}">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
+						<rich:message for="objetiveValue" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.metric.valueminimum']}" />
+						<h:inputText id="minimumValue"
+							value="#{campaignBean.campaign.minimumValue}" size="15"
+							maxlength="10" required="true"
+							label="#{msg['label.metric.valueminimum']}">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
+						<rich:message for="minimumValue" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+
+						<h:outputText value="#{msg['label.metric.valueunsatisfactory']}" />
+						<h:inputText id="unsatisfactoryValue"
+							value="#{campaignBean.campaign.unsatisfactoryValue}" size="15"
+							maxlength="10" required="true"
+							label="#{msg['label.metric.valueunsatisfactory']}">
+							<f:validateDoubleRange minimum="0" />
+						</h:inputText>
+						<rich:message for="unsatisfactoryValue" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+					</h:panelGrid>
+				</rich:panel>
+
+				<a4j:outputPanel ajaxRendered="true">
+
+					<!-- Supervisors -->
+					<h:panelGrid columns="2">
+						<h:outputText value="#{msg['label.supervisor.empty']}"
+							rendered="#{empty campaignBean.campaign.supervisors}" />
+						<a4j:commandLink ajaxSingle="true" id="LnkSupervisorNew2"
+							action="#{campaignBean.createSupervisor}"
+							rendered="#{empty campaignBean.campaign.supervisors}"
+							oncomplete="#{rich:component('editSupervisorsPanel')}.show()">
+							<h:outputText value="#{msg['label.supervisor.add']}" />
+						</a4j:commandLink>
+					</h:panelGrid>
+
+					<rich:dataTable id="gridSupervisors" width="100%" rows="3"
+						var="supervisor" value="#{campaignBean.campaign.supervisors}"
+						rendered="#{not empty campaignBean.campaign.supervisors}"
+						reRender="gridSupervisorsScroller">
+						<f:facet name="header">
+							<h:panelGroup>
+								<a4j:commandLink ajaxSingle="true" id="LnkSupervisorNew"
+									action="#{campaignBean.createSupervisor}"
+									oncomplete="#{rich:component('editSupervisorsPanel')}.show()">
+									<h:graphicImage value="/images/Add-icon.png" style="border:0" />
+								</a4j:commandLink>
+								<rich:toolTip for="LnkSupervisorNew"
+									value="#{msg['label.supervisor.add']}" />
+								<h:outputText value="#{msg['label.supervisor']}" />
+							</h:panelGroup>
+						</f:facet>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.supervisor.id']}" />
+							</f:facet>
+							<h:outputText value="#{supervisor.id}" />
+						</rich:column>
+						<rich:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.supervisor.dni']}" />
+							</f:facet>
+							<h:outputText value="#{supervisor.dni}" />
+						</rich:column>
+						<rich:column width="200" filterBy="#{supervisor.name}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.supervisor.name']}" />
+							</f:facet>
+							<h:outputText value="#{supervisor.name}" />
+						</rich:column>
+						<rich:column width="200" filterBy="#{supervisor.surname}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.supervisor.surname']}" />
+							</f:facet>
+							<h:outputText value="#{supervisor.surname}" />
+						</rich:column>
+						<rich:column width="50" style="text-align:center">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.action']}" />
+							</f:facet>
+							<a4j:commandLink ajaxSingle="true" id="LnkSupervisorDelete"
+								oncomplete="#{rich:component('deleteSupervisorPanel')}.show()">
+								<h:graphicImage value="/images/Delete-icon.png" style="border:0" />
+								<f:setPropertyActionListener value="#{supervisor}"
+									target="#{campaignBean.supervisor}" />
+							</a4j:commandLink>
+							<rich:toolTip for="LnkSupervisorDelete"
+								value="#{msg['label.delete']}" />
+						</rich:column>
+						<f:facet name="footer">
+							<rich:datascroller id="gridSupervisorsScroller"
+								for="gridSupervisors" maxPages="15" reRender="gridSupervisors"
+								renderIfSinglePage="false" />
+						</f:facet>
+					</rich:dataTable>
+					<!-- Supervisors -->
+
+					<!-- Agents -->
+					<h:outputText value="#{msg['label.agent.empty']}"
+						rendered="#{empty campaignBean.campaign.agents}" />
+					<rich:dataTable id="gridAgents" width="100%" rows="3" var="agent"
+						value="#{campaignBean.campaign.agents}"
+						rendered="#{not empty campaignBean.campaign.agents}"
+						reRender="gridAgentsScroller">
+						<f:facet name="header">
+							<h:outputText value="#{msg['label.agent']}" />
+						</f:facet>
+						<rich:column width="200" filterBy="#{agent.docket}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.agent.docket']}" />
+							</f:facet>
+							<h:outputText value="#{agent.docket}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.agent.dni']}" />
+							</f:facet>
+							<h:outputText value="#{agent.dni}" />
+						</rich:column>
+						<rich:column width="200" filterBy="#{agent.name}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.agent.name']}" />
+							</f:facet>
+							<h:outputText value="#{agent.name}" />
+						</rich:column>
+						<rich:column width="200" filterBy="#{agent.surname}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.agent.surname']}" />
+							</f:facet>
+							<h:outputText value="#{agent.surname}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.agent.status']}" />
+							</f:facet>
+							<h:outputText value="#{agent.status}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.agent.entryDate']}" />
+							</f:facet>
+							<h:outputText value="#{agent.entryDate}">
+								<f:convertDateTime pattern="#{msg['date.format']}" />
+							</h:outputText>
+						</rich:column>
+						<f:facet name="footer">
+							<rich:datascroller id="gridAgentsScroller" for="gridAgents"
+								maxPages="15" reRender="gridAgents" renderIfSinglePage="false" />
+						</f:facet>
+					</rich:dataTable>
+					<!-- Agents -->
+
+					<!-- Metrics -->
+					<h:panelGrid columns="2">
+						<h:outputText value="#{msg['label.metric.empty']}"
+							rendered="#{empty campaignBean.campaign.campaignMetric}" />
+						<a4j:commandLink ajaxSingle="true" id="LnkMetricNew2"
+							action="#{campaignBean.createMetric}"
+							rendered="#{empty campaignBean.campaign.campaignMetric}"
+							oncomplete="#{rich:component('editMetricPanel')}.show()"
+							disabled="#{campaignBean.canAddMetric}">
+							<h:outputText value="#{msg['label.metric.add']}" />
+						</a4j:commandLink>
+					</h:panelGrid>
+
+					<rich:dataTable id="gridMetrics" width="100%" rows="3"
+						var="campaignMetric"
+						rendered="#{not empty campaignBean.campaign.campaignMetric}"
+						value="#{campaignBean.campaign.campaignMetric}">
+						<f:facet name="header">
+							<h:panelGroup>
+								<a4j:commandLink ajaxSingle="true" id="LnkMetricNew"
+									action="#{campaignBean.createMetric}"
+									oncomplete="#{rich:component('editMetricPanel')}.show()"
+									disabled="#{campaignBean.canAddMetric}">
+									<h:graphicImage value="/images/Add-icon.png" style="border:0" />
+								</a4j:commandLink>
+								<rich:toolTip for="LnkMetricNew"
+									value="#{msg['label.metric.add']}" />
+								<h:outputText value="#{msg['label.metric']}" />
+							</h:panelGroup>
+						</f:facet>
+
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.metric.code']}" />
+							</f:facet>
+							<h:outputText value="#{campaignMetric.metric.code}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.metric.optim']}" />
+							</f:facet>
+							<h:outputText
+								value="#{campaignMetric.metric.optimSign}#{campaignMetric.optim}#{campaignMetric.metric.unit}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.metric.objective']}" />
+							</f:facet>
+							<h:outputText
+								value="#{campaignMetric.metric.objetiveSign}#{campaignMetric.objective}#{campaignMetric.metric.unit}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.metric.minimum']}" />
+							</f:facet>
+							<h:outputText
+								value="#{campaignMetric.metric.minimumSign}#{campaignMetric.minimum}#{campaignMetric.metric.unit}" />
+						</rich:column>
+						<rich:column width="200">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+							</f:facet>
+							<h:outputText
+								value="#{campaignMetric.metric.unsatisfactorySign}#{campaignMetric.unsatisfactory}#{campaignMetric.metric.unit}" />
+						</rich:column>
+						<rich:column width="50" style="text-align:center">
+							<f:facet name="header">
+								<h:outputText value="#{msg['label.action']}" />
+							</f:facet>
+							<a4j:commandLink ajaxSingle="true" id="LnkMetricEdit"
+								oncomplete="#{rich:component('editMetricPanel')}.show()"
+								reRender="editMetricPanel">
+								<h:graphicImage value="/images/Edit-icon.png" style="border:0" />
+								<f:setPropertyActionListener value="#{campaignMetric}"
+									target="#{campaignBean.campaignMetric}" />
+							</a4j:commandLink>
+							<rich:toolTip for="LnkMetricEdit" value="#{msg['label.edit']}" />
+
+							<a4j:commandLink ajaxSingle="true" id="LnkMetricDelete"
+								oncomplete="#{rich:component('deleteMetricPanel')}.show()">
+								<h:graphicImage value="/images/Delete-icon.png" style="border:0" />
+								<f:setPropertyActionListener value="#{campaignMetric}"
+									target="#{campaignBean.campaignMetric}" />
+							</a4j:commandLink>
+							<rich:toolTip for="LnkMetricDelete"
+								value="#{msg['label.delete']}" />
+						</rich:column>
+					</rich:dataTable>
+					<!-- Metrics -->
+
+				</a4j:outputPanel>
+
+				<h:panelGrid columns="4">
+					<rich:toolTip for="LnkUpdate" value="#{msg['label.save']}" />
+					<a4j:commandLink id="LnkUpdate" reRender="grid, status"
+						action="#{campaignBean.update}"
+						oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editPanel')}.hide();">
+						<h:graphicImage value="/images/Button-Save-icon.png"
+							style="border:0" />
+					</a4j:commandLink>
+
+					<rich:toolTip for="LnkCancel" value="#{msg['label.cancel']}" />
+					<a4j:commandLink id="LnkCancel"
+						onclick="#{rich:component('editPanel')}.hide(); return false;">
+						<h:graphicImage value="/images/Button-Close-icon.png"
+							style="border:0" />
+					</a4j:commandLink>
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</rich:modalPanel>
+
+	<!-- Edit Supervisors Panel -->
+	<ui:include src="editSupervisorPanel.xhtml" />
+	<!-- Delete Supervisors Panel -->
+	<ui:include src="deleteSupervisorPanel.xhtml" />
+
+	<!-- Edit Metrics Panel -->
+	<ui:include src="editMetricPanel.xhtml" />
+	<!-- Delete Metrics Panel -->
+	<ui:include src="deleteMetricPanel.xhtml" />
+
+</f:view>
+</body>
+</html>
