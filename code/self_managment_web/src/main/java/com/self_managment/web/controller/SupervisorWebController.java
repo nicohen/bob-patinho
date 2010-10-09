@@ -10,8 +10,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.jsf.FacesContextUtils;
 
-import com.self_managment.model.entity.*;
-import com.self_managment.service.*;
+import com.self_managment.model.entity.Supervisor;
+import com.self_managment.service.CampaignService;
+import com.self_managment.service.SupervisorService;
 import com.self_managment.web.util.JSFUtil;
 
 @Component("supervisorBean")
@@ -37,12 +38,12 @@ public class SupervisorWebController {
 	    supervisors = service.findAll();
 	return supervisors;
     }
-    
+
     public List<SelectItem> getCampaigns() {
-    	if (campaigns == null)
-    		campaigns = JSFUtil.getSelectItems(campaignService.findAll());
-    	return campaigns;
-        }
+	if (campaigns == null)
+	    campaigns = JSFUtil.getSelectItems(campaignService.findAll());
+	return campaigns;
+    }
 
     public Supervisor getSupervisor() {
 	return supervisor;
@@ -50,7 +51,7 @@ public class SupervisorWebController {
 
     public String update() {
 	try {
-	    if (supervisor.getId() == null)
+	    if (!editMode)
 		service.save(supervisor);
 	    else
 		service.update(supervisor);
@@ -68,7 +69,7 @@ public class SupervisorWebController {
     }
 
     public String create() {
-	editMode=false;
+	editMode = false;
 	setSupervisor(new Supervisor());
 	return "";
     }
@@ -83,13 +84,13 @@ public class SupervisorWebController {
 	}
 	return "";
     }
-    
+
     public boolean isEditMode() {
-    	return editMode;
+	return editMode;
     }
-    
+
     public void setEditMode() {
-    	this.editMode = true;
+	this.editMode = true;
     }
-    
+
 }

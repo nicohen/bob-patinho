@@ -26,6 +26,11 @@ public class JSFUtil {
 	FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
     }
 
+    public static String getRequestParameter(String key) {
+	return FacesContext.getCurrentInstance().getExternalContext()
+		.getRequestParameterMap().get(key);
+    }
+
     public static List<SelectItem> getSelectItems(List<?> entities) {
 	List<SelectItem> items = new ArrayList<SelectItem>();
 	for (Object x : entities) {

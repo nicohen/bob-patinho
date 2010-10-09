@@ -10,16 +10,17 @@
 		<f:view>
 			<f:loadBundle basename="messages" var="msg" />
 			<h:form id="form">
-				<rich:dataTable id="grid" width="500" rows="10" var="supervisor" align="center"
-					value="#{supervisorBean.supervisors}">
+				<rich:dataTable id="grid" width="500" rows="10" var="supervisor"
+					align="center" value="#{supervisorBean.supervisors}">
 					<f:facet name="header">
 						<h:panelGroup>
 							<a4j:commandLink ajaxSingle="true" id="LnkNew"
 								action="#{supervisorBean.create}"
-								oncomplete="#{rich:component('editPanel')}.show()">
+								oncomplete="#{rich:component('editPanel')}.show()"
+								reRender="editPanel">
 								<h:graphicImage value="/images/Add-icon.png" style="border:0" />
 							</a4j:commandLink>
-							<rich:toolTip for="LnkNew" value="New" />
+							<rich:toolTip for="LnkNew" value="#{msg['label.new']}" />
 							<h:outputText value="#{msg['label.supervisor']}" />
 						</h:panelGroup>
 					</f:facet>
@@ -57,7 +58,8 @@
 						<f:facet name="header">
 							<h:outputText value="Action" />
 						</f:facet>
-						<a4j:commandLink ajaxSingle="true" id="LnkEdit" action="#{supervisorBean.setEditMode}"
+						<a4j:commandLink ajaxSingle="true" id="LnkEdit"
+							action="#{supervisorBean.setEditMode}"
 							oncomplete="#{rich:component('editPanel')}.show()">
 							<h:graphicImage value="/images/Edit-icon.png" style="border:0" />
 							<f:setPropertyActionListener value="#{supervisor}"
@@ -92,13 +94,22 @@
 					</h:panelGroup>
 				</f:facet>
 				<h:form>
-					<rich:messages style="color:red;" />
+					<rich:messages errorClass="error" tooltip="true" showSummary="true"
+						globalOnly="true">
+						<f:facet name="errorMarker">
+							<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+						</f:facet>
+						<f:facet name="infoMarker">
+							<h:graphicImage url="/image/info.png" />
+						</f:facet>
+					</rich:messages>
 					<h:panelGrid columns="1">
 						<a4j:outputPanel ajaxRendered="true">
 							<h:panelGrid columns="3">
 								<h:outputText value="#{msg['label.supervisor.id']}" />
-								<h:inputText id="id" value="#{supervisorBean.supervisor.id}" size="25" disabled="#{supervisorBean.editMode}"
-									maxlength="10" required="true" label="#{msg['label.supervisor.id']}" />
+								<h:inputText id="id" value="#{supervisorBean.supervisor.id}"
+									size="25" disabled="#{supervisorBean.editMode}" maxlength="10"
+									required="true" label="#{msg['label.supervisor.id']}" />
 								<rich:message for="id" errorClass="error">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/images/Error-icon.png"
@@ -106,8 +117,9 @@
 									</f:facet>
 								</rich:message>
 								<h:outputText value="#{msg['label.supervisor.dni']}" />
-								<h:inputText id="dni" value="#{supervisorBean.supervisor.dni}" size="25"
-									maxlength="20" required="true" label="#{msg['label.supervisor.dni']}" />
+								<h:inputText id="dni" value="#{supervisorBean.supervisor.dni}"
+									size="25" maxlength="20" required="true"
+									label="#{msg['label.supervisor.dni']}" />
 								<rich:message for="dni" errorClass="error">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/images/Error-icon.png"
@@ -115,8 +127,9 @@
 									</f:facet>
 								</rich:message>
 								<h:outputText value="#{msg['label.supervisor.name']}" />
-								<h:inputText id="name" value="#{supervisorBean.supervisor.name}" size="25"
-									maxlength="20" required="true" label="#{msg['label.supervisor.name']}" />
+								<h:inputText id="name" value="#{supervisorBean.supervisor.name}"
+									size="25" maxlength="20" required="true"
+									label="#{msg['label.supervisor.name']}" />
 								<rich:message for="name" errorClass="error">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/images/Error-icon.png"
@@ -124,8 +137,10 @@
 									</f:facet>
 								</rich:message>
 								<h:outputText value="#{msg['label.supervisor.surname']}" />
-								<h:inputText id="surname" value="#{supervisorBean.supervisor.surname}" size="25"
-									maxlength="20" required="true" label="#{msg['label.supervisor.surname']}" />
+								<h:inputText id="surname"
+									value="#{supervisorBean.supervisor.surname}" size="25"
+									maxlength="20" required="true"
+									label="#{msg['label.supervisor.surname']}" />
 								<rich:message for="surname" errorClass="error">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/images/Error-icon.png"
@@ -148,23 +163,23 @@
 									</f:facet>
 								</rich:message>
 							</h:panelGrid>
-						</a4j:outputPanel>
-						<h:panelGrid columns="4">
-							<a4j:commandLink id="LnkUpdate" reRender="grid, status"
-								action="#{supervisorBean.update}"
-								oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editPanel')}.hide();">
-								<h:graphicImage value="/images/Button-Save-icon.png"
-									style="border:0" />
-							</a4j:commandLink>
-							<rich:toolTip for="LnkUpdate" value="Save" />
+							<h:panelGrid columns="4">
+								<a4j:commandLink id="LnkUpdate" reRender="grid, status"
+									action="#{supervisorBean.update}"
+									oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editPanel')}.hide();">
+									<h:graphicImage value="/images/Button-Save-icon.png"
+										style="border:0" />
+								</a4j:commandLink>
+								<rich:toolTip for="LnkUpdate" value="Save" />
 
-							<a4j:commandLink id="LnkCancel"
-								onclick="#{rich:component('editPanel')}.hide(); return false;">
-								<h:graphicImage value="/images/Button-Close-icon.png"
-									style="border:0" />
-							</a4j:commandLink>
-							<rich:toolTip for="LnkCancel" value="Cancel" />
-						</h:panelGrid>
+								<a4j:commandLink id="LnkCancel"
+									onclick="#{rich:component('editPanel')}.hide(); return false;">
+									<h:graphicImage value="/images/Button-Close-icon.png"
+										style="border:0" />
+								</a4j:commandLink>
+								<rich:toolTip for="LnkCancel" value="Cancel" />
+							</h:panelGrid>
+						</a4j:outputPanel>
 					</h:panelGrid>
 				</h:form>
 			</rich:modalPanel>
@@ -183,8 +198,8 @@
 				</f:facet>
 				<h:form>
 					<h:panelGrid columns="2">
-						<a4j:commandButton value="Delete" action="#{supervisorBean.delete}"
-							ajaxSingle="true"
+						<a4j:commandButton value="Delete"
+							action="#{supervisorBean.delete}" ajaxSingle="true"
 							oncomplete="#{rich:component('deletePanel')}.hide();"
 							reRender="grid, status" />
 						<a4j:commandButton value="Cancel"
