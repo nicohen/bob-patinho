@@ -24,10 +24,13 @@ public class CampaignConverter implements Converter {
 	CampaignService campaignService = (CampaignService) ctx
 		.getBean("campaignService");
 
-	List<Campaign> l = campaignService.findAllByProperty("id", Integer.parseInt(string.split(" - ")[0]));
-
-	return l.isEmpty() ? null : l.get(0).getId();
-
+	try {
+	    List<Campaign> l = campaignService.findAllByProperty("id", Integer
+		    .parseInt(string.split(" - ")[0]));
+	    return l.isEmpty() ? null : l.get(0);
+	} catch (NumberFormatException e) {
+	    return null;
+	}
     }
 
     @Override
