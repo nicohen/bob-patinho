@@ -14,8 +14,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.jsf.FacesContextUtils;
 
-import com.self_managment.model.entity.*;
-import com.self_managment.service.*;
+import com.self_managment.model.entity.Campaign;
+import com.self_managment.model.entity.CampaignMetric;
+import com.self_managment.model.entity.Metric;
+import com.self_managment.model.entity.Supervisor;
+import com.self_managment.service.CampaignService;
+import com.self_managment.service.MetricService;
+import com.self_managment.service.SupervisorService;
 import com.self_managment.web.util.JSFUtil;
 import com.sun.faces.util.MessageUtils;
 
@@ -28,6 +33,7 @@ public class CampaignWebController {
     private MetricService metricService;
     private SupervisorService supervisorService;
     private Supervisor supervisor;
+    private List<Supervisor> deletedSupervisors = new ArrayList<Supervisor>();
     private List<SelectItem> freeSupervisors;
     private Metric metric;
     private CampaignMetric campaignMetric;
@@ -42,20 +48,19 @@ public class CampaignWebController {
 	service = (CampaignService) ctx.getBean("campaignService");
 
 	metricService = (MetricService) ctx.getBean("metricService");
-	
-	supervisorService = (SupervisorService) ctx.getBean("supervisorService");
+
+	supervisorService = (SupervisorService) ctx
+		.getBean("supervisorService");
     }
 
     public String addSupervisor() {
-    	supervisor.setCampaign(campaign);
-    	if (campaign.getSupervisors() == null) 
-    	{
-    		List<Supervisor> supervisors = new ArrayList<Supervisor>();
-    		supervisors.add(supervisor);
-    		campaign.setSupervisors(supervisors);
-    	}
-    	else
-    		campaign.getSupervisors().add(supervisor);
+	supervisor.setCampaign(campaign);
+	if (campaign.getSupervisors() == null) {
+	    List<Supervisor> supervisors = new ArrayList<Supervisor>();
+	    supervisors.add(supervisor);
+	    campaign.setSupervisors(supervisors);
+	} else
+	    campaign.getSupervisors().add(supervisor);
 	return "";
     }
 
@@ -78,6 +83,7 @@ public class CampaignWebController {
     public String create() {
 	setEditMode(false);
 	setCampaign(new Campaign());
+	deletedSupervisors.clear();
 	return "";
     }
 
@@ -110,9 +116,11 @@ public class CampaignWebController {
     }
 
     public String deleteSupervisor() {
-    	campaign.getSupervisors().remove(supervisor);
-    	supervisor.setCampaign(null);
-    	return "";
+	campaign.getSupervisors().remove(supervisor);
+	supervisor.setCampaign(null);
+	deletedSupervisors.add(supervisor);
+
+	return "";
     }
 
     public String deleteMetric() {
@@ -148,11 +156,12 @@ public class CampaignWebController {
 	}
 	return metrics;
     }
-    
+
     public List<SelectItem> getFreeSupervisors() {
-    	//if(freeSupervisors == null)
-		freeSupervisors = JSFUtil.getSelectItems(supervisorService.findAllSupervisorsWithoutCampaign());
-    	return freeSupervisors;
+	// if(freeSupervisors == null)
+	freeSupervisors = JSFUtil.getSelectItems(supervisorService
+		.findAllSupervisorsWithoutCampaign());
+	return freeSupervisors;
     }
 
     public boolean isCanAddMetric() {
@@ -171,6 +180,7 @@ public class CampaignWebController {
 	    setCampaign(new Campaign());
 	    JSFUtil.addErrorMessage("Campania inexistente");
 	}
+	deletedSupervisors.clear();
 	return "";
     }
 
@@ -195,32 +205,37 @@ public class CampaignWebController {
 	this.metric = metric;
     }
 
-    public boolean validateValues(){
-    	if (campaign.getOptimValue()>=campaign.getObjetiveValue()	&& campaign.getObjetiveValue()>=campaign.getMinimumValue() 
-    			&& campaign.getMinimumValue()>=campaign.getUnsatisfactoryValue())    		
-    		return true;
-    	else
-    		return false;
-    		
+    public boolean validateValues() {
+	if (campaign.getOptimValue() >= campaign.getObjetiveValue()
+		&& campaign.getObjetiveValue() >= campaign.getMinimumValue()
+		&& campaign.getMinimumValue() >= campaign
+			.getUnsatisfactoryValue())
+	    return true;
+	else
+	    return false;
+
     }
+
     public String update() {
 	try {
-		if (campaign.getCampaignMetric().size() >= 1){
-			if (validateValues()){
-				service.saveOrUpdate(campaign);
-				campaigns = service.findAll();
-				setCampaign(new Campaign());}
-			else
-			{
-				JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
-				"error.metric.values").getSummary());
-			}
+	    if (campaign.getCampaignMetric().size() >= 1) {
+		if (validateValues()) {
+		    service.saveOrUpdate(campaign);
+		    for (Supervisor supervisor : deletedSupervisors) {
+			supervisorService.update(supervisor);
+		    }
+		    campaigns = service.findAll();
+		    setCampaign(new Campaign());
+		} else {
+		    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+			    "error.metric.values").getSummary());
 		}
-	    
+	    }
+
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
-			"error.metric.nometric").getSummary());
+		    "error.metric.nometric").getSummary());
 	}
 	return "";
     }
