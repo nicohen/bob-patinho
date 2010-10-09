@@ -218,7 +218,8 @@ public class CampaignWebController {
 
     public String update() {
 	try {
-	    if (campaign.getCampaignMetric().size() >= 1) {
+	    if (campaign.getCampaignMetric() != null
+		    && !campaign.getCampaignMetric().isEmpty()) {
 		if (validateValues()) {
 		    service.saveOrUpdate(campaign);
 		    for (Supervisor supervisor : deletedSupervisors) {
@@ -230,6 +231,9 @@ public class CampaignWebController {
 		    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
 			    "error.metric.values").getSummary());
 		}
+	    } else {
+		JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+			"error.metric.nometric").getSummary());
 	    }
 
 	} catch (Exception e) {
