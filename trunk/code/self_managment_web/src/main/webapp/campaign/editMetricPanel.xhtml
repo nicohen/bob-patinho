@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<link rel="stylesheet" type="text/css"
+	href="style/self_managment_web.css" />
+</head>
+
+<body>
+
+<f:view>
+	<f:loadBundle basename="messages" var="msg" />
+
+	<rich:modalPanel id="editMetricPanel" autosized="true" width="250">
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.metric']}" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/images/Button-X-icon.gif"
+					id="LnkEditMetricPanelClose" style="cursor:pointer" />
+				<rich:componentControl for="editMetricPanel"
+					attachTo="LnkEditMetricPanelClose" operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+		<h:form>
+			<rich:messages errorClass="error" tooltip="true" showSummary="true"
+				globalOnly="true">
+				<f:facet name="errorMarker">
+					<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+				</f:facet>
+				<f:facet name="infoMarker">
+					<h:graphicImage url="/image/info.png" />
+				</f:facet>
+			</rich:messages>
+
+			<h:panelGrid columns="1">
+				<a4j:outputPanel ajaxRendered="true">
+					<h:panelGrid columns="2">
+						<h:outputText value="#{msg['label.metric.code']}" />
+						<rich:comboBox id="metricCode"
+							value="#{campaignBean.campaignMetric.pk.metric}"
+							defaultLabel="#{msg['label.comboBox.default']}" size="25"
+							required="true" label="#{msg['label.metric.code']}"
+							converter="com.self_managment.web.converter.MetricConverter"
+							valueChangeListener="#{campaignBean.changeMetric}">
+							<a4j:support event="onselect" ajaxSingle="true" />
+							<f:selectItems value="#{campaignBean.metrics}" />
+						</rich:comboBox>
+						<rich:message for="metricCode" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+					</h:panelGrid>
+					<h:panelGrid columns="5">
+						<h:outputText value="#{msg['label.metric.optim']}" />
+						<h:outputText value="#{campaignBean.metric.optimSign}" />
+						<h:inputText id="metricOptim"
+							value="#{campaignBean.campaignMetric.optim}"
+							label="#{msg['label.metric.optim']}" size="5" maxlength="10"
+							required="true" validator="#{campaignBean.validateMetric}">
+						</h:inputText>
+						<rich:toolTip for="metricOptim">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
+						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricOptim" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+
+						<h:outputText value="#{msg['label.metric.objective']}" />
+						<h:outputText value="#{campaignBean.metric.objetiveSign}" />
+						<h:inputText id="metricObjective"
+							value="#{campaignBean.campaignMetric.objective}"
+							label="#{msg['label.metric.objective']}" size="5" maxlength="10"
+							required="true" validator="#{campaignBean.validateMetric}">
+						</h:inputText>
+						<rich:toolTip for="metricObjective">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
+						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricObjective" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+
+						<h:outputText value="#{msg['label.metric.minimum']}" />
+						<h:outputText value="#{campaignBean.metric.minimumSign}" />
+						<h:inputText id="metricMinimum"
+							value="#{campaignBean.campaignMetric.minimum}"
+							label="#{msg['label.metric.minimum']}" size="5" maxlength="10"
+							required="true" validator="#{campaignBean.validateMetric}">
+						</h:inputText>
+						<rich:toolTip for="metricMinimum">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
+						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricMinimum" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+
+						<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+						<h:outputText value="#{campaignBean.metric.unsatisfactorySign}" />
+						<h:inputText id="metricUnsatisfactory"
+							value="#{campaignBean.campaignMetric.unsatisfactory}"
+							label="#{msg['label.metric.unsatisfactory']}" size="5"
+							maxlength="10" required="true"
+							validator="#{campaignBean.validateMetric}">
+						</h:inputText>
+						<rich:toolTip for="metricUnsatisfactory">
+							<h:outputFormat value="#{msg['error.metric.range']}">
+								<f:param value="#{campaignBean.metric.minValue}" />
+								<f:param value="#{campaignBean.metric.maxValue}" />
+							</h:outputFormat>
+						</rich:toolTip>
+						<h:outputText value="#{campaignBean.metric.unit}" />
+						<rich:message for="metricUnsatisfactory" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+						<h:outputText></h:outputText>
+
+					</h:panelGrid>
+				</a4j:outputPanel>
+
+				<h:panelGrid columns="4">
+					<a4j:commandLink id="LnkMetricAdd"
+						action="#{campaignBean.addMetric}"
+						oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editMetricPanel')}.hide();"
+						reRender="gridMetrics, status">
+						<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
+					</a4j:commandLink>
+					<rich:toolTip for="LnkMetricAdd" value="#{msg['label.accept']}" />
+
+					<a4j:commandLink id="LnkMetricCancel"
+						onclick="#{rich:component('editMetricPanel')}.hide(); return false;">
+						<h:graphicImage value="/images/Button-Close-icon.png"
+							style="border:0" />
+					</a4j:commandLink>
+					<rich:toolTip for="LnkMetricCancel" value="#{msg['label.cancel']}" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</rich:modalPanel>
+</f:view>
+</body>
+</html>

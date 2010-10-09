@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<link rel="stylesheet" type="text/css"
+	href="style/self_managment_web.css" />
+</head>
+
+<body>
+
+<f:view>
+	<f:loadBundle basename="messages" var="msg" />
+
+	
+	<rich:modalPanel id="editSupervisorsPanel" autosized="true" width="300">
+		<f:facet name="header">
+			<h:outputText value="#{msg['label.supervisor']}" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:panelGroup>
+				<h:graphicImage value="/images/Button-X-icon.gif"
+					id="LnkCloseSupervisorPanel" style="cursor:pointer" />
+				<rich:componentControl for="editSupervisorsPanel"
+					attachTo="LnkCloseSupervisorPanel" operation="hide" event="onclick" />
+			</h:panelGroup>
+		</f:facet>
+
+		<h:form>
+			<h:panelGrid columns="1">
+				<a4j:outputPanel ajaxRendered="true">
+					<h:panelGrid columns="3">
+						<h:outputText
+							value="#{msg['label.supervisor.id']} - #{msg['label.supervisor.name']}" />
+						<rich:comboBox id="supervisorName"
+							value="#{campaignBean.supervisor}"
+							defaultLabel="#{msg['label.comboBox.default']}" size="25"
+							converter="com.self_managment.web.converter.SupervisorConverter"
+							label="#{msg['label.supervisor.id']} - #{msg['label.supervisor.name']}"
+							required="true">
+							<a4j:support event="onselect" ajaxSingle="true" />
+							<f:selectItems value="#{campaignBean.freeSupervisors}" />
+						</rich:comboBox>
+						<rich:message for="supervisorName" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText value="#{msg['label.supervisor.surname']}" />
+						<h:inputText id="supervisorSurname" readonly="true"
+							value="#{campaignBean.supervisor.surname}"
+							label="#{msg['label.supervisor.surname']}" size="25"
+							maxlength="10">
+						</h:inputText>
+						<rich:message for="supervisorSurname" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+						<h:outputText value="#{msg['label.supervisor.dni']}" />
+						<h:inputText id="supervisorDni" readonly="true"
+							value="#{campaignBean.supervisor.dni}"
+							label="#{msg['label.supervisor.dni']}" size="25" maxlength="10">
+						</h:inputText>
+						<rich:message for="supervisorDni" errorClass="error">
+							<f:facet name="errorMarker">
+								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+						</rich:message>
+					</h:panelGrid>
+				</a4j:outputPanel>
+
+				<h:panelGrid columns="4">
+					<a4j:commandLink id="LnkSupervisorAdd"
+						action="#{campaignBean.addSupervisor}"
+						oncomplete="if (#{facesContext.maximumSeverity==null}) #{rich:component('editSupervisorsPanel')}.hide();"
+						reRender="gridSupervisors, status">
+						<h:graphicImage value="/images/Accept-icon.png" style="border:0" />
+					</a4j:commandLink>
+					<rich:toolTip for="LnkSupervisorAdd"
+						value="#{msg['label.supervisor.add']}" />
+
+					<a4j:commandLink id="LnkSupervisorCancel"
+						onclick="#{rich:component('editSupervisorsPanel')}.hide(); return false;">
+						<h:graphicImage value="/images/Button-Close-icon.png"
+							style="border:0" />
+					</a4j:commandLink>
+					<rich:toolTip for="LnkSupervisorCancel"
+						value="#{msg['label.cancel']}" />
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</rich:modalPanel>
+	
+
+</f:view>
+</body>
+</html>
