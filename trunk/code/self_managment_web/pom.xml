@@ -124,10 +124,11 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-			<dependency>
-		<groupId>jfreechart</groupId>
+		
+		<dependency>
+			<groupId>jfree</groupId>
 			<artifactId>jfreechart</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.13</version>
 			<scope>compile</scope>
 		</dependency>
 
