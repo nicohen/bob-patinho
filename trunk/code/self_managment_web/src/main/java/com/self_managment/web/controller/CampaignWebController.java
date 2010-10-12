@@ -110,6 +110,7 @@ public class CampaignWebController {
 	    e.printStackTrace();
 	} finally {
 	    campaigns = service.findAll();
+	    
 	}
 
 	return "";
