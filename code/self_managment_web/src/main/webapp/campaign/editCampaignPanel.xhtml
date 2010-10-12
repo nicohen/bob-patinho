@@ -410,7 +410,7 @@
 
 					<rich:toolTip for="LnkCancel" value="#{msg['label.cancel']}" />
 					<a4j:commandLink id="LnkCancel"
-						onclick="#{rich:component('editPanel')}.hide(); window.location.reload(); return false;">
+						onclick="#{rich:component('editPanel')}.hide(); window.location.href=window.location.href; return false;">
 						<h:graphicImage value="/images/Button-Close-icon.png"
 							style="border:0" />
 					</a4j:commandLink>
