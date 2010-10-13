@@ -3,28 +3,19 @@ package com.self_managment.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "qa", catalog = "self_managment")
 public class QA implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "QA_ID", unique = true, nullable = false)
-	private Integer id;
-
-	@Column(name = "DATE", nullable = false)
-	private Date date;
+	@EmbeddedId
+	private QAPk pk = new QAPk();
 
 	@Column(name = "EVALUATIONS_QUANTITY", nullable = false)
 	private Integer evaluationsQuantity;
@@ -34,10 +25,6 @@ public class QA implements Serializable {
 
 	@Column(name = "ACHIEVED_POINTS_QUANTITY", nullable = false)
 	private Integer achievedPointsQuantity;
-
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "DOCKET", nullable = false)
-	private Agent agent;
 
 	public QA() {
 		super();
@@ -52,10 +39,10 @@ public class QA implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		QA other = (QA) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (pk == null) {
+			if (other.pk != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!pk.equals(other.pk))
 			return false;
 		return true;
 	}
@@ -64,20 +51,22 @@ public class QA implements Serializable {
 		return achievedPointsQuantity;
 	}
 
+	@Transient
 	public Agent getAgent() {
-		return agent;
+		return pk.getAgent();
 	}
 
+	@Transient
 	public Date getDate() {
-		return date;
+		return pk.getDate();
 	}
 
 	public Integer getEvaluationsQuantity() {
 		return evaluationsQuantity;
 	}
 
-	public Integer getId() {
-		return id;
+	public QAPk getPk() {
+		return pk;
 	}
 
 	public Integer getPosiblePointsQuantity() {
@@ -88,7 +77,7 @@ public class QA implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
 		return result;
 	}
 
@@ -97,19 +86,19 @@ public class QA implements Serializable {
 	}
 
 	public void setAgent(Agent agent) {
-		this.agent = agent;
+		pk.setAgent(agent);
 	}
 
 	public void setDate(Date date) {
-		this.date = date;
+		pk.setDate(date);
 	}
 
 	public void setEvaluationsQuantity(Integer evaluationsQuantity) {
 		this.evaluationsQuantity = evaluationsQuantity;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPk(QAPk pk) {
+		this.pk = pk;
 	}
 
 	public void setPosiblePointsQuantity(Integer posiblePointsQuantity) {
