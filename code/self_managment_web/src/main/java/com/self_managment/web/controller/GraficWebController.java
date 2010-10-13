@@ -21,6 +21,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -42,31 +44,100 @@ import com.sun.faces.util.MessageUtils;
 @Scope("session")
 
 public class GraficWebController {
+	public String metric1="QA_MONITORS";
+	public String metric2="QA_PTS_ACHIEVED";
+	public String metric3="QA_PTS_POSSIBLE";
+    
+	public Integer metric1_optim=80;
+	public Integer metric1_objetivo=50;
+	public Integer metric1_minimo=20;
+	public Integer metric1_noSatisfactorio=10;
+	public Integer metric2_optim=50;
+	public Integer metric2_objetivo=35;
+	public Integer metric2_minimo=15;
+	public Integer metric2_noSatisfactorio=5;
+	public Integer metric3_optim=35;
+	public Integer metric3_objetivo=20;
+	public Integer metric3_minimo=10;
+	public Integer metric3_noSatisfactorio=5;
+    
+	public double value_metrics_optim=20.93;
+	public double value_metrics_objetivo=15.65;
+	public double value_metrics_minimo=10.95;
+	public double value_metrics_noSatisfactorio=0.00;
+    
+	public Integer metric1_values=89;
+	public Integer metric2_values=47;
+	public Integer metric3_values=32;
+    
+	public Integer cantHoras=108;
+	
+	public double sueldoProyectado;
+	public double sueldoReal;
 
 	public void generaGrafico(OutputStream out, Object data) throws IOException {
 		
 		
+		org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries("Linea de Crecimiento", Day.class);
+		pop.add(new Day(1, 10, 2010), 0);
+		pop.add(new Day(18,10, 2010), sueldoALaFecha());
+		pop.add(new Day(30, 10, 2010), sueldoProyectado());
+	
+		TimeSeriesCollection dataset = new TimeSeriesCollection();
+		dataset.addSeries(pop);
+		
+		JFreeChart chart1 = ChartFactory.createTimeSeriesChart(
+				"Tendencia", "Dias",
+                "Proyeccion Sueldo",
+		dataset,
+		true,
+		true,
+		false);
 		
 		
          
-		 XYSeries series = new XYSeries("titulo de la serie");
+		/* XYSeries series = new XYSeries("Sueldo Proyectado");
 	        //como su nombre lo indica el primer valor sera asignado al eje X
 	        //y el segundo al eje Y
-	        series.add(1, 23);
-	        series.add(2, 34);
-	        series.add(3, 51);
+	        series.add(1, 0);
+	        series.add(18, sueldoALaFecha());
+	        
+	        series.add(30, sueldoProyectado());
 	        series.add(4, 67);
 	        series.add(5, 89);
 	        series.add(6, 121);
 	        series.add(7, 137);
+	        series.add(8, 34);
+	        series.add(9, 51);
+	        series.add(10, 67);
+	        series.add(11, 89);
+	        series.add(12, 121);
+	        series.add(13, 137);
+	        series.add(14, 34);
+	        series.add(15, 51);
+	        series.add(16, 67);
+	        series.add(17, 89);
+	        series.add(18, 121);
+	        series.add(19, 137);
+	        series.add(20, 34);
+	        series.add(21, 51);
+	        series.add(22, 67);
+	        series.add(23, 89);
+	        series.add(24, 121);
+	        series.add(25, 137);
+	        series.add(26, 137);
+	        series.add(27, 137);
+	        series.add(28, 137);
+	        series.add(29, 137);
+	        series.add(30, 137);*/
 	        //se crea un objeto XYDataset requerido mas adelante por el metodo que grafica
-	      XYDataset juegoDatos= new XYSeriesCollection(series);
+	    /*  XYDataset juegoDatos= new XYSeriesCollection(series);
         
         
 
-		 JFreeChart  chart1 = ChartFactory.createXYLineChart("Visitas", "Mes",
-                 "visitas", juegoDatos, PlotOrientation.VERTICAL, true,
-                 true, true);
+		 JFreeChart  chart1 = ChartFactory.createXYLineChart("Tendencia", "Dias",
+                 "Proyeccion Sueldo", juegoDatos, PlotOrientation.VERTICAL, true,
+                 true, true);*/
 		 
 		    BufferedImage buffImg = chart1.createBufferedImage(
 		                                500, //width
@@ -81,9 +152,34 @@ public class GraficWebController {
 		}
 	
 
-
+	public double sueldoALaFecha(){
+		if (metric1_values>metric1_optim && metric1_values>metric2_optim && metric1_values>metric3_optim)
+			 sueldoReal=cantHoras*value_metrics_optim;
+		 return sueldoReal;
+	}
 	
+	 public double sueldoProyectado(){
+		 double proyectado_metric1;
+		 double proyectado_metric2;
+		 double proyectado_metric3;
+		 proyectado_metric1=(160*metric1_values)/cantHoras;
+		 proyectado_metric2=(160*metric2_values)/cantHoras;
+		 proyectado_metric3=(160*metric3_values)/cantHoras;
+		 
+		 
+		 if (proyectado_metric1>metric1_optim && proyectado_metric2>metric2_optim && proyectado_metric3>metric3_optim)
+			 sueldoProyectado=160*value_metrics_optim;
+		 return sueldoProyectado;
+	 }
 	 
+	 public Integer getMetric1_optim(){
+		 return metric1_optim;
+	 }
+	 
+	 public double getSueldoProyectado(){
+		 sueldoProyectado=sueldoProyectado();
+		 return sueldoProyectado;
+	 }
 	
 	
 }
