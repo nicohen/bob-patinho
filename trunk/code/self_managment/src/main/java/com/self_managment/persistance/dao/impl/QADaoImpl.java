@@ -15,5 +15,9 @@ public class QADaoImpl extends GenericDaoImpl<QA, Serializable> implements
 	protected Class<QA> getEntityClass() {
 		return QA.class;
 	}
+	
+	public Long sumPossiblePoints(String docket) {
+		return (Long)getHibernateTemplate().find("select sum(possiblePoints) from Stock where stockCode=?",docket).get(0);
+	}
 
 }

@@ -12,120 +12,111 @@
 </head>
 
 <body>
-						<h:outputText value="Fecha: " />
-					<h:outputText value="18/10/2010" />
-					<h:outputText value=" Campaña : Movistar" />
-					 <br/>
-					 <h:outputText value="Sueldo Fijo: 3500" />
-					 <h:outputText value="  Sueldo Variable : " />
-					 <h:outputText value="#{graficBean.sueldoProyectado}"/>
-					  <br/>
-					<rich:dataTable id="grid" width="500" rows="3" 
-					align="center" value="agente">
-					
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="Nivel de Logro" />
-						</f:facet>
-						<h:outputText value="Optimo" />
-						<br/>						
-						<h:outputText value="Objetivo" />
-						<br/>						
-						<h:outputText value="Minimo" />
-						<br/>						
-						<h:outputText value="No Satisfactorio" />						
-					</rich:column>
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="QA_Monitors" />
-						</f:facet>
-						<h:outputText value="80" />
-						<br/>						
-						<h:outputText value="50" />
-						<br/>						
-						<h:outputText value="20" />
-						<br/>						
-						<h:outputText value="10" />						
-					</rich:column>
-					
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="QA_PTS_Achieved" />
-						</f:facet>
-						<h:outputText value="50" />
-						<br/>						
-						<h:outputText value="35" />
-						<br/>						
-						<h:outputText value="15" />
-						<br/>						
-						<h:outputText value="5" />						
-					</rich:column>
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="QA_PTS_Possible" />
-						</f:facet>
-						<h:outputText value="35" />
-						<br/>						
-						<h:outputText value="15" />
-						<br/>						
-						<h:outputText value="10" />
-						<br/>						
-						<h:outputText value="5" />						
-					</rich:column>
-					</rich:dataTable>
-					<br/>								
-					<rich:dataTable id="grid" width="500" rows="3" 
-					align="center" value="Valores">
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="Agente" />
-						</f:facet>
-						<h:outputText value="Legajo 82935" />
-					</rich:column>
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="metricas" />
-						</f:facet>
-						<h:outputText value="QA_MONITORS" />
-						<br/>						
-						<h:outputText value="QA_PTS_ACHIEVED" />
-						<br/>						
-						<h:outputText value="QA_PTS_POSSIBLE" />						
-					</rich:column>
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="% a la Fecha actual" />
-						</f:facet>
-						<h:outputText value="89" />
-						<br/>						
-						<h:outputText value="47" />
-						<br/>						
-						<h:outputText value="32" />						
-					</rich:column>
-					
-					<rich:column>
-						<f:facet name="header">
-							<h:outputText value="Proyectado" />
-						</f:facet>
-						<h:outputText value="131" />
-						<br/>						
-						<h:outputText value="69" />
-						<br/>						
-						<h:outputText value="42" />						
-					</rich:column>
-					</rich:dataTable>
-					
-					
-					 <br/>
-					
-					<a4j:mediaOutput element="img"
-                 	cacheable="false"
-                	 session="true"
-                 	createContent="#{graficBean.generaGrafico}"
-                 	mimeType="image/jpeg" />	
-				
-			
-				
-		
+<h:outputText value="Fecha: " /><h:outputText value="#{graficBean.today}" /><br />
+<h:outputText value="Campaña: " /><h:outputText value="#{graficBean.currentCampaign}" /><br />
+<h:outputText value="Sueldo Fijo: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
+<h:outputText value="Sueldo Variable Proyectado: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
+<br />
+<rich:dataTable id="grid" width="500" rows="3" align="center"
+	value="agente">
+
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="Nivel de Logro" />
+		</f:facet>
+		<h:outputText value="Optimo" />
+		<br />
+		<h:outputText value="Objetivo" />
+		<br />
+		<h:outputText value="Minimo" />
+		<br />
+		<h:outputText value="No Satisfactorio" />
+	</rich:column>
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="QA_Monitors" />
+		</f:facet>
+		<h:outputText value="80" />
+		<br />
+		<h:outputText value="50" />
+		<br />
+		<h:outputText value="20" />
+		<br />
+		<h:outputText value="10" />
+	</rich:column>
+
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="QA_PTS_Achieved" />
+		</f:facet>
+		<h:outputText value="50" />
+		<br />
+		<h:outputText value="35" />
+		<br />
+		<h:outputText value="15" />
+		<br />
+		<h:outputText value="5" />
+	</rich:column>
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="QA_PTS_Possible" />
+		</f:facet>
+		<h:outputText value="35" />
+		<br />
+		<h:outputText value="15" />
+		<br />
+		<h:outputText value="10" />
+		<br />
+		<h:outputText value="5" />
+	</rich:column>
+</rich:dataTable>
+<br />
+<rich:dataTable id="grid" width="500" rows="3" align="center"
+	value="Valores">
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="Agente" />
+		</f:facet>
+		<h:outputText value="Legajo 82935" />
+	</rich:column>
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="metricas" />
+		</f:facet>
+		<h:outputText value="QA_MONITORS" />
+		<br />
+		<h:outputText value="QA_PTS_ACHIEVED" />
+		<br />
+		<h:outputText value="QA_PTS_POSSIBLE" />
+	</rich:column>
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="% a la Fecha actual" />
+		</f:facet>
+		<h:outputText value="89" />
+		<br />
+		<h:outputText value="47" />
+		<br />
+		<h:outputText value="32" />
+	</rich:column>
+
+	<rich:column>
+		<f:facet name="header">
+			<h:outputText value="Proyectado" />
+		</f:facet>
+		<h:outputText value="131" />
+		<br />
+		<h:outputText value="69" />
+		<br />
+		<h:outputText value="42" />
+	</rich:column>
+</rich:dataTable>
+
+
+<br />
+
+<a4j:mediaOutput element="img" cacheable="false" session="true"
+	createContent="#{graficBean.generaGrafico}" mimeType="image/jpeg" />
+
 </body>
 </html>

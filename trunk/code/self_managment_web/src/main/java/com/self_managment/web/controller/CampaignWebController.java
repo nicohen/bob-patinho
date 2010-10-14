@@ -38,7 +38,6 @@ public class CampaignWebController {
     private Metric metric;
     private CampaignMetric campaignMetric;
     private List<SelectItem> metrics;
-    private boolean canAddMetric;
     private boolean editMode;
 
     public CampaignWebController() {
