@@ -17,7 +17,7 @@ public class QADaoImpl extends GenericDaoImpl<QA, Serializable> implements
 	}
 	
 	public Long sumPossiblePoints(String docket) {
-		return (Long)getHibernateTemplate().find("select sum(possiblePoints) from Stock where stockCode=?",docket).get(0);
+		return (Long)getHibernateTemplate().find("select sum(posible_points_quantity) from qa where docket=?",docket).get(0);
 	}
 
 }

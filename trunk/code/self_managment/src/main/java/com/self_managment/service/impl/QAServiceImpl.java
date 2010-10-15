@@ -51,4 +51,9 @@ public class QAServiceImpl implements QAService {
 		qaDao.update(transientObject);
 	}
 
+	@Override
+	public Long sumPossiblePoints(String docket) {
+		return qaDao.sumPossiblePoints(docket);
+	}
+
 }

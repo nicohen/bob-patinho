@@ -3,7 +3,6 @@ package com.self_managment.service.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

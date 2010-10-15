@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.jsf.FacesContextUtils;
 
 import com.self_managment.model.entity.Agent;
+import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.service.AgentService;
 import com.self_managment.service.QAService;
 
@@ -57,6 +59,8 @@ public class GraficWebController {
 	private String currentCampaign;
 	private double sueldoFijo;
 	private double sueldoVariableProyectado;
+	private List<CampaignMetric> metrics;
+	private String agentName;
 	
 	ApplicationContext ctx = FacesContextUtils
 	.getWebApplicationContext(FacesContext.getCurrentInstance());
@@ -104,7 +108,7 @@ public class GraficWebController {
 		double proyectado_metric2;
 		double proyectado_metric3;
 		
-//		List<QA> qas = qaService.findAllByProperty("agent", currentAgent);
+//		List<QA> qas = qaService.sumPossiblePoints("1");
 //		qas.get(0).getPk().getAgent().getGrossSalary()
 		
 		proyectado_metric1 = (160 * metric1_values) / cantHoras;
@@ -160,6 +164,22 @@ public class GraficWebController {
 
 	public double getSueldoVariableProyectado() {
 		return sueldoVariableProyectado;
+	}
+
+	public void setMetrics(List<CampaignMetric> metrics) {
+		this.metrics = metrics;
+	}
+
+	public List<CampaignMetric> getMetrics() {
+		return currentAgent.getCampaign().getCampaignMetric();
+	}
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+
+	public String getAgentName() {
+		return currentAgent.getName();
 	}
 
 }

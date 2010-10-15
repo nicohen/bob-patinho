@@ -6,4 +6,5 @@ import com.self_managment.model.entity.QA;
 
 public interface QAService extends CRUDService<QA, Serializable> {
 
+	public Long sumPossiblePoints(String docket);
 }
