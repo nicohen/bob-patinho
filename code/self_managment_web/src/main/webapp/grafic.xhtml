@@ -12,111 +12,91 @@
 </head>
 
 <body>
-<h:outputText value="Fecha: " /><h:outputText value="#{graficBean.today}" /><br />
-<h:outputText value="Campaña: " /><h:outputText value="#{graficBean.currentCampaign}" /><br />
-<h:outputText value="Sueldo Fijo: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
-<h:outputText value="Sueldo Variable Proyectado: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
-<br />
-<rich:dataTable id="grid" width="500" rows="3" align="center"
-	value="agente">
 
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="Nivel de Logro" />
-		</f:facet>
-		<h:outputText value="Optimo" />
-		<br />
-		<h:outputText value="Objetivo" />
-		<br />
-		<h:outputText value="Minimo" />
-		<br />
-		<h:outputText value="No Satisfactorio" />
-	</rich:column>
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="QA_Monitors" />
-		</f:facet>
-		<h:outputText value="80" />
-		<br />
-		<h:outputText value="50" />
-		<br />
-		<h:outputText value="20" />
-		<br />
-		<h:outputText value="10" />
-	</rich:column>
+<f:view>
+	<f:loadBundle basename="messages" var="msg" />
+	<h:form id="graphicForm">
 
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="QA_PTS_Achieved" />
-		</f:facet>
-		<h:outputText value="50" />
+		<h:outputText value="Nombre: " /><h:outputText value="#{graficBean.agentName}" /><br />
+		<h:outputText value="Fecha: " /><h:outputText value="#{graficBean.today}" /><br />
+		<h:outputText value="Campaña: " /><h:outputText value="#{graficBean.currentCampaign}" /><br />
+		<h:outputText value="Sueldo Fijo: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
+		<h:outputText value="Sueldo Variable Proyectado: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
 		<br />
-		<h:outputText value="35" />
-		<br />
-		<h:outputText value="15" />
-		<br />
-		<h:outputText value="5" />
-	</rich:column>
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="QA_PTS_Possible" />
-		</f:facet>
-		<h:outputText value="35" />
-		<br />
-		<h:outputText value="15" />
-		<br />
-		<h:outputText value="10" />
-		<br />
-		<h:outputText value="5" />
-	</rich:column>
-</rich:dataTable>
-<br />
-<rich:dataTable id="grid" width="500" rows="3" align="center"
-	value="Valores">
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="Agente" />
-		</f:facet>
-		<h:outputText value="Legajo 82935" />
-	</rich:column>
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="metricas" />
-		</f:facet>
-		<h:outputText value="QA_MONITORS" />
-		<br />
-		<h:outputText value="QA_PTS_ACHIEVED" />
-		<br />
-		<h:outputText value="QA_PTS_POSSIBLE" />
-	</rich:column>
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="% a la Fecha actual" />
-		</f:facet>
-		<h:outputText value="89" />
-		<br />
-		<h:outputText value="47" />
-		<br />
-		<h:outputText value="32" />
-	</rich:column>
+		
+		<table border="1" class="dr-table rich-table" align="center">
+            <thead class="dr-table-thead">
+                <tr class="dr-table-header rich-table-header">
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Nivel de Logro" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Optimo" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Objetivo" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Minimo" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="No Satisfactorio" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <a4j:repeat value="#{graficBean.metrics}" var="metric">
+                    <tr>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="#{metric.pk.metric}" />
+                        </td>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="#{metric.optim}" />
+                        </td>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="#{metric.objective}" />
+                        </td>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="#{metric.minimum}" />
+                        </td>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="#{metric.unsatisfactory}" />
+                        </td>
+                    </tr>
+                </a4j:repeat>
+            </tbody>
+        </table>
 
-	<rich:column>
-		<f:facet name="header">
-			<h:outputText value="Proyectado" />
-		</f:facet>
-		<h:outputText value="131" />
+		<table border="1" class="dr-table rich-table" align="center">
+            <thead class="dr-table-thead">
+                <tr class="dr-table-header rich-table-header">
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Métricas" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="% a la Fecha actual" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="% proyectado" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <a4j:repeat value="#{graficBean.metrics}" var="metric">
+                    <tr>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="#{metric.pk.metric}" />
+                        </td>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="1" />
+                        </td>
+                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
+                            <h:outputText value="2" />
+                        </td>
+                    </tr>
+                </a4j:repeat>
+            </tbody>
+        </table>
+		
 		<br />
-		<h:outputText value="69" />
-		<br />
-		<h:outputText value="42" />
-	</rich:column>
-</rich:dataTable>
+		
+		<a4j:mediaOutput element="img" cacheable="false" session="true"
+			createContent="#{graficBean.generaGrafico}" mimeType="image/jpeg" />
+	</h:form>
+
+	<a4j:status id="status" onstart="#{rich:component('wait')}.show()"
+		onstop="#{rich:component('wait')}.hide()" />
 
 
-<br />
-
-<a4j:mediaOutput element="img" cacheable="false" session="true"
-	createContent="#{graficBean.generaGrafico}" mimeType="image/jpeg" />
+	<rich:modalPanel id="wait" autosized="true" width="32" height="32"
+		moveable="false" resizeable="false">
+		<h:graphicImage value="/images/Busy-icon.gif" />
+	</rich:modalPanel>
+</f:view>
 
 </body>
 </html>
