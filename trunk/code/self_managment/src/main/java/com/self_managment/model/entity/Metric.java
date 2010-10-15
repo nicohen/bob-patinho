@@ -9,7 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.self_managment.model.metric.MetricStrategy;
 
 @Entity
 @Table(name = "metric", catalog = "self_managment", uniqueConstraints = { @UniqueConstraint(columnNames = "METRIC_CODE") })
@@ -50,6 +56,18 @@ public class Metric implements Serializable {
 
     public Metric() {
 	super();
+    }
+    
+    @Transient
+    public Double execute(Agent agent) {
+    	ApplicationContext appContext = new ClassPathXmlApplicationContext(
+		"spring/config/beanlocations.xml");
+
+    	// La idea seria obtener la metrica con el id.
+    	// Seria algo asi:  (MetricStrategy) appContext.getBean(id);
+    	MetricStrategy metric = (MetricStrategy) appContext.getBean("metricQAPossiblePoints");
+    	
+    	return metric.execute(agent);
     }
 
     public Integer getId() {
