@@ -41,22 +41,22 @@
                             <h:outputText value="#{metric.pk.metric}" />
                         </td>
                         <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.optim}" />
+                            <h:outputText value="#{metric.pk.metric.optimSign}" /><h:outputText value="#{metric.optim}" /><h:outputText value="#{metric.pk.metric.unit}" />
                         </td>
                         <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.objective}" />
+                            <h:outputText value="#{metric.pk.metric.objetiveSign}" /><h:outputText value="#{metric.objective}" /><h:outputText value="#{metric.pk.metric.unit}" />
                         </td>
                         <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.minimum}" />
+                            <h:outputText value="#{metric.pk.metric.minimumSign}" /><h:outputText value="#{metric.minimum}" /><h:outputText value="#{metric.pk.metric.unit}" />
                         </td>
                         <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.unsatisfactory}" />
+                            <h:outputText value="#{metric.pk.metric.unsatisfactorySign}" /><h:outputText value="#{metric.unsatisfactory}" /><h:outputText value="#{metric.pk.metric.unit}" />
                         </td>
                     </tr>
                 </a4j:repeat>
             </tbody>
         </table>
-
+		<br />
 		<table border="1" class="dr-table rich-table" align="center">
             <thead class="dr-table-thead">
                 <tr class="dr-table-header rich-table-header">

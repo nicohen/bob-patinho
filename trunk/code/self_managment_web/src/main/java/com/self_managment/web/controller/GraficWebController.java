@@ -22,6 +22,7 @@ import org.springframework.web.jsf.FacesContextUtils;
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.service.AgentService;
+import com.self_managment.service.MetricService;
 import com.self_managment.service.QAService;
 
 @Component("graficBean")
@@ -67,6 +68,7 @@ public class GraficWebController {
 	
 	AgentService agentService = (AgentService) ctx.getBean("agentService");
 	QAService qaService = (QAService) ctx.getBean("qaService");
+	MetricService metricService = (MetricService) ctx.getBean("metricService");
 
 	Agent currentAgent = agentService.findById(1); 
 	
@@ -171,7 +173,10 @@ public class GraficWebController {
 	}
 
 	public List<CampaignMetric> getMetrics() {
-		return currentAgent.getCampaign().getCampaignMetric();
+		if(metrics==null) {
+			metrics = currentAgent.getCampaign().getCampaignMetric();
+		}
+		return metrics;
 	}
 
 	public void setAgentName(String agentName) {
