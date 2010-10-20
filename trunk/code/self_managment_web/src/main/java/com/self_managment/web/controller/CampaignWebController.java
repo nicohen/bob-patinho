@@ -52,6 +52,10 @@ public class CampaignWebController {
 		.getBean("supervisorService");
     }
 
+    public void onload() {
+	campaigns = service.findAll();
+    }
+
     public String addSupervisor() {
 	supervisor.setCampaign(campaign);
 	if (campaign.getSupervisors() == null) {
@@ -109,7 +113,7 @@ public class CampaignWebController {
 	    e.printStackTrace();
 	} finally {
 	    campaigns = service.findAll();
-	    
+
 	}
 
 	return "";

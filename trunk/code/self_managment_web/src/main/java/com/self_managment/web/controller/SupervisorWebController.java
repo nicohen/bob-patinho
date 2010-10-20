@@ -2,13 +2,10 @@ package com.self_managment.web.controller;
 
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.jsf.FacesContextUtils;
 
 import com.self_managment.model.entity.Supervisor;
 import com.self_managment.service.CampaignService;
@@ -26,11 +23,12 @@ public class SupervisorWebController {
     private boolean editMode;
 
     public SupervisorWebController() {
-	ApplicationContext ctx = FacesContextUtils
-		.getWebApplicationContext(FacesContext.getCurrentInstance());
+	service = (SupervisorService) JSFUtil.getBean("supervisorService");
+	campaignService = (CampaignService) JSFUtil.getBean("campaignService");
+    }
 
-	service = (SupervisorService) ctx.getBean("supervisorService");
-	campaignService = (CampaignService) ctx.getBean("campaignService");
+    public void onload() {
+	supervisors = service.findAll();
     }
 
     public List<Supervisor> getSupervisors() {

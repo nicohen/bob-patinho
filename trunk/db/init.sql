@@ -1,7 +1,8 @@
-DELETE FROM campaign_metric;
+﻿DELETE FROM qa;
 DELETE FROM agent;
 DELETE FROM campaign;
 DELETE FROM metric;
+DELETE FROM campaign_metric;
 DELETE FROM supervisor;
 DELETE FROM segurity;
 

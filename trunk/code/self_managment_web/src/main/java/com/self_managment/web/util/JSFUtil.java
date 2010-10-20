@@ -7,11 +7,21 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.jsf.FacesContextUtils;
+
 public class JSFUtil {
     public static void addErrorMessages(List<String> messages) {
 	for (String message : messages) {
 	    addErrorMessage(message);
 	}
+    }
+
+    public static Object getBean(String name) {
+	ApplicationContext ctx = FacesContextUtils
+		.getWebApplicationContext(FacesContext.getCurrentInstance());
+
+	return ctx.getBean(name);
     }
 
     public static void addErrorMessage(String msg) {
