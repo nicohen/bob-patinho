@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -21,6 +23,8 @@ import org.springframework.web.jsf.FacesContextUtils;
 
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
+import com.self_managment.model.entity.QA;
+import com.self_managment.model.entity.Segurity;
 import com.self_managment.service.AgentService;
 import com.self_managment.service.MetricService;
 import com.self_managment.service.QAService;
@@ -60,6 +64,8 @@ public class GraficWebController {
 	private String currentCampaign;
 	private double sueldoFijo;
 	private double sueldoVariableProyectado;
+	private Integer metricaCalculada;
+	private Integer metricaCalculadaProy;
 	private List<CampaignMetric> metrics;
 	private String agentName;
 	
@@ -69,11 +75,22 @@ public class GraficWebController {
 	AgentService agentService = (AgentService) ctx.getBean("agentService");
 	QAService qaService = (QAService) ctx.getBean("qaService");
 	MetricService metricService = (MetricService) ctx.getBean("metricService");
+	
+	private List<QA> QAList;
+	  private QA qa = new QA();
 
 	Agent currentAgent = agentService.findById(1); 
+	Integer sumaAchieved=0;
+	Integer sumaPossible=0;
+	Integer sumaTotal=0;
+	org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries("Linea de Crecimiento");
+	
+	
+	
+	Integer CantDias=0;
 	
 	public void generaGrafico(OutputStream out, Object data) throws IOException {
-		org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries("Linea de Crecimiento");
+		
 		pop.add(new Day(1, 10, 2010), 0);
 		pop.add(new Day(18, 10, 2010), sueldoALaFecha());
 		pop.add(new Day(30, 10, 2010), sueldoProyectado());
@@ -82,7 +99,7 @@ public class GraficWebController {
 		dataset.addSeries(pop);
 
 		JFreeChart chart1 = ChartFactory.createTimeSeriesChart("Tendencia",
-				"Dias", "Proyeccion Sueldo", dataset, true, true, false);
+				"Dias", "Proyeccion Metrica", dataset, true, true, false);
 
 		BufferedImage buffImg = chart1.createBufferedImage(500, // width
 				375, // height
@@ -185,6 +202,44 @@ public class GraficWebController {
 
 	public String getAgentName() {
 		return currentAgent.getName();
+	}
+	
+	public Integer metricCalculate(){
+		QAList=qaService.findAll();
+		Iterator it = QAList.iterator();
+		metrics = currentAgent.getCampaign().getCampaignMetric();
+		Iterator it1 = metrics.iterator();
+		CantDias=0;
+		
+		while (it.hasNext())
+		{
+		
+		   QA qa = (QA)it.next();
+		  
+		   if (qa.getAgent().getDocket().equals(currentAgent.getDocket())){
+			   CantDias=CantDias+1;
+			   sumaAchieved=sumaAchieved+qa.getAchievedPointsQuantity();
+			   sumaPossible=sumaPossible+qa.getPosiblePointsQuantity();
+			   sumaTotal=sumaTotal+qa.getAchievedPointsQuantity()+qa.getPosiblePointsQuantity();
+			
+			   
+			   
+		   }
+		}
+		
+		
+		return sumaTotal;
+	}
+	
+
+	public Integer getMetricCalculate() {
+		metricaCalculada = metricCalculate();
+		return metricaCalculada;
+	}
+	
+	public Integer getMetricCalculateProy() {
+		metricaCalculadaProy = (30-CantDias)*sumaTotal;
+		return metricaCalculadaProy;
 	}
 
 }
