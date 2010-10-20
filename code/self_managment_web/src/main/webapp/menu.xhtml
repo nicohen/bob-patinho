@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:acegijsf="http://sourceforge.net/projects/jsf-comp/acegijsf">
 <body>
 <f:view>
 	<f:loadBundle basename="messages" var="msg" />
@@ -15,11 +16,13 @@
 					<h:outputText value="#{msg['menu.campaigns']}" />
 				</h:outputLink>
 			</rich:menuItem>
+
 			<rich:menuItem submitMode="none">
 				<h:outputLink value="/self_managment_web/supervisorCRUD.jsf">
 					<h:outputText value="#{msg['menu.supervisors']}" />
 				</h:outputLink>
 			</rich:menuItem>
+
 			<rich:menuItem submitMode="none">
 				<h:outputLink value="/self_managment_web/grafic.jsf">
 					<h:outputText value="Salario" />
@@ -27,6 +30,11 @@
 			</rich:menuItem>
 		</rich:toolBar>
 	</a4j:form>
+	<acegijsf:authorize ifAllGranted="ROLE_ADMIN">
+   Agregar los componentes que solo seran visibles para ROLE_ADMIN.
+</acegijsf:authorize>
+
+
 	<rich:spacer height="5" />
 </f:view>
 </body>

@@ -21,28 +21,51 @@
 	<converter>
 		<converter-id>
 			com.self_managment.web.converter.MetricConverter
-		</converter-id>				
+		</converter-id>
 		<converter-class>
 			com.self_managment.web.converter.MetricConverter
 		</converter-class>
 	</converter>
-	
+
 	<converter>
 		<converter-id>
 			com.self_managment.web.converter.SupervisorConverter
-		</converter-id>				
+		</converter-id>
 		<converter-class>
 			com.self_managment.web.converter.SupervisorConverter
 		</converter-class>
 	</converter>
-	
+
 	<converter>
 		<converter-id>
 			com.self_managment.web.converter.CampaignConverter
-		</converter-id>				
+		</converter-id>
 		<converter-class>
 			com.self_managment.web.converter.CampaignConverter
 		</converter-class>
 	</converter>
-	
+
+	<component>
+		<component-type>
+			net.sf.jsfcomp.acegijsf.Authorize
+		</component-type>
+		<component-class>
+			net.sf.jsfcomp.acegijsf.Authorize
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sf.jsfcomp.acegijsf.Authentication
+		</component-type>
+		<component-class>
+			net.sf.jsfcomp.acegijsf.Authentication
+		</component-class>
+	</component>
+
+	<lifecycle>
+		<phase-listener>
+			net.sf.jsfcomp.onload.OnLoadPhaseListener
+		</phase-listener>
+	</lifecycle>
+
 </faces-config>

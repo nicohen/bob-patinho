@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<onload-config xmlns="urn:onload-config"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:onload-config onload-config.xsd">
+
+	<navigation-rule>
+		<view-id>/campaign/campaignCRUD.xhtml</view-id>
+		<action>#{campaignBean.onload}</action>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<view-id>/supervisorCRUD.xhtml</view-id>
+		<action>#{campaignBean.onload}</action>
+	</navigation-rule>
+
+</onload-config>
