@@ -61,8 +61,8 @@
             <thead class="dr-table-thead">
                 <tr class="dr-table-header rich-table-header">
                     <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Métricas" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="% a la Fecha actual" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="% proyectado" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Fecha actual" /></th>
+                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Proyectado" /></th>
                 </tr>
             </thead>
             <tbody>
@@ -72,10 +72,10 @@
                             <h:outputText value="#{metric.pk.metric}" />
                         </td>
                         <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="1" />
+                            <h:outputText value="#{graficBean.metricCalculate}" />
                         </td>
                         <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="2" />
+                            <h:outputText value="#{graficBean.metricCalculateProy}"  />
                         </td>
                     </tr>
                 </a4j:repeat>
