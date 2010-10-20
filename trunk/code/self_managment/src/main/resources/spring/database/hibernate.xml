@@ -33,6 +33,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 				<value>com.self_managment.model.entity.Supervisor</value>
 				<value>com.self_managment.model.entity.Segurity</value>
 				<value>com.self_managment.model.entity.QA</value>
+				<value>com.self_managment.model.entity.TTS</value>
 			</list>
 		</property>
 
