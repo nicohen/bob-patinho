@@ -34,7 +34,7 @@ public class ImportFileQATest extends TestCase {
 		importFile.importFile();
 
 		assertEquals(qaService.findAllByProperty("achievedPointsQuantity", 27)
-				.get(0).getPosiblePointsQuantity(), new Integer(30));
+				.get(0).getPosiblePointsQuantity(), new Integer(35));
 
 	}
 }

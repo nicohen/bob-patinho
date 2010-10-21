@@ -1,9 +1,11 @@
 ﻿DELETE FROM qa;
+DELETE FROM tts;
+DELETE FROM summary;
 DELETE FROM agent;
+DELETE FROM supervisor;
+DELETE FROM campaign_metric;
 DELETE FROM campaign;
 DELETE FROM metric;
-DELETE FROM campaign_metric;
-DELETE FROM supervisor;
 DELETE FROM segurity;
 
 /* METRICS */
