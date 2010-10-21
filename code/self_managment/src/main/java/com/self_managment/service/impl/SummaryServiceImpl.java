@@ -6,15 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.Summary;
-
 
 import com.self_managment.persistance.dao.SummaryDao;
 
 import com.self_managment.service.SummaryService;
-
-
 
 @Service("summaryService")
 public class SummaryServiceImpl implements SummaryService {
@@ -57,6 +54,11 @@ public class SummaryServiceImpl implements SummaryService {
 		summaryDao.update(transientObject);
 	}
 
-	
+	@Override
+	public Long getAmountOfTimeInAnAvailableCallStatus(Agent agent) {
+		if (agent == null)
+			return null;
+		return summaryDao.getAmountOfTimeInAnAvailableCallStatus(agent);
+	}
 
 }

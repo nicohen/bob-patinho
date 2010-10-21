@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.self_managment.model.entity.Agent;
-import com.self_managment.service.QAService;
+import com.self_managment.service.SummaryService;
 
-@Component("metricQAPossiblePoints")
-public class MetricQAPossiblePoints implements MetricStrategy {
+@Component("AVAIL_TM")
+public class MetricAmountOfTimeInAnAvailableCallStatus implements
+		MetricStrategy {
 	@Autowired
-	private QAService qaService;
+	private SummaryService summaryService;
 
 	@Override
 	public Number execute(Agent agent) {
-		// return qaService.getPossiblePoints(agent);
-		return 2.0;
+		return summaryService.getAmountOfTimeInAnAvailableCallStatus(agent);
 	}
 
 }
