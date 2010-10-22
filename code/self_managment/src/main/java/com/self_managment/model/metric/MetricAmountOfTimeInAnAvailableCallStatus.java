@@ -17,4 +17,10 @@ public class MetricAmountOfTimeInAnAvailableCallStatus implements
 		return summaryService.getAmountOfTimeInAnAvailableCallStatus(agent);
 	}
 
+	@Override
+	public String getMetricCode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

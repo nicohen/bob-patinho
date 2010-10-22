@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -24,7 +22,8 @@ import org.springframework.web.jsf.FacesContextUtils;
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.model.entity.QA;
-import com.self_managment.model.entity.Segurity;
+import com.self_managment.model.metric.MetricQAPossiblePoints;
+import com.self_managment.model.metric.MetricStrategy;
 import com.self_managment.service.AgentService;
 import com.self_managment.service.MetricService;
 import com.self_managment.service.QAService;
@@ -68,29 +67,25 @@ public class GraficWebController {
 	private Integer metricaCalculadaProy;
 	private List<CampaignMetric> metrics;
 	private String agentName;
-	
+
 	ApplicationContext ctx = FacesContextUtils
-	.getWebApplicationContext(FacesContext.getCurrentInstance());
-	
+			.getWebApplicationContext(FacesContext.getCurrentInstance());
+
 	AgentService agentService = (AgentService) ctx.getBean("agentService");
 	QAService qaService = (QAService) ctx.getBean("qaService");
 	MetricService metricService = (MetricService) ctx.getBean("metricService");
-	
-	private List<QA> QAList;
-	  private QA qa = new QA();
 
-	Agent currentAgent = agentService.findById(1); 
-	Integer sumaAchieved=0;
-	Integer sumaPossible=0;
-	Integer sumaTotal=0;
-	org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries("Linea de Crecimiento");
-	
-	
-	
-	Integer CantDias=0;
-	
+	Agent currentAgent = agentService.findById(1);
+
+	Double QAPossiblePoints;
+
+	org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
+			"Linea de Crecimiento");
+
+	Integer CantDias = 0;
+
 	public void generaGrafico(OutputStream out, Object data) throws IOException {
-		
+
 		pop.add(new Day(1, 10, 2010), 0);
 		pop.add(new Day(18, 10, 2010), sueldoALaFecha());
 		pop.add(new Day(30, 10, 2010), sueldoProyectado());
@@ -126,10 +121,10 @@ public class GraficWebController {
 		double proyectado_metric1;
 		double proyectado_metric2;
 		double proyectado_metric3;
-		
-//		List<QA> qas = qaService.sumPossiblePoints("1");
-//		qas.get(0).getPk().getAgent().getGrossSalary()
-		
+
+		// List<QA> qas = qaService.sumPossiblePoints("1");
+		// qas.get(0).getPk().getAgent().getGrossSalary()
+
 		proyectado_metric1 = (160 * metric1_values) / cantHoras;
 		proyectado_metric2 = (160 * metric2_values) / cantHoras;
 		proyectado_metric3 = (160 * metric3_values) / cantHoras;
@@ -163,9 +158,9 @@ public class GraficWebController {
 	}
 
 	public String getCurrentCampaign() {
-		if(this.currentCampaign==null) {
+		if (this.currentCampaign == null) {
 			this.currentCampaign = currentAgent.getCampaign().getName();
-		} 
+		}
 		return this.currentCampaign;
 	}
 
@@ -190,7 +185,7 @@ public class GraficWebController {
 	}
 
 	public List<CampaignMetric> getMetrics() {
-		if(metrics==null) {
+		if (metrics == null) {
 			metrics = currentAgent.getCampaign().getCampaignMetric();
 		}
 		return metrics;
@@ -203,42 +198,26 @@ public class GraficWebController {
 	public String getAgentName() {
 		return currentAgent.getName();
 	}
-	
-	public Integer metricCalculate(){
-		QAList=qaService.findAll();
-		Iterator it = QAList.iterator();
-		metrics = currentAgent.getCampaign().getCampaignMetric();
-		Iterator it1 = metrics.iterator();
-		CantDias=0;
+
+	public Integer metricCalculate() {
+		CantDias = 0;
+		MetricStrategy metricStrategy = new MetricQAPossiblePoints();
+		QAPossiblePoints = metricStrategy.execute(currentAgent);
 		
-		while (it.hasNext())
-		{
-		
-		   QA qa = (QA)it.next();
-		  
-		   if (qa.getAgent().getDocket().equals(currentAgent.getDocket())){
-			   CantDias=CantDias+1;
-			   sumaAchieved=sumaAchieved+qa.getAchievedPointsQuantity();
-			   sumaPossible=sumaPossible+qa.getPosiblePointsQuantity();
-			   sumaTotal=sumaTotal+qa.getAchievedPointsQuantity()+qa.getPosiblePointsQuantity();
-			
-			   
-			   
-		   }
-		}
-		
-		
+				CantDias = CantDias + 1;
+				QA qaMetric = null;
+				Integer sumaTotal = qaMetric.getAchievedPointsQuantity() + qaMetric.getPosiblePointsQuantity();
+
 		return sumaTotal;
 	}
-	
 
 	public Integer getMetricCalculate() {
 		metricaCalculada = metricCalculate();
 		return metricaCalculada;
 	}
-	
+
 	public Integer getMetricCalculateProy() {
-		metricaCalculadaProy = (30-CantDias)*sumaTotal;
+//		metricaCalculadaProy = (30 - CantDias) * sumaTotal;
 		return metricaCalculadaProy;
 	}
 

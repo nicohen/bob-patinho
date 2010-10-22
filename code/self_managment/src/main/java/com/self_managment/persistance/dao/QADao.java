@@ -6,5 +6,5 @@ import com.self_managment.model.entity.QA;
 
 public interface QADao extends GenericDao<QA, Serializable> {
 	
-	public Long sumPossiblePoints(String docket);
+	public Double sumPossiblePoints(Integer docket);
 }
