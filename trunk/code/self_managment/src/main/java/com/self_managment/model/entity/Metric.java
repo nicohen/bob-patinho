@@ -72,24 +72,13 @@ public class Metric implements Serializable {
 	}
     
     @Transient
-    public Double execute(Agent agent) {
+    public Number execute(Agent agent) {
     	ApplicationContext appContext = new ClassPathXmlApplicationContext(
 		"spring/config/beanlocations.xml");
 
-    	MetricStrategy metricQAPossiblePoints = (MetricStrategy) appContext.getBean("metricQAPossiblePoints");
-    	MetricStrategy metricQAMonitors = (MetricStrategy) appContext.getBean("metricQAMonitors");
-    	MetricStrategy metricQAAchievedPoints = (MetricStrategy) appContext.getBean("metricQAAchievedPoints");
+    	MetricStrategy metric = (MetricStrategy) appContext.getBean(code);
 
-    	if(this.code.equals(metricQAPossiblePoints)) {
-    		return (Double) metricQAPossiblePoints.execute(agent);
-    	} else if(this.code.equals(metricQAMonitors)) {
-    		return (Double) metricQAMonitors.execute(agent);
-    	} else if(this.code.equals(metricQAAchievedPoints)) {
-    		return (Double) metricQAAchievedPoints.execute(agent);
-    	} else {
-    		return new Double(0);
-    	}
-
+    	return metric.execute(agent);
     }
 
 	public Integer getId() {
