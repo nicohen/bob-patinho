@@ -1,21 +1,19 @@
 package com.self_managment.model.metric;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.self_managment.model.entity.Agent;
+import com.self_managment.service.QAService;
 
-@Component("metricQAAchievedPoints")
+@Component("QA_PTS_ACHIEVED")
 public class MetricQAAchievedPoints implements MetricStrategy {
+	@Autowired
+	private QAService qaService;
 
 	@Override
-	public Double execute(Agent agent) {
-		// TODO Auto-generated method stub
-		return (double)0;
-	}
-
-	@Override
-	public String getMetricCode() {
-		return "QA_PTS_ACHIEVED";
+	public Number execute(Agent agent) {
+		return qaService.sumAchievedPoints(agent.getDocket());
 	}
 
 }

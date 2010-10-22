@@ -52,8 +52,18 @@ public class QAServiceImpl implements QAService {
 	}
 
 	@Override
-	public Double sumPossiblePoints(Integer docket) {
+	public Number sumPossiblePoints(Integer docket) {
 		return qaDao.sumPossiblePoints(docket);
+	}
+
+	@Override
+	public Number sumQAMonitors(Integer docket) {
+		return qaDao.sumQAMonitors(docket);
+	}
+
+	@Override
+	public Number sumAchievedPoints(Integer docket) {
+		return qaDao.sumAchievedPoints(docket);
 	}
 
 }

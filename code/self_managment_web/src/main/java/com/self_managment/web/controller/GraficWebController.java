@@ -21,9 +21,6 @@ import org.springframework.web.jsf.FacesContextUtils;
 
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
-import com.self_managment.model.entity.QA;
-import com.self_managment.model.metric.MetricQAPossiblePoints;
-import com.self_managment.model.metric.MetricStrategy;
 import com.self_managment.service.AgentService;
 import com.self_managment.service.MetricService;
 import com.self_managment.service.QAService;
@@ -63,7 +60,6 @@ public class GraficWebController {
 	private String currentCampaign;
 	private double sueldoFijo;
 	private double sueldoVariableProyectado;
-	private Integer metricaCalculada;
 	private Integer metricaCalculadaProy;
 	private List<CampaignMetric> metrics;
 	private String agentName;
@@ -197,23 +193,6 @@ public class GraficWebController {
 
 	public String getAgentName() {
 		return currentAgent.getName();
-	}
-
-	public Integer metricCalculate() {
-		CantDias = 0;
-		MetricStrategy metricStrategy = new MetricQAPossiblePoints();
-		QAPossiblePoints = metricStrategy.execute(currentAgent);
-		
-				CantDias = CantDias + 1;
-				QA qaMetric = null;
-				Integer sumaTotal = qaMetric.getAchievedPointsQuantity() + qaMetric.getPosiblePointsQuantity();
-
-		return sumaTotal;
-	}
-
-	public Integer getMetricCalculate() {
-		metricaCalculada = metricCalculate();
-		return metricaCalculada;
 	}
 
 	public Integer getMetricCalculateProy() {

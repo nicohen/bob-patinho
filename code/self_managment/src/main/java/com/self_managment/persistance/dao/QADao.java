@@ -7,4 +7,8 @@ import com.self_managment.model.entity.QA;
 public interface QADao extends GenericDao<QA, Serializable> {
 	
 	public Double sumPossiblePoints(Integer docket);
+
+	public Number sumAchievedPoints(Integer docket);
+
+	public Number sumQAMonitors(Integer docket);
 }

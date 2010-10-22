@@ -1,22 +1,19 @@
 package com.self_managment.model.metric;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.self_managment.model.entity.Agent;
+import com.self_managment.service.QAService;
 
-@Component("metricQAMonitors")
+@Component("QA_MONITORS")
 public class MetricQAMonitors implements MetricStrategy {
+	@Autowired
+	private QAService qaService;
 
 	@Override
-	public Double execute(Agent agent) {
-		// TODO Auto-generated method stub
-		return (double)0;
+	public Number execute(Agent agent) {
+		return qaService.sumQAMonitors(agent.getDocket());
 	}
-
-	@Override
-	public String getMetricCode() {
-		return "QA_MONITORS";
-	}
-
 
 }
