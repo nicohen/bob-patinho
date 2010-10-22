@@ -11,92 +11,115 @@
 	href="style/self_managment_web.css" />
 </head>
 
-<body>
+<ui:composition template="/template.xhtml">
+	<ui:define name="body">
 
-<f:view>
-	<f:loadBundle basename="messages" var="msg" />
-	<h:form id="graphicForm">
+		<f:view>
+			<f:loadBundle basename="messages" var="msg" />
+			<h:form id="graphicForm">
 
-		<h:outputText value="Nombre: " /><h:outputText value="#{graficBean.agentName}" /><br />
-		<h:outputText value="Fecha: " /><h:outputText value="#{graficBean.today}" /><br />
-		<h:outputText value="Campaña: " /><h:outputText value="#{graficBean.currentCampaign}" /><br />
-		<h:outputText value="Sueldo Fijo: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
-		<h:outputText value="Sueldo Variable Proyectado: $" /><h:outputText value="#{graficBean.sueldoFijo}" /><br />
-		<br />
-		
-		<table border="1" class="dr-table rich-table" align="center">
-            <thead class="dr-table-thead">
-                <tr class="dr-table-header rich-table-header">
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Nivel de Logro" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Optimo" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Objetivo" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Minimo" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="No Satisfactorio" /></th>
-                </tr>
-            </thead>
-            <tbody>
-                <a4j:repeat value="#{graficBean.metrics}" var="metric">
-                    <tr>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.pk.metric}" />
-                        </td>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.pk.metric.optimSign}" /><h:outputText value="#{metric.optim}" /><h:outputText value="#{metric.pk.metric.unit}" />
-                        </td>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.pk.metric.objetiveSign}" /><h:outputText value="#{metric.objective}" /><h:outputText value="#{metric.pk.metric.unit}" />
-                        </td>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.pk.metric.minimumSign}" /><h:outputText value="#{metric.minimum}" /><h:outputText value="#{metric.pk.metric.unit}" />
-                        </td>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.pk.metric.unsatisfactorySign}" /><h:outputText value="#{metric.unsatisfactory}" /><h:outputText value="#{metric.pk.metric.unit}" />
-                        </td>
-                    </tr>
-                </a4j:repeat>
-            </tbody>
-        </table>
-		<br />
-		<table border="1" class="dr-table rich-table" align="center">
-            <thead class="dr-table-thead">
-                <tr class="dr-table-header rich-table-header">
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Métricas" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Fecha actual" /></th>
-                    <th class="dr-table-headercell rich-table-headercell"><h:outputText value="Proyectado" /></th>
-                </tr>
-            </thead>
-            <tbody>
-                <a4j:repeat value="#{graficBean.metrics}" var="metric">
-                    <tr>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="#{metric.pk.metric}" />
-                        </td>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="1" />
-                        </td>
-                        <td align="center" class="dr-subtable-cell rich-subtable-cell">
-                            <h:outputText value="1"  />
-                        </td>
-                    </tr>
-                </a4j:repeat>
-            </tbody>
-        </table>
-		
-		<br />
-		
-		<a4j:mediaOutput element="img" cacheable="false" session="true"
-			createContent="#{graficBean.generaGrafico}" mimeType="image/jpeg" />
-	</h:form>
+				<h:outputText value="Nombre: " />
+				<h:outputText value="#{graficBean.currentAgent.name}" />
+				<br />
+				<h:outputText value="Fecha: " />
+				<h:outputText value="#{graficBean.today}" />
+				<br />
+				<h:outputText value="Campaña: " />
+				<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
+				<br />
+				<h:outputText value="Sueldo Fijo: $" />
+				<h:outputText value="#{graficBean.sueldoFijo}" />
+				<br />
+				<h:outputText value="Sueldo Variable Proyectado: $" />
+				<h:outputText value="#{graficBean.sueldoFijo}" />
+				<br />
+				<br />
 
-	<a4j:status id="status" onstart="#{rich:component('wait')}.show()"
-		onstop="#{rich:component('wait')}.hide()" />
+				<table border="1" class="dr-table rich-table" align="center">
+					<thead class="dr-table-thead">
+						<tr class="dr-table-header rich-table-header">
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Nivel de Logro" /></th>
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Optimo" /></th>
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Objetivo" /></th>
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Minimo" /></th>
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="No Satisfactorio" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<a4j:repeat value="#{graficBean.metrics}" var="metric">
+							<tr>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="#{metric.pk.metric}" /></td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="#{metric.pk.metric.optimSign}" /><h:outputText
+									value="#{metric.optim}" /><h:outputText
+									value="#{metric.pk.metric.unit}" /></td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="#{metric.pk.metric.objetiveSign}" /><h:outputText
+									value="#{metric.objective}" /><h:outputText
+									value="#{metric.pk.metric.unit}" /></td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="#{metric.pk.metric.minimumSign}" /><h:outputText
+									value="#{metric.minimum}" /><h:outputText
+									value="#{metric.pk.metric.unit}" /></td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="#{metric.pk.metric.unsatisfactorySign}" /><h:outputText
+									value="#{metric.unsatisfactory}" /><h:outputText
+									value="#{metric.pk.metric.unit}" /></td>
+							</tr>
+						</a4j:repeat>
+					</tbody>
+				</table>
+				<br />
+				<table border="1" class="dr-table rich-table" align="center">
+					<thead class="dr-table-thead">
+						<tr class="dr-table-header rich-table-header">
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Métricas" /></th>
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Fecha actual" /></th>
+							<th class="dr-table-headercell rich-table-headercell"><h:outputText
+								value="Proyectado" /></th>
+						</tr>
+					</thead>
+					<tbody>
+						<a4j:repeat value="#{graficBean.metrics}" var="metric">
+							<tr>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="#{metric.pk.metric}" /></td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText binding="#{graficBean.metricOutput}"
+									value="#{graficBean.metricValue}">
+									<f:attribute name="metric" value="#{metric}" />
+								</h:outputText></td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+								<h:outputText value="1" /></td>
+							</tr>
+						</a4j:repeat>
+					</tbody>
+				</table>
+
+				<br />
+
+				<a4j:mediaOutput element="img" cacheable="false" session="true"
+					createContent="#{graficBean.generaGrafico}" mimeType="image/jpeg" />
+			</h:form>
+
+			<a4j:status id="status" onstart="#{rich:component('wait')}.show()"
+				onstop="#{rich:component('wait')}.hide()" />
 
 
-	<rich:modalPanel id="wait" autosized="true" width="32" height="32"
-		moveable="false" resizeable="false">
-		<h:graphicImage value="/images/Busy-icon.gif" />
-	</rich:modalPanel>
-</f:view>
+			<rich:modalPanel id="wait" autosized="true" width="32" height="32"
+				moveable="false" resizeable="false">
+				<h:graphicImage value="/images/Busy-icon.gif" />
+			</rich:modalPanel>
+		</f:view>
 
-</body>
+	</ui:define>
+</ui:composition>
 </html>
