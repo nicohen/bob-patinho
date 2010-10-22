@@ -52,7 +52,7 @@ public class QAServiceImpl implements QAService {
 	}
 
 	@Override
-	public Long sumPossiblePoints(String docket) {
+	public Double sumPossiblePoints(Integer docket) {
 		return qaDao.sumPossiblePoints(docket);
 	}
 

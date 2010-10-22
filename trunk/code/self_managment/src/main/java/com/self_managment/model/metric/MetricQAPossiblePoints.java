@@ -13,8 +13,12 @@ public class MetricQAPossiblePoints implements MetricStrategy {
 
 	@Override
 	public Number execute(Agent agent) {
-		// return qaService.getPossiblePoints(agent);
-		return 2.0;
+		return qaService.sumPossiblePoints(agent.getDocket());
+	}
+
+	@Override
+	public String getMetricCode() {
+		return "QA_PTS_POSSIBLE";
 	}
 
 }

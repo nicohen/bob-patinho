@@ -33,8 +33,11 @@ public class Metric implements Serializable {
 	@Column(name = "METRIC_UNIT", unique = false, nullable = false)
 	private String unit;
 
-	@Column(name = "OPTIM_SIGN", unique = false, nullable = false)
+    @Column(name = "OPTIM_SIGN", unique = false, nullable = false)
 	private String optimSign;
+
+    @Transient
+    private Double metricValue;
 
 	@Column(name = "OBJETIVE_SIGN", unique = false, nullable = false)
 	private String objetiveSign;
@@ -58,15 +61,36 @@ public class Metric implements Serializable {
 		super();
 	}
 
-	@Transient
-	public Number execute(Agent agent) {
-		ApplicationContext appContext = new ClassPathXmlApplicationContext(
-				"spring/config/beanlocations.xml");
-
-		MetricStrategy metric = (MetricStrategy) appContext.getBean(code);
-
-		return metric.execute(agent);
+    @Transient
+    public void setMetricValue(Double metricValue) {
+		this.metricValue = metricValue;
 	}
+
+    @Transient
+	public Double getMetricValue() {
+		return metricValue;
+	}
+    
+    @Transient
+    public Double execute(Agent agent) {
+    	ApplicationContext appContext = new ClassPathXmlApplicationContext(
+		"spring/config/beanlocations.xml");
+
+    	MetricStrategy metricQAPossiblePoints = (MetricStrategy) appContext.getBean("metricQAPossiblePoints");
+    	MetricStrategy metricQAMonitors = (MetricStrategy) appContext.getBean("metricQAMonitors");
+    	MetricStrategy metricQAAchievedPoints = (MetricStrategy) appContext.getBean("metricQAAchievedPoints");
+
+    	if(this.code.equals(metricQAPossiblePoints)) {
+    		return (Double) metricQAPossiblePoints.execute(agent);
+    	} else if(this.code.equals(metricQAMonitors)) {
+    		return (Double) metricQAMonitors.execute(agent);
+    	} else if(this.code.equals(metricQAAchievedPoints)) {
+    		return (Double) metricQAAchievedPoints.execute(agent);
+    	} else {
+    		return new Double(0);
+    	}
+
+    }
 
 	public Integer getId() {
 		return id;
