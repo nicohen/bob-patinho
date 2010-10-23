@@ -56,7 +56,7 @@
 					</rich:column>
 					<rich:column width="50" style="text-align:center">
 						<f:facet name="header">
-							<h:outputText value="Action" />
+							<h:outputText value="#{msg['label.action']}" />
 						</f:facet>
 						<a4j:commandLink ajaxSingle="true" id="LnkEdit"
 							action="#{supervisorBean.setEditMode}"
@@ -65,7 +65,7 @@
 							<f:setPropertyActionListener value="#{supervisor}"
 								target="#{supervisorBean.supervisor}" />
 						</a4j:commandLink>
-						<rich:toolTip for="LnkEdit" value="Edit" />
+						<rich:toolTip for="LnkEdit" value="#{msg['label.edit']}" />
 
 						<a4j:commandLink ajaxSingle="true" id="LnkDelete"
 							oncomplete="#{rich:component('deletePanel')}.show()">
@@ -73,7 +73,7 @@
 							<f:setPropertyActionListener value="#{supervisor}"
 								target="#{supervisorBean.supervisor}" />
 						</a4j:commandLink>
-						<rich:toolTip for="LnkDelete" value="Delete" />
+						<rich:toolTip for="LnkDelete" value="#{msg['label.delete']}" />
 					</rich:column>
 					<f:facet name="footer">
 						<rich:datascroller for="grid" maxPages="15" reRender="grid" />
@@ -83,7 +83,7 @@
 
 			<rich:modalPanel id="editPanel" autosized="true" width="380">
 				<f:facet name="header">
-					<h:outputText value="Supervisor" />
+					<h:outputText value="#{msg['label.supervisor']}" />
 				</f:facet>
 				<f:facet name="controls">
 					<h:panelGroup>
@@ -170,14 +170,14 @@
 									<h:graphicImage value="/images/Button-Save-icon.png"
 										style="border:0" />
 								</a4j:commandLink>
-								<rich:toolTip for="LnkUpdate" value="Save" />
+								<rich:toolTip for="LnkUpdate" value="#{msg['label.save']}" />
 
 								<a4j:commandLink id="LnkCancel"
 									onclick="#{rich:component('editPanel')}.hide(); window.location.href=window.location.href; return false;">
 									<h:graphicImage value="/images/Button-Close-icon.png"
 										style="border:0" />
 								</a4j:commandLink>
-								<rich:toolTip for="LnkCancel" value="Cancel" />
+								<rich:toolTip for="LnkCancel" value="#{msg['label.cancel']}" />
 							</h:panelGrid>
 						</a4j:outputPanel>
 					</h:panelGrid>
@@ -186,7 +186,7 @@
 
 			<rich:modalPanel id="deletePanel" autosized="true" width="150">
 				<f:facet name="header">
-					<h:outputText value="Are you sure?" style="padding-right:15px;" />
+					<h:outputText value="#{msg['label.delete.cofirmation']}" style="padding-right:15px;" />
 				</f:facet>
 				<f:facet name="controls">
 					<h:panelGroup>
@@ -198,11 +198,11 @@
 				</f:facet>
 				<h:form>
 					<h:panelGrid columns="2">
-						<a4j:commandButton value="Delete"
+						<a4j:commandButton value="#{msg['label.delete']}"
 							action="#{supervisorBean.delete}" ajaxSingle="true"
 							oncomplete="#{rich:component('deletePanel')}.hide();"
 							reRender="grid, status" />
-						<a4j:commandButton value="Cancel"
+						<a4j:commandButton value="#{msg['label.cancel']}"
 							onclick="#{rich:component('deletePanel')}.hide(); return false;" />
 					</h:panelGrid>
 				</h:form>
