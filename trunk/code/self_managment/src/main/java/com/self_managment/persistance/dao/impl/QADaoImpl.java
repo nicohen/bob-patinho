@@ -31,7 +31,7 @@ public class QADaoImpl extends GenericDaoImpl<QA, Serializable> implements
 		cal.set(Calendar.SECOND, 0);
 
 		List<Long> result = getHibernateTemplate().find(
-    		"select sum(posible_points_quantity) from qa where docket=? and date between ? and ?",
+    		"select sum(posiblePointsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?",
     		new Object[] { docket, cal.getTime(), today });
 	    
 		return result.get(0) != null ? result.get(0) : 0L;
@@ -50,7 +50,7 @@ public class QADaoImpl extends GenericDaoImpl<QA, Serializable> implements
 		cal.set(Calendar.SECOND, 0);
 	
 		List<Long> result = getHibernateTemplate().find(
-			"select count(1) from qa where docket=? and date between ? and ?", 
+			"select sum(evaluationsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?", 
 			new Object[] { docket, cal.getTime(), today });
 	    
 		return result.get(0) != null ? result.get(0) : 0L;
@@ -69,7 +69,7 @@ public class QADaoImpl extends GenericDaoImpl<QA, Serializable> implements
 		cal.set(Calendar.SECOND, 0);
 	
 		List<Long> result = getHibernateTemplate().find(
-			"select sum(achieved_points_quantity) from qa where docket=? and date between ? and ?",
+			"select sum(achievedPointsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?",
 			new Object[] { docket, cal.getTime(), today });
 	    
 		return result.get(0) != null ? result.get(0) : 0L;
