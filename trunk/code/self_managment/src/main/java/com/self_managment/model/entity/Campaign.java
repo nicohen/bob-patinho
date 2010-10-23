@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cascade;
@@ -228,6 +229,25 @@ public class Campaign implements java.io.Serializable {
 	if (this.id == null)
 	    return "";
 	return this.id.toString() + " - " + this.name;
+    }
+
+    @Transient
+    public Double getHourValue(Agent agent) {
+	int level = 4;
+	for (CampaignMetric cm : campaignMetric) {
+	    int currentLevel = cm.getLevel(agent);
+	    level = currentLevel > level ? level : currentLevel; // get min
+	}
+
+	if (level == 3)
+	    return optimValue;
+	if (level == 2)
+	    return objetiveValue;
+	if (level == 1)
+	    return minimumValue;
+
+	return unsatisfactoryValue;
+
     }
 
 }

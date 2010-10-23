@@ -58,16 +58,16 @@ public class GraficWebController {
     private double sueldoVariableProyectado;
     private Integer metricaCalculadaProy;
     private List<CampaignMetric> metrics;
-	private String currentCampaign;
-	private double sueldoHorasExtra;
-	private double sueldoTotalProyectado;
-	private String agentName;
+    private String currentCampaign;
+    private double sueldoHorasExtra;
+    private double sueldoTotalProyectado;
+    private String agentName;
 
     AgentService agentService = (AgentService) JSFUtil.getBean("agentService");
     QAService qaService = (QAService) JSFUtil.getBean("qaService");
     MetricService metricService = (MetricService) JSFUtil
 	    .getBean("metricService");
-    TTSService ttsService = (TTSService)JSFUtil.getBean("ttsService");
+    TTSService ttsService = (TTSService) JSFUtil.getBean("ttsService");
     Agent currentAgent = agentService.findById(1);
 
     org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
@@ -190,25 +190,33 @@ public class GraficWebController {
 	return sueldoVariableProyectado;
     }
 
-	public void setAgentName(String agentName) {
-		this.agentName = agentName;
-	}
+    public void setAgentName(String agentName) {
+	this.agentName = agentName;
+    }
 
-	public String getAgentName() {
-		return currentAgent.getName();
-	}
+    public String getAgentName() {
+	return currentAgent.getName();
+    }
 
-	
-	public double getSueldoHorasExtra() {
-		//por ahora harcodeado
-		int mes = 8;
-		int anio = 2010;
-		sueldoHorasExtra = ttsService.getOvertimeSalary(currentAgent, mes, anio); 
-		return sueldoHorasExtra;
-	}
+    public double getSueldoHorasExtra() {
+	// por ahora harcodeado
+	int mes = 8;
+	int anio = 2010;
+	sueldoHorasExtra = ttsService
+		.getOvertimeSalary(currentAgent, mes, anio);
+	return sueldoHorasExtra;
+    }
 
-	public double getSueldoTotalProyectado() {
-		return sueldoFijo + getSueldoHorasExtra() + sueldoVariableProyectado;
-	}
+    public double getSueldoTotalProyectado() {
+	return sueldoFijo + getSueldoHorasExtra() + sueldoVariableProyectado;
+    }
+    
+    public Double getVariableSalary() {
+	// por ahora harcodeado
+	int mes = 8;
+	int anio = 2010;
+	return ttsService.getProductiveHours(currentAgent, mes, anio)
+		* currentAgent.getHourValue();
+    }
 
 }
