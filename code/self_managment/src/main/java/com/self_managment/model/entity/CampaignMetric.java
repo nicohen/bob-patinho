@@ -115,4 +115,43 @@ public class CampaignMetric implements java.io.Serializable {
 	this.unsatisfactory = unsatisfactory;
     }
 
+    @Transient
+    public int getLevel(Agent agent) {
+	Number result = getMetric().execute(agent);
+
+	if (applyLevel(result, optim, getMetric().getOptimSign()))
+	    return 3;
+	
+	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
+	    return 2;
+	
+	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
+	    return 1;
+
+	return 0;
+    }
+
+    @Transient
+    private boolean applyLevel(Number value, Number valueToCompare, String sign) {
+	if (value == null || valueToCompare == null || sign == null)
+	    return false;
+
+	if (sign.equals(">="))
+	    return value.doubleValue() >= valueToCompare.doubleValue();
+
+	if (sign.equals(">"))
+	    return value.doubleValue() > valueToCompare.doubleValue();
+
+	if (sign.equals("="))
+	    return value.doubleValue() == valueToCompare.doubleValue();
+
+	if (sign.equals("<"))
+	    return value.doubleValue() < valueToCompare.doubleValue();
+
+	if (sign.equals("<="))
+	    return value.doubleValue() <= valueToCompare.doubleValue();
+
+	return false;
+    }
+
 }
