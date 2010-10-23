@@ -18,23 +18,13 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>				
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 
-		<property name="annotatedClasses">
+		<property name="packagesToScan">
 			<list>
-				<value>com.self_managment.model.entity.Stock</value>
-				<value>com.self_managment.model.entity.Agent</value>
-				<value>com.self_managment.model.entity.Campaign</value>
-				<value>com.self_managment.model.entity.Metric</value>
-				<value>com.self_managment.model.entity.CampaignMetric</value>
-				<value>com.self_managment.model.entity.CampaignMetricPk</value>
-				<value>com.self_managment.model.entity.Supervisor</value>
-				<value>com.self_managment.model.entity.Segurity</value>
-				<value>com.self_managment.model.entity.QA</value>
-				<value>com.self_managment.model.entity.TTS</value>
-				<value>com.self_managment.model.entity.Summary</value>
+				<value>com.self_managment.model.entity</value>
 			</list>
 		</property>
 
