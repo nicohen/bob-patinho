@@ -22,6 +22,7 @@ import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.service.AgentService;
 import com.self_managment.service.MetricService;
 import com.self_managment.service.QAService;
+import com.self_managment.service.TTSService;
 import com.self_managment.web.util.JSFUtil;
 
 @Component("graficBean")
@@ -57,12 +58,16 @@ public class GraficWebController {
     private double sueldoVariableProyectado;
     private Integer metricaCalculadaProy;
     private List<CampaignMetric> metrics;
+	private String currentCampaign;
+	private double sueldoHorasExtra;
+	private double sueldoTotalProyectado;
+	private String agentName;
 
     AgentService agentService = (AgentService) JSFUtil.getBean("agentService");
     QAService qaService = (QAService) JSFUtil.getBean("qaService");
     MetricService metricService = (MetricService) JSFUtil
 	    .getBean("metricService");
-
+    TTSService ttsService = (TTSService)JSFUtil.getBean("ttsService");
     Agent currentAgent = agentService.findById(1);
 
     org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
@@ -184,5 +189,26 @@ public class GraficWebController {
 	    sueldoVariableProyectado = 160 * value_metrics_optim;
 	return sueldoVariableProyectado;
     }
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+
+	public String getAgentName() {
+		return currentAgent.getName();
+	}
+
+	
+	public double getSueldoHorasExtra() {
+		//por ahora harcodeado
+		int mes = 8;
+		int anio = 2010;
+		sueldoHorasExtra = ttsService.getOvertimeSalary(currentAgent, mes, anio); 
+		return sueldoHorasExtra;
+	}
+
+	public double getSueldoTotalProyectado() {
+		return sueldoFijo + getSueldoHorasExtra() + sueldoVariableProyectado;
+	}
 
 }
