@@ -9,31 +9,37 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-
 import com.self_managment.model.entity.TTS;
 import com.self_managment.persistance.dao.TTSDao;
 
 @Repository("ttsDao")
 public class TTSDaoImpl extends GenericDaoImpl<TTS, Serializable> implements
-		TTSDao {
+	TTSDao {
 
-	@Override
-	protected Class<TTS> getEntityClass() {
-		return TTS.class;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<TTS> findByAgentMonthYear(Integer docket, Integer month, Integer year) {
-		@SuppressWarnings("deprecation")
-		Calendar lowerLimit = Calendar.getInstance();
-		Calendar topLimit = Calendar.getInstance();
-		lowerLimit.set(year, month-1, 1, 0, 0, 0);
-		topLimit.set(year, month, 1, 0, 0, 0);
-		DetachedCriteria criteria = createDetachedCriteria();
-		criteria.add(Restrictions.eq("pk.agent.docket", docket));
-		criteria.add(Restrictions.lt("pk.date", topLimit.getTime()));
-		criteria.add(Restrictions.ge("bulgingDate", lowerLimit.getTime()));
-		return getHibernateTemplate().findByCriteria(criteria);
-	}
+    @Override
+    protected Class<TTS> getEntityClass() {
+	return TTS.class;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<TTS> findByAgentMonthYear(Integer docket, Integer month,
+	    Integer year) {
+	@SuppressWarnings("deprecation")
+	Calendar lowerLimit = Calendar.getInstance();
+	Calendar topLimit = Calendar.getInstance();
+	lowerLimit.set(year, month - 1, 1, 0, 0, 0);
+	topLimit.set(year, month, 1, 0, 0, 0);
+	// DetachedCriteria criteria = createDetachedCriteria();
+	// criteria.add(Restrictions.eq("pk.agent.docket", docket));
+	// criteria.add(Restrictions.lt("pk.date", topLimit.getTime()));
+	// criteria.add(Restrictions.ge("bulgingDate", lowerLimit.getTime()));
+	// return getHibernateTemplate().findByCriteria(criteria);
+
+	return getHibernateTemplate()
+		.find(
+			"from TTS where pk.agent.docket=? and pk.date between ? and ?",
+			new Object[] { docket, topLimit.getTime(),
+				lowerLimit.getTime() });
+    }
 
 }

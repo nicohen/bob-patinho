@@ -18,7 +18,6 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 

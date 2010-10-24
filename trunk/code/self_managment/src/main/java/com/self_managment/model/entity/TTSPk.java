@@ -2,7 +2,6 @@ package com.self_managment.model.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,7 +10,7 @@ public class TTSPk implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "DOCKET", nullable = false)
 	private Agent agent;
 
