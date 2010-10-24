@@ -34,9 +34,9 @@ public class MetricAmountOfTimeInAnAvailableCallStatusTest extends TestCase {
 
     public void testMetricWithResult() throws ParseException {
 	Agent agent = new Agent();
-	agent.setDocket(1);
+	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(562L, metric.execute(agent, DateUtils.getFirstDay(date),
+	assertEquals(4600L, metric.execute(agent, DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
 

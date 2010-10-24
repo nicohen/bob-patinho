@@ -33,9 +33,9 @@ public class MetricQAMonitorsTest extends TestCase {
 
     public void testMetricWithResult() throws ParseException {
 	Agent agent = new Agent();
-	agent.setDocket(1);
+	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(23L, metric.execute(agent, DateUtils.getFirstDay(date),
+	assertEquals(47L, metric.execute(agent, DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
 

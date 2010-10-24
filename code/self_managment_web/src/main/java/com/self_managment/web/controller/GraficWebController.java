@@ -71,7 +71,7 @@ public class GraficWebController {
     MetricService metricService = (MetricService) JSFUtil
 	    .getBean("metricService");
     TTSService ttsService = (TTSService) JSFUtil.getBean("ttsService");
-    Agent currentAgent = agentService.findById(1);
+    Agent currentAgent = agentService.findById(100);
 
     org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
 	    "Linea de Crecimiento");
@@ -211,7 +211,7 @@ public class GraficWebController {
 
     public double getSueldoHorasExtra() {
 	// por ahora harcodeado
-	int mes = 8;
+	int mes = 10;
 	int anio = 2010;
 	sueldoHorasExtra = ttsService
 		.getOvertimeSalary(currentAgent, mes, anio);
@@ -224,7 +224,7 @@ public class GraficWebController {
 
     public Double getVariableSalary() {
 	// por ahora harcodeado
-	int month = 8;
+	int month = 10;
 	int year = 2010;	
 	
 	return ttsService.getProductiveHours(currentAgent, month, year)
