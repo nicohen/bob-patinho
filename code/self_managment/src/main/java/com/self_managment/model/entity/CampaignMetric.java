@@ -1,5 +1,7 @@
 package com.self_managment.model.entity;
 
+import java.util.Date;
+
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
@@ -116,8 +118,8 @@ public class CampaignMetric implements java.io.Serializable {
     }
 
     @Transient
-    public int getLevel(Agent agent) {
-	Number result = getMetric().execute(agent);
+    public int getLevel(Agent agent, Date dateFrom, Date dateTo) {
+	Number result = getMetric().execute(agent, dateFrom, dateTo);
 
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;

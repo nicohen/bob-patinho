@@ -1,5 +1,7 @@
 package com.self_managment.model.metric;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,13 +10,14 @@ import com.self_managment.service.SummaryService;
 
 @Component("AVAIL_TM")
 public class MetricAmountOfTimeInAnAvailableCallStatus implements
-		MetricStrategy {
-	@Autowired
-	private SummaryService summaryService;
+	MetricStrategy {
+    @Autowired
+    private SummaryService summaryService;
 
-	@Override
-	public Number execute(Agent agent) {
-		return summaryService.getAmountOfTimeInAnAvailableCallStatus(agent);
-	}
+    @Override
+    public Number execute(Agent agent, Date dateFrom, Date dateTo) {
+	return summaryService.getAmountOfTimeInAnAvailableCallStatus(agent,
+		dateFrom, dateTo);
+    }
 
 }

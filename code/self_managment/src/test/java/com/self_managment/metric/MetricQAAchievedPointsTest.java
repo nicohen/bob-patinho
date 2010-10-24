@@ -1,5 +1,9 @@
 package com.self_managment.metric;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -9,6 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.metric.MetricStrategy;
+import com.self_managment.util.DateUtils;
 
 public class MetricQAAchievedPointsTest extends TestCase {
 
@@ -26,15 +31,19 @@ public class MetricQAAchievedPointsTest extends TestCase {
 	metric = (MetricStrategy) appContext.getBean("QA_PTS_ACHIEVED");
     }
 
-    public void testMetricWithResult() {
+    public void testMetricWithResult() throws ParseException {
 	Agent agent = new Agent();
 	agent.setDocket(1);
-	assertEquals(201L, metric.execute(agent));
+	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
+	assertEquals(201L, metric.execute(agent, DateUtils.getFirstDay(date),
+		DateUtils.getLastDay(date)));
     }
 
-    public void testMetricWithoutResult() {
+    public void testMetricWithoutResult() throws ParseException {
 	Agent agent = new Agent();
 	agent.setDocket(999);
-	assertEquals(0L, metric.execute(agent));
+	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
+	assertEquals(0L, metric.execute(agent, DateUtils.getFirstDay(date),
+		DateUtils.getLastDay(date)));
     }
 }

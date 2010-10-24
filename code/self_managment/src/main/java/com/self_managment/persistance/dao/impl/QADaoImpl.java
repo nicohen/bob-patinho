@@ -1,7 +1,6 @@
 package com.self_managment.persistance.dao.impl;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,63 +15,45 @@ public class QADaoImpl extends GenericDaoImpl<QA, Serializable> implements
 
     @Override
     protected Class<QA> getEntityClass() {
-    	return QA.class;
+	return QA.class;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Number sumPossiblePoints(Integer docket) {
-		Calendar cal = Calendar.getInstance();
-		Date today = new Date();
-		cal.setTime(today);
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
+    public Number sumPossiblePoints(Integer docket, Date dateFrom, Date dateTo) {
 
-		List<Long> result = getHibernateTemplate().find(
-    		"select sum(posiblePointsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?",
-    		new Object[] { docket, cal.getTime(), today });
-	    
-		return result.get(0) != null ? result.get(0) : 0L;
+	List<Long> result = getHibernateTemplate()
+		.find(
+			"select sum(posiblePointsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?",
+			new Object[] { docket, dateFrom, dateTo });
+
+	return result.get(0) != null ? result.get(0) : 0L;
 
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Number sumQAMonitors(Integer docket) {
-		Calendar cal = Calendar.getInstance();
-		Date today = new Date();
-		cal.setTime(today);
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-	
-		List<Long> result = getHibernateTemplate().find(
-			"select sum(evaluationsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?", 
-			new Object[] { docket, cal.getTime(), today });
-	    
-		return result.get(0) != null ? result.get(0) : 0L;
+    public Number sumQAMonitors(Integer docket, Date dateFrom, Date dateTo) {
+
+	List<Long> result = getHibernateTemplate()
+		.find(
+			"select sum(evaluationsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?",
+			new Object[] { docket, dateFrom, dateTo });
+
+	return result.get(0) != null ? result.get(0) : 0L;
 
     }
 
     @SuppressWarnings("unchecked")
     @Override
-	public Number sumAchievedPoints(Integer docket) {
-		Calendar cal = Calendar.getInstance();
-		Date today = new Date();
-		cal.setTime(today);
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-	
-		List<Long> result = getHibernateTemplate().find(
+    public Number sumAchievedPoints(Integer docket, Date dateFrom, Date dateTo) {
+
+	List<Long> result = getHibernateTemplate()
+		.find(
 			"select sum(achievedPointsQuantity) from QA where pk.agent.docket=? and pk.date between ? and ?",
-			new Object[] { docket, cal.getTime(), today });
-	    
-		return result.get(0) != null ? result.get(0) : 0L;
+			new Object[] { docket, dateFrom, dateTo });
+
+	return result.get(0) != null ? result.get(0) : 0L;
 
     }
 

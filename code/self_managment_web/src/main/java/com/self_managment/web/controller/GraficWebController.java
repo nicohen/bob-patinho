@@ -3,8 +3,10 @@ package com.self_managment.web.controller;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.html.HtmlOutputText;
@@ -23,10 +25,11 @@ import com.self_managment.service.AgentService;
 import com.self_managment.service.MetricService;
 import com.self_managment.service.QAService;
 import com.self_managment.service.TTSService;
+import com.self_managment.util.DateUtils;
 import com.self_managment.web.util.JSFUtil;
 
 @Component("graficBean")
-@Scope("session")
+@Scope("request")
 public class GraficWebController {
     public Integer metric1_optim = 80;
     public Integer metric1_objetivo = 50;
@@ -121,9 +124,17 @@ public class GraficWebController {
     }
 
     public String getMetricValue() {
+	Date date = null;
+	try {
+	    date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
+	} catch (ParseException e) {
+	}
+
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
 		.get("metric");
-	return metric.getMetric().execute(currentAgent).toString();
+	return metric.getMetric().execute(currentAgent,
+		DateUtils.getFirstDay(date), DateUtils.getLastDay(date))
+		.toString();
     }
 
     public double getSueldoFijo() {
@@ -210,13 +221,15 @@ public class GraficWebController {
     public double getSueldoTotalProyectado() {
 	return sueldoFijo + getSueldoHorasExtra() + sueldoVariableProyectado;
     }
-    
+
     public Double getVariableSalary() {
 	// por ahora harcodeado
-	int mes = 8;
-	int anio = 2010;
-	return ttsService.getProductiveHours(currentAgent, mes, anio)
-		* currentAgent.getHourValue();
+	int month = 8;
+	int year = 2010;	
+	
+	return ttsService.getProductiveHours(currentAgent, month, year)
+		* currentAgent.getHourValue(DateUtils.getFirstDay(month, year),
+			DateUtils.getLastDay(month, year));
     }
 
 }

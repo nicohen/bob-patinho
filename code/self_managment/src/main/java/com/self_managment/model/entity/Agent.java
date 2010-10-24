@@ -166,8 +166,9 @@ public class Agent implements Serializable {
     }
 
     @Transient
-    public Double getHourValue() {
-	return campaign != null ? campaign.getHourValue(this) : 0d;
+    public Double getHourValue(Date dateFrom, Date dateTo) {
+	return campaign != null ? campaign.getHourValue(this, dateFrom, dateTo)
+		: 0d;
 
     }
 

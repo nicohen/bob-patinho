@@ -16,7 +16,7 @@ public class AgentServiceImpl implements AgentService {
     @Autowired
     AgentDao agentDao;
 
-    public void setMetricDao(AgentDao agentDao) {
+    public void setAgentDao(AgentDao agentDao) {
 	this.agentDao = agentDao;
     }
 
