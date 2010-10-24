@@ -25,10 +25,10 @@
 		<param-name>org.richfaces.SKIN</param-name>
 		<param-value>blueSky</param-value>
 	</context-param>
-	<context-param>
+	<!-- <context-param>
 		<param-name>onload-config</param-name>
 		<param-value>/WEB-INF/onload-config.xml</param-value>
-	</context-param>
+	</context-param> -->
 
 	<filter>
 		<filter-name>Open Session in View Filter</filter-name>
