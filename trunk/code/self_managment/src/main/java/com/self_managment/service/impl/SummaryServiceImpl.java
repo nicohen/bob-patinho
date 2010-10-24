@@ -62,4 +62,12 @@ public class SummaryServiceImpl implements SummaryService {
 		dateFrom, dateTo);
     }
 
+    @Override
+    public Double getAverageTalkTime(Agent agent, Date dateFrom, Date dateTo) {
+	if (agent == null || dateFrom == null || dateTo == null)
+	    return null;
+	
+	return summaryDao.getAverageTalkTime(agent, dateFrom, dateTo);
+    }
+
 }
