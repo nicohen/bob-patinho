@@ -29,7 +29,7 @@ public class MetricQAPossiblePointsTest extends TestCase {
     public void testMetricWithResult() {
 	Agent agent = new Agent();
 	agent.setDocket(1);
-	assertEquals(100L, metric.execute(agent));
+	assertEquals(262L, metric.execute(agent));
     }
 
     public void testMetricWithoutResult() {

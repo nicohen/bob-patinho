@@ -19,6 +19,114 @@
 					<encoding>utf-8</encoding>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>generate-ddl</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includeProjectDependencies>
+						false
+					</includeProjectDependencies>
+					<includePluginDependencies>
+						true
+					</includePluginDependencies>
+					<executableDependency>
+						<groupId>self_managment</groupId>
+						<artifactId>self_managment</artifactId>
+					</executableDependency>
+					<mainClass>com.self_managment.ExtractDDL</mainClass>
+
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>self_managment</groupId>
+						<artifactId>self_managment</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						<type>jar</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.4</version>
+
+				<dependencies>
+					<!-- specify the dependent jdbc driver here -->
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.9</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>com.mysql.jdbc.Driver</driver>
+					<url>
+						jdbc:mysql://localhost:3306/self_managment
+					</url>
+					<username>root</username>
+					<password>root</password>
+					<!-- You can comment out username/password configurations and
+						have maven to look them up in your settings.xml using ${settingsKey}
+					-->
+					<settingsKey>sensibleKey</settingsKey>
+					<!--all executions are ignored if -Dmaven.test.skip=true-->
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>create-schema</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>target/schema.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>create-data</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<orderFile>ascending</orderFile>
+							<fileset>
+								<basedir>${basedir}</basedir>
+								<includes>
+									<include>
+										src/main/resources/test/init.sql
+									</include>
+									<include>
+										src/test/sql/test-data1.sql
+									</include>
+								</includes>
+							</fileset>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -117,7 +225,7 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.3.2.GA</version>
 		</dependency>
-		
+
 		<!-- Super CSV -->
 		<dependency>
 			<groupId>org.supercsv</groupId>

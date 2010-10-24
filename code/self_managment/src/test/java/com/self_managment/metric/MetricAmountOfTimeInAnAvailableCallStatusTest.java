@@ -30,7 +30,7 @@ public class MetricAmountOfTimeInAnAvailableCallStatusTest extends TestCase {
 	public void testMetricWithResult() {
 		Agent agent = new Agent();
 		agent.setDocket(1);
-		assertEquals(8L, metric.execute(agent));
+		assertEquals(562L, metric.execute(agent));
 	}
 
 	public void testMetricWithoutResult() {
