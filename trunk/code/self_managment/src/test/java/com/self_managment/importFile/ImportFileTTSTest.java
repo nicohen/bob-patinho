@@ -7,35 +7,31 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.self_managment.service.AgentService;
-
 import com.self_managment.service.TTSService;
 
 public class ImportFileTTSTest extends TestCase {
 
-	private ImportFile importFile;
-	private TTSService ttsService;
-	private AgentService agentService;
+    private ImportFile importFile;
+    private TTSService ttsService;
 
-	@Override
-	protected void setUp() throws Exception {
-		ApplicationContext appContext = new ClassPathXmlApplicationContext(
-				"spring/config/beanlocations.xml");
+    @Override
+    protected void setUp() throws Exception {
+	ApplicationContext appContext = new ClassPathXmlApplicationContext(
+		"spring/config/beanlocations.xml");
 
-		importFile = (ImportFile) appContext.getBean("importFileTTS");
-		ttsService = (TTSService) appContext.getBean("ttsService");
-		agentService = (AgentService) appContext.getBean("agentService");
-	}
+	importFile = (ImportFile) appContext.getBean("importFileTTS");
+	ttsService = (TTSService) appContext.getBean("ttsService");
+    }
 
-	public void testImportFile() throws IOException {
+    public void testImportFile() throws IOException {
 
-		// Save agent
-		// agents are load from hf test
+	// Save agent
+	// agents are load from hf test
 
-		importFile.importFile();
+	importFile.importFile();
 
-	/*	assertEquals(qaService.findAllByProperty("achievedPointsQuantity", 27)
-				.get(0).getPosiblePointsQuantity(), new Integer(30));*/
+	assertEquals(ttsService.findAllByProperty("pk.agent.docket", 100).get(0)
+		.getAgent().getDocket(), new Integer(100));
 
-	}
+    }
 }

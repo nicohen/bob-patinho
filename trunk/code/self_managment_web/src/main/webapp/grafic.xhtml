@@ -17,6 +17,8 @@
 		<f:view>
 			<f:loadBundle basename="messages" var="msg" />
 			<h:form id="graphicForm">
+			
+				<rich:dataTable rendered="false"/>
 
 				<h:outputText value="Nombre: " />
 				<h:outputText value="#{graficBean.currentAgent.name}" />

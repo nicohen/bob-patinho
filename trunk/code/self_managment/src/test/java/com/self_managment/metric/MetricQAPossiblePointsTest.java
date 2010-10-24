@@ -33,9 +33,9 @@ public class MetricQAPossiblePointsTest extends TestCase {
 
     public void testMetricWithResult() throws ParseException {
 	Agent agent = new Agent();
-	agent.setDocket(1);
+	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(262L, metric.execute(agent, DateUtils.getFirstDay(date),
+	assertEquals(546L, metric.execute(agent, DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
 
