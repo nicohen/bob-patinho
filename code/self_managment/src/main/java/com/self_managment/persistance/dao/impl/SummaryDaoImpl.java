@@ -33,4 +33,15 @@ public class SummaryDaoImpl extends GenericDaoImpl<Summary, Serializable>
 
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Double getAverageTalkTime(Agent agent, Date dateFrom, Date dateTo) {
+	List<Double> result = getHibernateTemplate()
+		.find(
+			"select avg(inCall*60/quantityOfCalls) from Summary where pk.agent=? and pk.date between ? and ?",
+			new Object[] { agent, dateFrom, dateTo });
+
+	return result.get(0) != null ? result.get(0) : 0D;
+    }
+
 }

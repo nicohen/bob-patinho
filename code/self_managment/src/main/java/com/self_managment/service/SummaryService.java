@@ -8,5 +8,6 @@ import com.self_managment.model.entity.Summary;
 
 public interface SummaryService extends CRUDService<Summary, Serializable> {
 	public Long getAmountOfTimeInAnAvailableCallStatus(Agent agent, Date dateFrom, Date dateTo);
+	public Double getAverageTalkTime(Agent agent, Date dateFrom, Date dateTo);
 
 }
