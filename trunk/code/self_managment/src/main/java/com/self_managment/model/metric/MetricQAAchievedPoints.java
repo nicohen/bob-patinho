@@ -1,5 +1,7 @@
 package com.self_managment.model.metric;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,8 @@ public class MetricQAAchievedPoints implements MetricStrategy {
 	private QAService qaService;
 
 	@Override
-	public Number execute(Agent agent) {
-		return qaService.sumAchievedPoints(agent.getDocket());
+	public Number execute(Agent agent, Date dateFrom, Date dateTo) {
+		return qaService.sumAchievedPoints(agent.getDocket(), dateFrom, dateTo);
 	}
 
 }

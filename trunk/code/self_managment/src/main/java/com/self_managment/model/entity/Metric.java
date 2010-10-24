@@ -1,6 +1,7 @@
 package com.self_managment.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -57,15 +58,15 @@ public class Metric implements Serializable {
     public Metric() {
 	super();
     }
-    
+
     @Transient
-    public Number execute(Agent agent) {
+    public Number execute(Agent agent, Date dateFrom, Date dateTo) {
 	ApplicationContext appContext = new ClassPathXmlApplicationContext(
 		"spring/config/beanlocations.xml");
 
 	MetricStrategy metric = (MetricStrategy) appContext.getBean(code);
 
-	return metric.execute(agent);
+	return metric.execute(agent, dateFrom, dateTo);
     }
 
     public Integer getId() {
