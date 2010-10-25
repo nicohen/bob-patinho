@@ -71,7 +71,8 @@ public class Campaign implements java.io.Serializable {
     @OneToMany(mappedBy = "campaign")
     private List<Agent> agents;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "campaign", cascade = { CascadeType.PERSIST })
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "campaign")
+    @Cascade( { org.hibernate.annotations.CascadeType.SAVE_UPDATE })
     private List<Supervisor> supervisors;
 
     // @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.campaign")

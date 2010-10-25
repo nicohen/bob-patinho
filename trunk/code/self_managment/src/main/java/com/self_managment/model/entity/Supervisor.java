@@ -34,7 +34,7 @@ public class Supervisor implements Serializable{
 	@Column(name = "SURNAME", nullable = false, length = 30)
 	private String surname;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "CAMPAIGN_ID")
 	private Campaign campaign;
 	
