@@ -134,7 +134,7 @@ public class GraficWebController {
 		.get("metric");
 	return metric.getMetric().execute(currentAgent,
 		DateUtils.getFirstDay(date), DateUtils.getLastDay(date))
-		.toString();
+		.toString() + " " + metric.getMetric().getUnit();
     }
 
     public double getSueldoFijo() {
