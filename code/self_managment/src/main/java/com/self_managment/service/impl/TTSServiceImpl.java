@@ -108,10 +108,7 @@ public class TTSServiceImpl implements TTSService {
 			dateOut.setMinutes(Integer.parseInt(aux[1]));
 			long offset = dateOut.getTime() - dateIn.getTime();
 			double workingHours = ((offset / 1000) / 60) / 60;
-			if(workingHours>8)
-			{
-				productiveHours += workingHours;
-			}
+			productiveHours += workingHours;
 		}
 		return productiveHours;
 	}
