@@ -14,9 +14,9 @@ import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.self_managment.model.metric.MetricStrategy;
+import com.self_managment.util.AppContext;
 
 @Entity
 @Table(name = "metric", catalog = "self_managment", uniqueConstraints = { @UniqueConstraint(columnNames = "METRIC_CODE") })
@@ -61,8 +61,7 @@ public class Metric implements Serializable {
 
     @Transient
     public Number execute(Agent agent, Date dateFrom, Date dateTo) {
-	ApplicationContext appContext = new ClassPathXmlApplicationContext(
-		"spring/config/beanlocations.xml");
+	ApplicationContext appContext = AppContext.getApplicationContext();
 
 	MetricStrategy metric = (MetricStrategy) appContext.getBean(code);
 
