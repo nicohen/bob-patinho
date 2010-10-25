@@ -66,17 +66,17 @@ public class GraficWebController {
     private double sueldoTotalProyectado;
     private String agentName;
 
-    AgentService agentService = (AgentService) JSFUtil.getBean("agentService");
-    QAService qaService = (QAService) JSFUtil.getBean("qaService");
-    MetricService metricService = (MetricService) JSFUtil
+    private static AgentService agentService = (AgentService) JSFUtil.getBean("agentService");
+    private static QAService qaService = (QAService) JSFUtil.getBean("qaService");
+    private static MetricService metricService = (MetricService) JSFUtil
 	    .getBean("metricService");
-    TTSService ttsService = (TTSService) JSFUtil.getBean("ttsService");
-    Agent currentAgent = agentService.findById(100);
+    private static TTSService ttsService = (TTSService) JSFUtil.getBean("ttsService");
+    private Agent currentAgent = agentService.findById(100);
 
-    org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
+    private org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
 	    "Linea de Crecimiento");
 
-    Integer CantDias = 0;
+    private Integer CantDias = 0;
 
     public void generaGrafico(OutputStream out, Object data) throws IOException {
 

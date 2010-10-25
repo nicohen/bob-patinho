@@ -28,7 +28,7 @@ public class MySessionFilter extends OpenSessionInViewFilter {
      */
     protected void closeSession(Session session, SessionFactory factory) {
 	try {
-	    session.flush();
+	    //session.flush();
 	} finally {
 	    super.closeSession(session, factory);
 	}
