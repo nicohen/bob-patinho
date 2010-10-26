@@ -35,26 +35,14 @@
 				</executions>
 				<configuration>
 					<includeProjectDependencies>
-						false
+						true
 					</includeProjectDependencies>
 					<includePluginDependencies>
-						true
-					</includePluginDependencies>
-					<executableDependency>
-						<groupId>self_managment</groupId>
-						<artifactId>self_managment</artifactId>
-					</executableDependency>
+						false
+					</includePluginDependencies>					
 					<mainClass>com.self_managment.ExtractDDL</mainClass>
-
 				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>self_managment</groupId>
-						<artifactId>self_managment</artifactId>
-						<version>1.0-SNAPSHOT</version>
-						<type>jar</type>
-					</dependency>
-				</dependencies>
+				
 			</plugin>
 
 
