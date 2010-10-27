@@ -1,6 +1,9 @@
 package com.self_managment.web.controller;
 
 import java.awt.image.BufferedImage;
+
+
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
@@ -74,18 +77,75 @@ public class GraficWebController {
     private Agent currentAgent = agentService.findById(100);
 
     private org.jfree.data.time.TimeSeries pop = new org.jfree.data.time.TimeSeries(
-	    "Linea de Crecimiento");
+	    "Puntos Acumulados");
+    private org.jfree.data.time.TimeSeries pop1 = new org.jfree.data.time.TimeSeries(
+    "Optimo");
+    private org.jfree.data.time.TimeSeries pop2 = new org.jfree.data.time.TimeSeries(
+    "Objetivo");
+    private org.jfree.data.time.TimeSeries pop3 = new org.jfree.data.time.TimeSeries(
+    "Minimo");
+    private org.jfree.data.time.TimeSeries pop4 = new org.jfree.data.time.TimeSeries(
+    "No Satisfactorio");
+    private org.jfree.data.time.TimeSeries pop5 = new org.jfree.data.time.TimeSeries(
+    "Tendencia");
 
     private Integer CantDias = 0;
+ 
 
     public void generaGrafico(OutputStream out, Object data) throws IOException {
 
+    
+
+
 	pop.add(new Day(1, 10, 2010), 0);
-	pop.add(new Day(18, 10, 2010), sueldoALaFecha());
-	pop.add(new Day(30, 10, 2010), sueldoProyectado());
+	pop.add(new Day(2, 10, 2010), 200);
+	pop.add(new Day(3, 10, 2010), 333);
+	pop.add(new Day(4, 10, 2010), 400);
+	pop.add(new Day(5, 10, 2010), 780);
+	pop.add(new Day(6, 10, 2010), 800);
+	pop.add(new Day(7, 10, 2010), 900);
+	pop.add(new Day(8, 10, 2010), 1450);
+	pop.add(new Day(9, 10, 2010), 1450);
+	pop.add(new Day(10, 10, 2010), 1470);
+	pop.add(new Day(11, 10, 2010), 1800);
+	pop.add(new Day(12, 10, 2010), 2000);
+	pop.add(new Day(13, 10, 2010), 2000);
+	pop.add(new Day(14, 10, 2010), 2000);
+	pop.add(new Day(15, 10, 2010), 2020);
+	pop.add(new Day(16, 10, 2010), 2100);
+	pop.add(new Day(17, 10, 2010), 2150);
+	pop.add(new Day(18, 10, 2010), 2300);
+	pop.add(new Day(19, 10, 2010), 2500);
+	pop.add(new Day(20, 10, 2010), 2550);
+	pop.add(new Day(21, 10, 2010), 2560);
+	pop.add(new Day(22, 10, 2010), 2590);
+	pop.add(new Day(23, 10, 2010), 2700);
+	pop.add(new Day(24, 10, 2010), 2900);
+	pop.add(new Day(25, 10, 2010), 3000);
+	pop.add(new Day(26, 10, 2010), 3100);
+	pop.add(new Day(27, 10, 2010), 3200);
+	pop.add(new Day(28, 10, 2010), 3400);
+	pop.add(new Day(29, 10, 2010), 3500);
+	pop.add(new Day(30, 10, 2010), 3500);
+	
+	pop1.add(new Day(1, 10, 2010), 3000);	
+	pop1.add(new Day(30, 10, 2010), 3000);
+	
+	pop2.add(new Day(1, 10, 2010), 2000);	
+	pop2.add(new Day(30, 10, 2010), 2000);
+	
+	pop3.add(new Day(1, 10, 2010), 1000);	
+	pop3.add(new Day(30, 10, 2010), 1000);
+	
+	pop4.add(new Day(1, 10, 2010), 500);	
+	pop4.add(new Day(30, 10, 2010), 500);
 
 	TimeSeriesCollection dataset = new TimeSeriesCollection();
 	dataset.addSeries(pop);
+	dataset.addSeries(pop1);
+	dataset.addSeries(pop2);
+	dataset.addSeries(pop3);
+	dataset.addSeries(pop4);
 
 	JFreeChart chart1 = ChartFactory.createTimeSeriesChart("Tendencia",
 		"Dias", "Proyeccion Metrica", dataset, true, true, false);
