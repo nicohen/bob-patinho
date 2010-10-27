@@ -1,12 +1,8 @@
 package com.self_managment.web.controller;
 
 import java.awt.image.BufferedImage;
-
-
-
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -90,7 +86,8 @@ public class GraficWebController {
     "Tendencia");
 
     private Integer CantDias = 0;
- 
+    
+    private Date currentPeriod = new Date();
 
     public void generaGrafico(OutputStream out, Object data) throws IOException {
 
@@ -194,14 +191,8 @@ public class GraficWebController {
     }
 
     public String getMetricValue() {
-	Date date = null;
-	try {
-	    date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	} catch (ParseException e) {
-	}
-	
-	Date dateFrom = DateUtils.getFirstDay(date);
-	Date dateTo = DateUtils.getLastDay(date);
+	Date dateFrom = DateUtils.getFirstDay(currentPeriod);
+	Date dateTo = DateUtils.getLastDay(currentPeriod);
 
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
 		.get("metric");
@@ -209,7 +200,7 @@ public class GraficWebController {
 	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(currentAgent, dateFrom, dateTo)));
 	
 	return metric.getMetric().execute(currentAgent,
-		DateUtils.getFirstDay(date), DateUtils.getLastDay(date))
+		DateUtils.getFirstDay(currentPeriod), DateUtils.getLastDay(currentPeriod))
 		.toString() + " " + metric.getMetric().getUnit();
     }
 
@@ -286,11 +277,13 @@ public class GraficWebController {
     }
 
     public double getSueldoHorasExtra() {
-	// por ahora harcodeado
-	int mes = 10;
-	int anio = 2010;
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(currentPeriod);
+	int month = cal.get(Calendar.MONTH) + 1;
+	int year = cal.get(Calendar.YEAR);
+	
 	sueldoHorasExtra = ttsService
-		.getOvertimeSalary(currentAgent, mes, anio);
+		.getOvertimeSalary(currentAgent, month, year);
 	return sueldoHorasExtra;
     }
 
@@ -299,13 +292,22 @@ public class GraficWebController {
     }
 
     public Double getVariableSalary() {
-	// por ahora harcodeado
-	int month = 10;
-	int year = 2010;	
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(currentPeriod);
+	int month = cal.get(Calendar.MONTH) + 1;
+	int year = cal.get(Calendar.YEAR);
 	
-	return ttsService.getProductiveHours(currentAgent, month, year)
+	return ttsService.getProductiveHours(currentAgent, month , year)
 		* currentAgent.getHourValue(DateUtils.getFirstDay(month, year),
 			DateUtils.getLastDay(month, year));
+    }
+
+    public Date getCurrentPeriod() {
+        return currentPeriod;
+    }
+
+    public void setCurrentPeriod(Date currentPeriod) {
+        this.currentPeriod = currentPeriod;
     }
 
 }
