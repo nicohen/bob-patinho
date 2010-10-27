@@ -23,7 +23,7 @@ public class MetricTimeInAuxStatus implements MetricStrategy {
 	Calendar cal = Calendar.getInstance();
 	cal.setTime(dateFrom);
 	// out hour - in hour
-	double productiveHours = ttService.getProductiveHours(agent, cal
+	long productiveHours = ttService.getProductiveHours(agent, cal
 		.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
 
 	return productiveHours * 60 - summaryService.getTotalLoggedTime(agent, dateFrom, dateTo);

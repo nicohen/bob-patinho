@@ -57,59 +57,79 @@ public class TTSServiceImpl implements TTSService {
 	public void update(TTS transientObject) {
 		ttsDao.update(transientObject);
 	}
+	
+	private long getExtraHours50Percent(List<TTS> dates, int workDayHours)
+	{
+		long extraHours50Percent = 0;
+		for(TTS date : dates)
+		{
+			Date dateIn = date.getDate();
+			String[] aux = date.getScheduleEntered().split(":");
+			dateIn.setHours(Integer.parseInt(aux[0]));
+			dateIn.setMinutes(Integer.parseInt(aux[1]));
+			aux = date.getScheduleGoneOut().split(":");
+			Date dateOut = date.getBulgingDate();
+			dateOut.setHours(Integer.parseInt(aux[0]));
+			dateOut.setMinutes(Integer.parseInt(aux[1]));
+			Calendar calendarIn = Calendar.getInstance();
+			calendarIn.setTime(dateIn);
+			Calendar calendarOut = Calendar.getInstance();
+			calendarOut.setTime(dateOut);
+			//Si no es fin de semana...
+			if ((calendarOut.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)&&((calendarOut.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY))&&(calendarIn.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)&&((calendarIn.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY)))
+			{
+				long offset = dateOut.getTime() - dateIn.getTime();
+				int workedHours = (int)((offset / 1000) / 60) / 60;
+				if(workedHours>workDayHours)
+				{
+					extraHours50Percent += workedHours - workDayHours;
+				}
+			}
+		}
+		return extraHours50Percent;
+	}
+	
+	private long getExtraHours100Percent(List<TTS> dates)
+	{
+		long extraHours100Percent = 0;
+		for(TTS date : dates)
+		{
+			Date dateIn = date.getDate();
+			String[] aux = date.getScheduleEntered().split(":");
+			dateIn.setHours(Integer.parseInt(aux[0]));
+			dateIn.setMinutes(Integer.parseInt(aux[1]));
+			aux = date.getScheduleGoneOut().split(":");
+			Date dateOut = date.getBulgingDate();
+			dateOut.setHours(Integer.parseInt(aux[0]));
+			dateOut.setMinutes(Integer.parseInt(aux[1]));
+			Calendar calendarIn = Calendar.getInstance();
+			calendarIn.setTime(dateIn);
+			Calendar calendarOut = Calendar.getInstance();
+			calendarOut.setTime(dateOut);
+			if ((calendarOut.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)||((calendarOut.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY))||(calendarIn.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)||((calendarIn.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)))
+			{
+				long offset = dateOut.getTime() - dateIn.getTime();
+				int workedHours = (int)((offset / 1000) / 60) / 60;
+				extraHours100Percent += workedHours;
+			}
+		}
+		return extraHours100Percent;
+	}
 
 	@SuppressWarnings("deprecation")
 	public double getOvertimeSalary(Agent agent, int month, int year)
 	{
 		List<TTS> dates = ttsDao.findByAgentMonthYear(agent.getDocket(), month, year);
-		double overtimeSalary = 0;
-		for(TTS date : dates)
-		{
-			Date dateIn = date.getDate();
-			String[] aux = date.getScheduleEntered().split(":");
-			dateIn.setHours(Integer.parseInt(aux[0]));
-			dateIn.setMinutes(Integer.parseInt(aux[1]));
-			aux = date.getScheduleGoneOut().split(":");
-			Date dateOut = date.getBulgingDate();
-			dateOut.setHours(Integer.parseInt(aux[0]));
-			dateOut.setMinutes(Integer.parseInt(aux[1]));
-			long offset = dateOut.getTime() - dateIn.getTime();
-			double workingHours = ((offset / 1000) / 60) / 60;
-			if(workingHours>8)
-			{
-				//Con los feriados tendriamos q tener una tabla y alguien q la mantenga, x ahora no le doy bola...
-				Calendar calendarIn = Calendar.getInstance();
-				calendarIn.setTime(dateIn);
-				Calendar calendarOut = Calendar.getInstance();
-				calendarOut.setTime(dateOut);
-				if ((calendarOut.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)||((calendarOut.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY))||(calendarIn.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)||((calendarIn.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)))
-					overtimeSalary += (workingHours - 8) * ((agent.getGrossSalary()/(20*8))*2);
-				else
-					overtimeSalary += (workingHours - 8) * ((agent.getGrossSalary()/(20*8))*1.5);
-			}
-		}
+		double overtimeSalary = getExtraHours50Percent(dates, agent.getWorkDayHours()) * ((agent.getGrossSalary()/(22*agent.getWorkDayHours()))*1.5);
+		overtimeSalary += getExtraHours100Percent(dates) * ((agent.getGrossSalary()/(22*agent.getWorkDayHours()))*2);		
 		return overtimeSalary;
 	}
 	
 	@SuppressWarnings("deprecation")
-	public double getProductiveHours(Agent agent, int month, int year)
+	public long getProductiveHours(Agent agent, int month, int year)
 	{
 		List<TTS> dates = ttsDao.findByAgentMonthYear(agent.getDocket(), month, year);
-		double productiveHours = 0;
-		for(TTS date : dates)
-		{
-			Date dateIn = date.getDate();
-			String[] aux = date.getScheduleEntered().split(":");
-			dateIn.setHours(Integer.parseInt(aux[0]));
-			dateIn.setMinutes(Integer.parseInt(aux[1]));
-			aux = date.getScheduleGoneOut().split(":");
-			Date dateOut = date.getBulgingDate();
-			dateOut.setHours(Integer.parseInt(aux[0]));
-			dateOut.setMinutes(Integer.parseInt(aux[1]));
-			long offset = dateOut.getTime() - dateIn.getTime();
-			double workingHours = ((offset / 1000) / 60) / 60;
-			productiveHours += workingHours;
-		}
+		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
 		return productiveHours;
 	}
 
