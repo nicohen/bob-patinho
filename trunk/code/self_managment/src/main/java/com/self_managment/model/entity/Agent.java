@@ -171,5 +171,13 @@ public class Agent implements Serializable {
 		: 0d;
 
     }
+    
+    public int getWorkDayHours()
+    {
+		int workDayHours = 9;
+		if((this.getWorkingDay()!=null)&&(this.getWorkingDay().equals("PTE")))
+			workDayHours = 7;
+		return workDayHours;
+    }
 
 }

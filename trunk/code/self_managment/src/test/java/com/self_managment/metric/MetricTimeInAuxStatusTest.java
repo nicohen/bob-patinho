@@ -14,11 +14,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.self_managment.importFile.ImportFileTTSTest;
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.metric.MetricStrategy;
+import com.self_managment.service.SummaryService;
+import com.self_managment.service.TTSService;
 import com.self_managment.util.DateUtils;
 
 public class MetricTimeInAuxStatusTest extends TestCase {
 
     private MetricStrategy metric;
+    private ApplicationContext appContext;
 
     public static Test suite() {
 	TestSuite suite = new TestSuite();
@@ -29,7 +32,7 @@ public class MetricTimeInAuxStatusTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-	ApplicationContext appContext = new ClassPathXmlApplicationContext(
+	appContext = new ClassPathXmlApplicationContext(
 		"spring/config/beanlocations.xml");
 
 	metric = (MetricStrategy) appContext.getBean("AUX_TM");
@@ -39,7 +42,10 @@ public class MetricTimeInAuxStatusTest extends TestCase {
 	Agent agent = new Agent();
 	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(1110D, metric.execute(agent, DateUtils.getFirstDay(date),
+	SummaryService summaryService = (SummaryService)appContext.getBean("summaryService");
+	TTSService ttsService = (TTSService)appContext.getBean("ttsService");
+	assertEquals((ttsService.getProductiveHours(agent, 10, 2010)* 60) - summaryService.getTotalLoggedTime(agent, DateUtils.getFirstDay(date),
+			DateUtils.getLastDay(date)), metric.execute(agent, DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
 
@@ -47,7 +53,10 @@ public class MetricTimeInAuxStatusTest extends TestCase {
 	Agent agent = new Agent();
 	agent.setDocket(999);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(0D, metric.execute(agent, DateUtils.getFirstDay(date),
+	SummaryService summaryService = (SummaryService)appContext.getBean("summaryService");
+	TTSService ttsService = (TTSService)appContext.getBean("ttsService");
+	assertEquals((ttsService.getProductiveHours(agent, 10, 2010)* 60) - summaryService.getTotalLoggedTime(agent, DateUtils.getFirstDay(date),
+			DateUtils.getLastDay(date)), metric.execute(agent, DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
 

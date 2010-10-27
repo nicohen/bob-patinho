@@ -23,7 +23,7 @@ public class TTSDaoImpl extends GenericDaoImpl<TTS, Serializable> implements
 	    Integer year) {
 
 	return getHibernateTemplate().find(
-		"from TTS where pk.agent.docket=? and bulgingDate >= ? and pk.date <= ?",
+		"from TTS where pk.agent.docket=? and bulgingDate > ? and pk.date <= ?",
 		new Object[] { docket, DateUtils.getFirstDay(month, year),
 			DateUtils.getLastDay(month, year) });
     }
