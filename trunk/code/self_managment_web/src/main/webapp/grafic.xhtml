@@ -90,6 +90,26 @@
 								</td>
 							</tr>
 						</a4j:repeat>
+						<tr>
+							<td colspan="5" align="center">
+								<h:outputText value="Valor Hora ($)"/>
+							</td>
+						</tr>
+						<tr>
+							<td/>
+							<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:green">
+								<h:outputText value="#{graficBean.currentAgent.campaign.optimValue}" />
+							</td>
+							<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:yellow">
+								<h:outputText value="#{graficBean.currentAgent.campaign.objetiveValue}" />
+							</td>
+							<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:orange">
+								<h:outputText value="#{graficBean.currentAgent.campaign.minimumValue}" />
+							</td>
+							<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:red">
+								<h:outputText value="#{graficBean.currentAgent.campaign.unsatisfactoryValue}" />
+							</td>
+						</tr>
 					</tbody>
 				</table>
 				<br />

@@ -122,6 +122,16 @@ public class GraficWebController {
 	}
 	return metrics;
     }
+    
+    private String getStyleForMetricLevel(int level) {
+	if (level == 3)
+	    return "background-color:green";
+	if (level == 2)
+	    return "background-color:yellow";
+	if (level == 1)
+	    return "background-color:orange";
+	return "background-color:red";
+    }
 
     public String getMetricValue() {
 	Date date = null;
@@ -129,9 +139,15 @@ public class GraficWebController {
 	    date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
 	} catch (ParseException e) {
 	}
+	
+	Date dateFrom = DateUtils.getFirstDay(date);
+	Date dateTo = DateUtils.getLastDay(date);
 
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
 		.get("metric");
+	
+	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(currentAgent, dateFrom, dateTo)));
+	
 	return metric.getMetric().execute(currentAgent,
 		DateUtils.getFirstDay(date), DateUtils.getLastDay(date))
 		.toString() + " " + metric.getMetric().getUnit();
