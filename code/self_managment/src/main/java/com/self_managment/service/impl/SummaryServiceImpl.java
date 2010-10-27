@@ -70,4 +70,12 @@ public class SummaryServiceImpl implements SummaryService {
 	return summaryDao.getAverageTalkTime(agent, dateFrom, dateTo);
     }
 
+    @Override
+    public Long getTotalLoggedTime(Agent agent, Date dateFrom, Date dateTo) {
+	if (agent == null || dateFrom == null || dateTo == null)
+	    return null;
+	
+	return summaryDao.getTotalLoggedTime(agent, dateFrom, dateTo);
+    }
+
 }

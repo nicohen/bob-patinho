@@ -44,4 +44,15 @@ public class SummaryDaoImpl extends GenericDaoImpl<Summary, Serializable>
 	return result.get(0) != null ? result.get(0) : 0D;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Long getTotalLoggedTime(Agent agent, Date dateFrom, Date dateTo) {
+	List<Long> result = getHibernateTemplate()
+		.find(
+			"select sum(loggeado) from Summary where pk.agent=? and pk.date between ? and ?",
+			new Object[] { agent, dateFrom, dateTo });
+
+	return result.get(0) != null ? result.get(0) : 0L;
+    }
+
 }
