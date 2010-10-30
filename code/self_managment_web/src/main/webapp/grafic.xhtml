@@ -16,15 +16,15 @@
 
 		<f:view>
 			<f:loadBundle basename="messages" var="msg" />
+			
 			<h:form id="graphicForm">
 
 				<rich:dataTable rendered="false" />
 				
-				<rich:calendar showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
+				<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
  					oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
- 					popup="false" styleClass="special"
- 					>
- 					<a4j:support event="onchanged" reRender="metricValues, mainData"/>
+ 					popup="false" styleClass="special">
+ 					<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="mainData, metricValues, grafic"/>
  				</rich:calendar>
  				
 				<h:panelGrid id="mainData" columns="4" width="80%">
@@ -161,9 +161,25 @@
 				</h:panelGrid>
 
 				<br />
+				
+				<h:panelGrid id="grafic" columns="1">
+					<h:panelGroup>				
+						<rich:comboBox id="cboMetric" 
+							value="#{graficBean.selectedMetricToDraw}"
+							size="25"
+							converter="com.self_managment.web.converter.CampaignMetricConverter">
+							<a4j:support event="onselect" reRender="img"/>
+							<f:selectItems value="#{graficBean.metricsCombo}" />							
+						</rich:comboBox>
+					</h:panelGroup>
 
-				<a4j:mediaOutput element="img" cacheable="false" session="true"
-					createContent="#{graficBean.generaGrafico}" mimeType="image/jpeg" />
+					<a4j:mediaOutput id="img" element="img" cacheable="false" session="false"
+						createContent="#{graficBean.generaGrafico}"
+						value="#{graficBean.selectedMetricToDraw}" mimeType="image/jpeg">
+						<f:param value="#{graficBean.timeStamp}" name="time" />
+					</a4j:mediaOutput>
+					
+				</h:panelGrid>
 			</h:form>
 
 			<a4j:status id="status" onstart="#{rich:component('wait')}.show()"

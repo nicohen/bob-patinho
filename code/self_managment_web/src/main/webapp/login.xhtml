@@ -1,36 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+	<title><h:outputText value="Self Management" /></title>
+	<link rel="stylesheet" type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/style/self_managment_web.css" />
+</head>
+
 <body>
 
 <f:view>
-	<h:messages />
+
+	<f:loadBundle basename="messages" var="msg" />
+	
+	<rich:messages errorClass="error" tooltip="true" showSummary="true"
+		globalOnly="true">
+		<f:facet name="errorMarker">
+			<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+		</f:facet>
+		<f:facet name="infoMarker">
+			<h:graphicImage url="/image/info.png" />
+		</f:facet>
+	</rich:messages>
+	
 	<h:form id="loginForm" prependId="false">
-		<label for="j_username"><h:outputText value="Username:" /><br />
-		</label>
-		<h:inputText id="j_username" required="true">
-		</h:inputText>
 
-		<br />
-		<br />
-		<label for="j_password"><h:outputText value="Password:" /><br />
-		</label>
-		<h:inputSecret id="j_password" required="true">
-		</h:inputSecret>
+		<h:panelGrid columns="3">
+			<h:panelGroup>
+				<label for="j_username"><h:outputText value="#{msg['label.username']}:" /></label>
+			</h:panelGroup>
+			<h:inputText id="j_username" required="true"></h:inputText>
+			<rich:message for="j_username" errorClass="error">
+				<f:facet name="errorMarker">
+					<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+				</f:facet>
+			</rich:message>
 
-		<br />
-		<br />
-		<label for="_spring_security_remember_me"> <h:outputText
-			value="Remember me" /> </label>
-		<h:selectBooleanCheckbox id="_spring_security_remember_me" />
-		<br />
+			<h:panelGroup>
+				<label for="j_password"><h:outputText value="#{msg['label.password']}:" />
+				</label>
+			</h:panelGroup>
+			<h:inputSecret id="j_password" required="true">
+			</h:inputSecret>
+			<rich:message for="j_password" errorClass="error">
+				<f:facet name="errorMarker">
+					<h:graphicImage value="/images/Error-icon.png" style="border:0" />
+				</f:facet>
+			</rich:message>
 
-		<h:commandButton type="submit" id="login"
-			action="#{loginBean.doLogin}" value="Login" />
+			<br />
+			<br />
+			<h:commandButton type="submit" id="login"
+				action="#{loginBean.doLogin}" value="#{msg['label.login']}" />
+		</h:panelGrid>
 
 	</h:form>
 </f:view>

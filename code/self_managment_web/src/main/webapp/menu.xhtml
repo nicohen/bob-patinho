@@ -28,6 +28,14 @@
 					<h:outputText value="Salario" />
 				</h:outputLink>
 			</rich:menuItem>
+			
+			<rich:toolBarGroup location="right">
+				<rich:menuItem submitMode="none">
+					<h:outputLink value="/self_managment_web/logout.jsp">
+						<h:outputText value="#{msg['menu.logout']}" />
+					</h:outputLink>
+				</rich:menuItem>
+			</rich:toolBarGroup>
 		</rich:toolBar>
 	</a4j:form>
 	<acegijsf:authorize ifAllGranted="ROLE_ADMIN">
