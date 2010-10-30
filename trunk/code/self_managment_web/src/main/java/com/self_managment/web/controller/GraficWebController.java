@@ -30,9 +30,10 @@ public class GraficWebController implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private HtmlOutputText metricOutput;
-    private String today = now();
     private double sueldoFijo;
-    private double sueldoVariableProyectado;
+    private double sueldoVariable;
+    private String lblSueldoVariable = "Sueldo Variable Proyectado";
+    private String lblSueldoTotal = "Sueldo Total Proyectado";
     private Integer metricaCalculadaProy;
     private List<CampaignMetric> metrics;
     private double sueldoHorasExtra;
@@ -65,6 +66,23 @@ public class GraficWebController implements Serializable {
 	FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 		.put("period", currentPeriod);
 	setSelectedMetricToDraw(null);
+	if(currentPeriod.getYear() ==  now().getYear() )
+	{
+		if(currentPeriod.getMonth() >=  now().getMonth() )
+		{
+			lblSueldoVariable = "Sueldo Variable Proyectado";
+			lblSueldoTotal = "Sueldo Total Proyectado";
+			return;
+		}
+	}
+	else if(currentPeriod.getYear() > now().getYear())
+	{
+		lblSueldoVariable = "Sueldo Variable Proyectado";
+		lblSueldoTotal = "Sueldo Total Proyectado";
+		return;
+	}
+	lblSueldoVariable = "Sueldo Variable";
+	lblSueldoTotal = "Sueldo Total";
     }
 
     public Agent getCurrentAgent() {
@@ -121,17 +139,19 @@ public class GraficWebController implements Serializable {
 	return currentAgent.getGrossSalary();
     }
 
-    public double getSueldoVariableProyectado() {
-	return sueldoVariableProyectado;
+    public double getSueldoVariable() {
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(getCurrentPeriod());
+    	int month = cal.get(Calendar.MONTH) + 1;
+    	int year = cal.get(Calendar.YEAR);
+
+    	return ttsService.getProductiveHours(currentAgent, month, year)
+    		* currentAgent.getHourValue(DateUtils.getFirstDay(month, year),
+    			DateUtils.getLastDay(month, year));
     }
 
-    public String getToday() {
-	return today;
-    }
-
-    private String now() {
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	return sdf.format(Calendar.getInstance().getTime());
+    private Date now() {
+	return Calendar.getInstance().getTime();
     }
 
     public void setCurrentAgent(Agent currentAgent) {
@@ -147,7 +167,7 @@ public class GraficWebController implements Serializable {
     }
 
     public void setSueldoVariableProyectado(double sueldoVariableProyectado) {
-	this.sueldoVariableProyectado = sueldoVariableProyectado;
+	this.sueldoVariable = sueldoVariableProyectado;
     }
 
     public double getSueldoHorasExtra() {
@@ -161,19 +181,8 @@ public class GraficWebController implements Serializable {
 	return sueldoHorasExtra;
     }
 
-    public double getSueldoTotalProyectado() {
-	return sueldoFijo + getSueldoHorasExtra() + sueldoVariableProyectado;
-    }
-
-    public Double getVariableSalary() {
-	Calendar cal = Calendar.getInstance();
-	cal.setTime(getCurrentPeriod());
-	int month = cal.get(Calendar.MONTH) + 1;
-	int year = cal.get(Calendar.YEAR);
-
-	return ttsService.getProductiveHours(currentAgent, month, year)
-		* currentAgent.getHourValue(DateUtils.getFirstDay(month, year),
-			DateUtils.getLastDay(month, year));
+    public double getSueldoTotal() {
+	return sueldoFijo + getSueldoHorasExtra() + sueldoVariable;
     }
 
     public Date getCurrentPeriod() {
@@ -202,5 +211,14 @@ public class GraficWebController implements Serializable {
     
     public long getTimeStamp(){
         return System.currentTimeMillis();
-   }
+    }
+    
+    public String getLblSueldoVariable() {
+    	return lblSueldoVariable;
+    }
+    
+    public String getLblSueldoTotal() {
+    	return lblSueldoTotal;
+    }
+    
 }
