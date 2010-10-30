@@ -44,7 +44,16 @@
 			com.self_managment.web.converter.CampaignConverter
 		</converter-class>
 	</converter>
-
+	
+	<converter>
+		<converter-id>
+			com.self_managment.web.converter.CampaignMetricConverter
+		</converter-id>
+		<converter-class>
+			com.self_managment.web.converter.CampaignMetricConverter
+		</converter-class>
+	</converter>
+	
 	<component>
 		<component-type>
 			net.sf.jsfcomp.acegijsf.Authorize
@@ -61,7 +70,11 @@
 			net.sf.jsfcomp.acegijsf.Authentication
 		</component-class>
 	</component>
-
+	
+	<lifecycle>
+		<phase-listener>com.self_managment.web.util.LoginErrorPhaseListener</phase-listener>
+	</lifecycle>
+	
 	<!-- <lifecycle>
 		<phase-listener>
 			net.sf.jsfcomp.onload.OnLoadPhaseListener

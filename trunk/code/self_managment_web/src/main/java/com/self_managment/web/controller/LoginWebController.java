@@ -2,18 +2,10 @@ package com.self_managment.web.controller;
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.BadCredentialsException;
-import org.springframework.security.ui.AbstractProcessingFilter;
 import org.springframework.stereotype.Component;
 
 @Component("loginBean")
@@ -26,45 +18,11 @@ public class LoginWebController {
     private boolean loggedIn = false;
 
     public String doLogin() throws IOException, ServletException {
-	ExternalContext context = FacesContext.getCurrentInstance()
-		.getExternalContext();
-
-	RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
-		.getRequestDispatcher("/j_spring_security_check");
-
-	dispatcher.forward((ServletRequest) context.getRequest(),
-		(ServletResponse) context.getResponse());
-
-	FacesContext.getCurrentInstance().responseComplete();
-
-	// It's OK to return null here because Faces is just going to exit.
+	FacesContext jsf = FacesContext.getCurrentInstance();
+	jsf.getExternalContext().dispatch("/j_spring_security_check");
+	jsf.responseComplete();
 	return null;
 
-    }
-
-    @PostConstruct
-    @SuppressWarnings("unused")
-    private void handleErrorMessage() {
-	Exception e = (Exception) FacesContext
-		.getCurrentInstance()
-		.getExternalContext()
-		.getSessionMap()
-		.get(
-			AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY);
-
-	if (e instanceof BadCredentialsException) {
-	    FacesContext
-		    .getCurrentInstance()
-		    .getExternalContext()
-		    .getSessionMap()
-		    .put(
-			    AbstractProcessingFilter.SPRING_SECURITY_LAST_EXCEPTION_KEY,
-			    null);
-	    FacesContext.getCurrentInstance().addMessage(
-		    null,
-		    new FacesMessage(FacesMessage.SEVERITY_ERROR,
-			    "Username or password not valid.", null));
-	}
     }
 
     public String getUsername() {

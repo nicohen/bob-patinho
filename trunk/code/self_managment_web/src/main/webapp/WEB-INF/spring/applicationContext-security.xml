@@ -11,18 +11,21 @@
 	<global-method-security secured-annotations="enabled">
 	</global-method-security>
 
-	<http auto-config="true" access-denied-page="/accessDenied.jsp">
-
-		<intercept-url pattern="/login.jsf*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-
-		<intercept-url pattern="/**"
-			access="ROLE_SUPERVISOR,ROLE_USER,ROLE_TELLER" />
-
-		<form-login login-processing-url="/j_spring_security_check"
-			login-page="/login.jsf" default-target-url="/"
+	<http auto-config="true">
+		<intercept-url pattern="/style/**" filters="none" />
+		<intercept-url pattern="/images/**" filters="none" />
+		
+		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		
+		<intercept-url pattern="/**" access="ROLE_USER" />
+ 
+		<form-login
+			login-processing-url="/j_spring_security_check"
+			login-page="/login.jsf"
+			default-target-url="/index.jsf" always-use-default-target="true"
 			authentication-failure-url="/login.jsf" />
-		<logout logout-url="/logout*" logout-success-url="/login.jsf" />
-
+			
+		<logout logout-url="/logout*" logout-success-url="/index.html" />
 	</http>
 
 	<authentication-provider>
