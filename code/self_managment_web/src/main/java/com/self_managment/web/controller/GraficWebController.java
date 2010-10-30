@@ -3,10 +3,12 @@ package com.self_managment.web.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.component.html.HtmlOutputText;
 import javax.faces.context.FacesContext;
@@ -15,6 +17,7 @@ import javax.imageio.ImageIO;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.html.HTMLTableCellElement;
 
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
@@ -29,9 +32,8 @@ import com.self_managment.web.util.JSFUtil;
 public class GraficWebController implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private HTMLTableCellElement metricCell;
     private HtmlOutputText metricOutput;
-    private double sueldoFijo;
-    private double sueldoVariable;
     private String lblSueldoVariable = "Sueldo Variable Proyectado";
     private String lblSueldoTotal = "Sueldo Total Proyectado";
     private Integer metricaCalculadaProy;
@@ -162,27 +164,21 @@ public class GraficWebController implements Serializable {
 	this.metricOutput = metricOutput;
     }
 
-    public void setSueldoFijo(double sueldoFijo) {
-	this.sueldoFijo = sueldoFijo;
-    }
-
-    public void setSueldoVariableProyectado(double sueldoVariableProyectado) {
-	this.sueldoVariable = sueldoVariableProyectado;
-    }
-
     public double getSueldoHorasExtra() {
 	Calendar cal = Calendar.getInstance();
 	cal.setTime(getCurrentPeriod());
 	int month = cal.get(Calendar.MONTH) + 1;
 	int year = cal.get(Calendar.YEAR);
-
 	sueldoHorasExtra = ttsService.getOvertimeSalary(currentAgent, month,
 		year);
-	return sueldoHorasExtra;
+	NumberFormat nf = NumberFormat.getInstance(Locale.US);
+	nf.setMaximumFractionDigits(2);
+	double aux = Double.parseDouble(nf.format(sueldoHorasExtra)); 
+	return aux;
     }
 
     public double getSueldoTotal() {
-	return sueldoFijo + getSueldoHorasExtra() + sueldoVariable;
+	return getSueldoFijo() + getSueldoHorasExtra() + getSueldoVariable();
     }
 
     public Date getCurrentPeriod() {
