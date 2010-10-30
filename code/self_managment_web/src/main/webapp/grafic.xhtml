@@ -18,149 +18,161 @@
 			<f:loadBundle basename="messages" var="msg" />
 			
 			<h:form id="graphicForm">
-
-				<rich:dataTable rendered="false" />
 				
-				<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
- 					oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
- 					popup="false" styleClass="special">
- 					<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="mainData, metricValues, grafic"/>
- 				</rich:calendar>
+ 				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.agent.fields']}" />
+					</f:facet>
+
+					<h:panelGrid id="AgentData" columns="6" width="100%">
+	
+						<h:outputText value="#{msg['label.agent']}" style="font-weight:bold" />
+						<h:outputText value="#{graficBean.currentAgent.surname}, #{graficBean.currentAgent.name}" />
+	
+						<h:outputText value="#{msg['label.agent.grossSalary']}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoFijo}" />
+	
+						<h:outputText value="$ #{graficBean.lblSueldoVariable}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoVariable}" />
+	
+						<h:outputText value="Período" style="font-weight:bold"/>
+						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
+		 					oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
+		 					popup="false" styleClass="special">
+		 					<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafic"/>
+		 				</rich:calendar>
+	
+						<h:outputText value="#{msg['label.agent.overtimeSalary']}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoHorasExtra}" />
+	
+						<h:outputText value="$ #{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoTotal}" />
+	
+					</h:panelGrid>
+				</rich:panel>
+				
+ 				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.campaign.fields']}" />
+					</f:facet>
  				
-				<h:panelGrid id="mainData" columns="4" width="80%">
-
-					<h:outputText value="#{msg['label.agent.name']}:" />
-					<h:outputText value="#{graficBean.currentAgent.surname}, #{graficBean.currentAgent.name}" />
-
-					<h:outputText value="Fecha: " />
-					<h:outputText value="#{graficBean.today}" />
-
-					<h:outputText value="#{msg['label.campaign']}:" />
-					<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
-
-					<h:outputText value="#{msg['label.agent.grossSalary']}:" />
-					<h:outputText value="$ #{graficBean.sueldoFijo}" />
-
-					<h:outputText value="#{msg['label.agent.variableSalary']}:" />
-					<h:outputText value="$ #{graficBean.variableSalary}" />
-
-					<h:outputText value="Sueldo Variable Proyectado:" />
-					<h:outputText value="$ #{graficBean.sueldoVariableProyectado}" />
-
-					<h:outputText value="#{msg['label.agent.overtimeSalary']}:" />
-					<h:outputText value="#{graficBean.sueldoHorasExtra}" />
-
-					<h:outputText value="Sueldo Total Proyectado:" />
-					<h:outputText value="$ #{graficBean.sueldoTotalProyectado}" />
-
-				</h:panelGrid>
-				<br />
-				<br />
-				
-				<h:panelGrid columns="2" border="4" style="text-align:center" columnClasses="alignTop, alignTop">				
-					<h:panelGroup>	
-						<table border="1" class="dr-table rich-table">
-							<thead class="dr-table-thead">
-								<tr class="dr-table-header rich-table-header">
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="Nivel de Logro" />
-									</th>
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="#{msg['label.metric.optim']}" />
-									</th>
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="#{msg['label.metric.objective']}" />
-									</th>
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="#{msg['label.metric.minimum']}" />
-									</th>
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<a4j:repeat value="#{graficBean.metrics}" var="metric">
-									<tr>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{metric.pk.metric}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{metric.pk.metric.optimSign} #{metric.optim} #{metric.pk.metric.unit}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{metric.pk.metric.objetiveSign} #{metric.objective} #{metric.pk.metric.unit}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{metric.pk.metric.minimumSign} #{metric.minimum} #{metric.pk.metric.unit}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{metric.pk.metric.unsatisfactorySign} #{metric.unsatisfactory} #{metric.pk.metric.unit}" />
-										</td>
-									</tr>
-								</a4j:repeat>
-								<tr>
-									<td colspan="5" align="center">
-										<h:outputText value="Valor Hora ($)"/>
-									</td>
-								</tr>
-								<tr>
-									<td/>
-									<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:green">
-										<h:outputText value="#{graficBean.currentAgent.campaign.optimValue}" />
-									</td>
-									<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:yellow">
-										<h:outputText value="#{graficBean.currentAgent.campaign.objetiveValue}" />
-									</td>
-									<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:orange">
-										<h:outputText value="#{graficBean.currentAgent.campaign.minimumValue}" />
-									</td>
-									<td align="center" class="dr-subtable-cell rich-subtable-cell" style="background-color:red">
-										<h:outputText value="#{graficBean.currentAgent.campaign.unsatisfactoryValue}" />
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</h:panelGroup>
+					<h:panelGrid id="CampaignData" columns="2">
+	
+						<h:outputText value="#{msg['label.campaign']}: " style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
+						
+					</h:panelGrid>
 					
-					<h:panelGroup id="metricValues">
-						<table border="1" class="dr-table rich-table">
-							<thead class="dr-table-thead">
-								<tr class="dr-table-header rich-table-header">
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="#{msg['label.metric']}" />
-									</th>
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="Fecha actual" />
-									</th>
-									<th class="dr-table-headercell rich-table-headercell">
-										<h:outputText value="Proyectado" />
-									</th>
+					<table border="1" class="dr-table rich-table" width="100%">
+						<thead class="dr-table-thead">
+							<tr class="dr-table-header rich-table-header">
+								<th class="dr-table-headercell rich-table-headercell">
+									<h:outputText value="" />
+								</th>
+								<th class="dr-table-headercell rich-table-headercell" style="background-color:green">
+									<h:outputText value="#{msg['label.metric.optim']}"/>
+								</th>
+								<th class="dr-table-headercell rich-table-headercell" style="background-color:yellow">
+									<h:outputText value="#{msg['label.metric.objective']}" />
+								</th>
+								<th class="dr-table-headercell rich-table-headercell" style="background-color:orange">
+									<h:outputText value="#{msg['label.metric.minimum']}" />
+								</th>
+								<th class="dr-table-headercell rich-table-headercell" style="background-color:red">
+									<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
+									<h:outputText value="Valor Hora ($)"/>
+								</td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+									<h:outputText value="#{graficBean.currentAgent.campaign.optimValue}" />
+								</td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+									<h:outputText value="#{graficBean.currentAgent.campaign.objetiveValue}" />
+								</td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+									<h:outputText value="#{graficBean.currentAgent.campaign.minimumValue}" />
+								</td>
+								<td align="center" class="dr-subtable-cell rich-subtable-cell">
+									<h:outputText value="#{graficBean.currentAgent.campaign.unsatisfactoryValue}" />
+								</td>
+							</tr>
+							<a4j:repeat value="#{graficBean.metrics}" var="metric">
+								<tr>
+									<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
+										<h:outputText value="#{metric.pk.metric}" />
+									</td>
+									<td align="center" class="dr-subtable-cell rich-subtable-cell">
+										<h:outputText value="#{metric.pk.metric.optimSign} #{metric.optim} #{metric.pk.metric.unit}" />
+									</td>
+									<td align="center" class="dr-subtable-cell rich-subtable-cell">
+										<h:outputText value="#{metric.pk.metric.objetiveSign} #{metric.objective} #{metric.pk.metric.unit}" />
+									</td>
+									<td align="center" class="dr-subtable-cell rich-subtable-cell">
+										<h:outputText value="#{metric.pk.metric.minimumSign} #{metric.minimum} #{metric.pk.metric.unit}" />
+									</td>
+									<td align="center" class="dr-subtable-cell rich-subtable-cell">
+										<h:outputText value="#{metric.pk.metric.unsatisfactorySign} #{metric.unsatisfactory} #{metric.pk.metric.unit}" />
+									</td>
 								</tr>
-							</thead>
-							<tbody>
-								<a4j:repeat value="#{graficBean.metrics}" var="metric">
-									<tr>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{metric.pk.metric}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText binding="#{graficBean.metricOutput}"
-												value="#{graficBean.metricValue}">
-												<f:attribute name="metric" value="#{metric}" />
-											</h:outputText>
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="1" />
-										</td>
+							</a4j:repeat>
+						</tbody>
+					</table>
+					
+				</rich:panel>
+				
+ 				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.metric.fields']}" />
+					</f:facet>
+				
+					<h:panelGrid columns="2" style="text-align:center" columnClasses="alignTop, alignTop" width="100%">				
+						<h:panelGroup width="70%">	
+							
+						</h:panelGroup>
+						
+						<h:panelGroup id="metricValues" width="30%">
+							<table border="1" class="dr-table rich-table" width="100%">
+								<thead class="dr-table-thead">
+									<tr class="dr-table-header rich-table-header">
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="#{msg['label.metric']}" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="Fecha actual" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="Proyectado" />
+										</th>
 									</tr>
-								</a4j:repeat>
-							</tbody>
-						</table>
-					</h:panelGroup>
-				</h:panelGrid>
-
-				<br />
+								</thead>
+								<tbody>
+									<a4j:repeat value="#{graficBean.metrics}" var="metric">
+										<tr>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText value="#{metric.pk.metric}" />
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText binding="#{graficBean.metricOutput}"
+													value="#{graficBean.metricValue}">
+													<f:attribute name="metric" value="#{metric}" />
+												</h:outputText>
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText value="1" />
+											</td>
+										</tr>
+									</a4j:repeat>
+								</tbody>
+							</table>
+						</h:panelGroup>
+					</h:panelGrid>
+					
+				</rich:panel>
 				
 				<h:panelGrid id="grafic" columns="1">
 					<h:panelGroup>				
