@@ -32,7 +32,7 @@
 						<h:outputText value="#{msg['label.agent.grossSalary']}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoFijo}" />
 	
-						<h:outputText value="$ #{graficBean.lblSueldoVariable}" style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.lblSueldoVariable}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoVariable}" />
 	
 						<h:outputText value="Período" style="font-weight:bold"/>
@@ -45,12 +45,13 @@
 						<h:outputText value="#{msg['label.agent.overtimeSalary']}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoHorasExtra}" />
 	
-						<h:outputText value="$ #{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoTotal}" />
 	
 					</h:panelGrid>
 				</rich:panel>
 				
+				<h:panelGrid columns="2" width="60%">
  				<rich:panel>
 					<f:facet name="header">
 						<h:outputText value="#{msg['label.campaign.fields']}" />
@@ -63,7 +64,7 @@
 						
 					</h:panelGrid>
 					
-					<table border="1" class="dr-table rich-table" width="100%">
+					<table border="1" class="dr-table rich-table">
 						<thead class="dr-table-thead">
 							<tr class="dr-table-header rich-table-header">
 								<th class="dr-table-headercell rich-table-headercell">
@@ -130,7 +131,7 @@
 						<h:outputText value="#{msg['label.metric.fields']}" />
 					</f:facet>
 				
-					<h:panelGrid columns="2" style="text-align:center" columnClasses="alignTop, alignTop" width="100%">				
+					<h:panelGrid columns="2" style="text-align:center" columnClasses="alignTop, alignTop">				
 						<h:panelGroup width="70%">	
 							
 						</h:panelGroup>
@@ -173,6 +174,7 @@
 					</h:panelGrid>
 					
 				</rich:panel>
+				</h:panelGrid>
 				
 				<h:panelGrid id="grafic" columns="1">
 					<h:panelGroup>				

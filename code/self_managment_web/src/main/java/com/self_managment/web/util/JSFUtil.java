@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import org.jfree.data.statistics.Statistics;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.jsf.FacesContextUtils;
 
@@ -48,4 +49,13 @@ public class JSFUtil {
 	}
 	return items;
     }
+    
+    public static void main(String[] args) {
+    	Number[] xValues = { 1, 2, 3, 4 };
+    	Number[] yValues = { 1, 2, 2, 3 };
+
+    	double[] fit = Statistics.getLinearFit(xValues, yValues);
+    	for (int i=0; i<fit.length; i++)
+    		System.out.println(fit[i]);
+	}
 }
