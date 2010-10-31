@@ -93,8 +93,6 @@ public class MetricChart {
 	double endY = getY(linearFit[0],linearFit[1],dateTo);
 	popLeastSquares.addOrUpdate(new Day(leastSquaresFirstDate),startY);
 	popLeastSquares.addOrUpdate(new Day(dateTo),endY);
-	System.out.println("linearFit[0]:"+linearFit[0]+" # linearFit[1]:"+linearFit[1]+" # dayOfMonthFrom:"+new Day(date)+" # startY:"+startY);
-	System.out.println("linearFit[0]:"+linearFit[0]+" # linearFit[1]:"+linearFit[1]+" # dayOfMonthTo:"+new Day(dateTo).getDayOfMonth()+" # endY:"+endY);
 	
 	TimeSeriesCollection dataset = new TimeSeriesCollection();
 	dataset.addSeries(pop);

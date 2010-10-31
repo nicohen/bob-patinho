@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +33,7 @@ public class GraficWebController implements Serializable {
 
     private HTMLTableCellElement metricCell;
     private HtmlOutputText metricOutput;
+    private HtmlOutputText metricOutput2;
     private String lblSueldoVariable = "Sueldo Variable Proyectado";
     private String lblSueldoTotal = "Sueldo Total Proyectado";
     private Integer metricaCalculadaProy;
@@ -97,7 +97,11 @@ public class GraficWebController implements Serializable {
     }
 
     public HtmlOutputText getMetricOutput() {
-	return metricOutput;
+    	return metricOutput;
+    }
+
+    public HtmlOutputText getMetricOutput2() {
+    	return metricOutput2;
     }
 
     public List<SelectItem> getMetricsCombo() {
@@ -126,10 +130,13 @@ public class GraficWebController implements Serializable {
 	Date dateTo = DateUtils.getLastDay(getCurrentPeriod());
 
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
-		.get("metric");
+	.get("metric");
 
 	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(
 		currentAgent, dateFrom, dateTo)));
+
+	metricOutput2.setStyle(getStyleForMetricLevel(metric.getLevel(
+			currentAgent, dateFrom, dateTo)));
 
 	return metric.getMetric().execute(currentAgent,
 		DateUtils.getFirstDay(getCurrentPeriod()),
@@ -137,6 +144,22 @@ public class GraficWebController implements Serializable {
 		+ " " + metric.getMetric().getUnit();
     }
 
+    public String getMetricValueProy() {
+    	String metricValue = getMetricValue().split(" ")[0];
+    	Date dateTo = DateUtils.getLastDay(getCurrentPeriod());
+    	Calendar.getInstance().setTime(dateTo);
+    	int day = Calendar.getInstance().get(Calendar.DATE);
+    	Date endMonth = DateUtils.getLastDay(Calendar.getInstance().get(Calendar.MONTH)+1, Calendar.getInstance().get(Calendar.YEAR));
+    	double metricInitValue = Double.parseDouble(metricValue);
+
+    	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
+    	.get("metric");
+
+    	Calendar.getInstance().setTime(endMonth);
+    	return String.valueOf((Calendar.getInstance().get(Calendar.DATE)*metricInitValue)/day)+" "+metric.getMetric().getUnit();
+    }
+
+    
     public double getSueldoFijo() {
 	return currentAgent.getGrossSalary();
     }
@@ -161,7 +184,11 @@ public class GraficWebController implements Serializable {
     }
 
     public void setMetricOutput(HtmlOutputText metricOutput) {
-	this.metricOutput = metricOutput;
+    	this.metricOutput = metricOutput;
+    }
+
+    public void setMetricOutput2(HtmlOutputText metricOutput2) {
+    	this.metricOutput2 = metricOutput2;
     }
 
     public double getSueldoHorasExtra() {
