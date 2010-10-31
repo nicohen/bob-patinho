@@ -46,8 +46,8 @@ public class MetricChart {
     public BufferedImage createBufferedImage(int width, int height) {
 
 	JFreeChart chart = ChartFactory.createTimeSeriesChart(campaignMetric
-		.getMetric().getCode().toUpperCase(), "Días",
-		"Proyección Métrica", getDataSet(), true, true, false);
+		.getMetric().getCode().toUpperCase(), "Dias",
+		"Proyeccion Metrica", getDataSet(), true, true, false);
 
 	ResourceBundle rb = ResourceBundle.getBundle("messages");
 
@@ -72,7 +72,7 @@ public class MetricChart {
 
     private TimeSeriesCollection getDataSet() {
 	TimeSeries pop = new TimeSeries("Puntos Acumulados");
-	TimeSeries popLeastSquares = new TimeSeries("Proyección");
+	TimeSeries popLeastSquares = new TimeSeries("Proyeccion");
 	SortedSet<Day> acumDays = new TreeSet<Day>();
 	
 	Date dateTo = DateUtils.getLastDay(period);
