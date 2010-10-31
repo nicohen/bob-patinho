@@ -225,16 +225,6 @@
 			<artifactId>spiffy</artifactId>
 			<version>0.05</version>
 		</dependency>
-		<dependency>
-			<groupId>com.gregdennis</groupId>
-			<artifactId>drej</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.vecmath</groupId>
-			<artifactId>vecmath</artifactId>
-			<version>1.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>commons-lang</groupId>
