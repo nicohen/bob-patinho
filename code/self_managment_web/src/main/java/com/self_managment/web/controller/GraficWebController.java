@@ -92,7 +92,7 @@ public class GraficWebController implements Serializable {
     }
 
     public Integer getMetricCalculateProy() {
-	// metricaCalculadaProy = (30 - CantDias) * sumaTotal;
+	
 	return metricaCalculadaProy;
     }
 
@@ -145,20 +145,70 @@ public class GraficWebController implements Serializable {
     }
 
     public String getMetricValueProy() {
-    	String metricValue = getMetricValue().split(" ")[0];
+    	Date dateFrom = DateUtils.getFirstDay(getCurrentPeriod());
+    	Date dateTo = DateUtils.getLastDay(getCurrentPeriod());
+    	int day = Calendar.getInstance().get(Calendar.DATE);
+    	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
+    	.get("metric");
+
+    	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(
+    		currentAgent, dateFrom, dateTo)));
+
+    	
+    	
+    	
+    	currentPeriod=getCurrentPeriod();
+    	if(currentPeriod.getMonth() <  now().getMonth() )
+		{
+    		metricOutput2.setStyle(getStyleForMetricLevel(metric.getLevel(
+            		currentAgent, dateFrom, dateTo)));	
+    	return metric.getMetric().execute(currentAgent,
+    		DateUtils.getFirstDay(getCurrentPeriod()),
+    		DateUtils.getLastDay(getCurrentPeriod())).toString()
+    		+ " " + metric.getMetric().getUnit();
+		}
+    	else{
+    		
+    		double metricInitValue = Double.parseDouble(metric.getMetric().execute(currentAgent,
+    	    		DateUtils.getFirstDay(getCurrentPeriod()),
+    	    		DateUtils.getLastDay(getCurrentPeriod())).toString());
+    		metricOutput2.setStyle(getStyleForMetricLevel(metric.getLevelProy(30*metricInitValue)/day));
+    		return String.valueOf((30*metricInitValue)/day)+" "+metric.getMetric().getUnit();
+    	}
+        }
+    /*public String getMetricValueProy() {
+    	Date dateFrom = DateUtils.getFirstDay(getCurrentPeriod());
+    	
+    	//String metricValue = getMetricValue().split(" ")[0];
     	Date dateTo = DateUtils.getLastDay(getCurrentPeriod());
     	Calendar.getInstance().setTime(dateTo);
     	int day = Calendar.getInstance().get(Calendar.DATE);
     	Date endMonth = DateUtils.getLastDay(Calendar.getInstance().get(Calendar.MONTH)+1, Calendar.getInstance().get(Calendar.YEAR));
-    	double metricInitValue = Double.parseDouble(metricValue);
+    	//double metricInitValue = Double.parseDouble(metricValue);
 
-    	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
+    	CampaignMetric metric = (CampaignMetric) metricOutput2.getAttributes()
     	.get("metric");
+    	
+    	String metricValue=metric.getMetric().execute(currentAgent,
+    			DateUtils.getFirstDay(getCurrentPeriod()),
+    			DateUtils.getLastDay(getCurrentPeriod())).toString();
+    	
+    	double metricInitValue = Double.parseDouble(metricValue);
+  
+
+    	metricOutput2.setStyle(getStyleForMetricLevel(metric.getLevel(
+    				currentAgent, dateFrom, dateTo)));
 
     	Calendar.getInstance().setTime(endMonth);
+    	
+    	if (currentPeriod.getMonth()<10)
     	return String.valueOf((Calendar.getInstance().get(Calendar.DATE)*metricInitValue)/day)+" "+metric.getMetric().getUnit();
+    	else
+    	return String.valueOf((30*metricInitValue)/day)+" "+metric.getMetric().getUnit();
     }
 
+    */
+    
     
     public double getSueldoFijo() {
 	return currentAgent.getGrossSalary();
