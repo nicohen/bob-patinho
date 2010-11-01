@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
@@ -69,6 +70,10 @@ public class MetricChart {
 		BufferedImage.TYPE_INT_RGB, null);
 
     }
+    private Date now() {
+    	return Calendar.getInstance().getTime();
+        }
+
 
     private TimeSeriesCollection getDataSet() {
 	TimeSeries pop = new TimeSeries("Puntos Acumulados");
@@ -78,16 +83,46 @@ public class MetricChart {
 	Date dateTo = DateUtils.getLastDay(period);
 	Date date = DateUtils.getFirstDay(period);
 	Date leastSquaresFirstDate = (Date) date.clone();
-
+	
+	System.out.println("Este es el dia " + Calendar.getInstance().getTime());
+	int dayTo=0;
+	
 	double acum = 0;
-	while (date.before(dateTo)) {
-	    acum += campaignMetric.getMetric().execute(agent, date, date)
-		    .doubleValue();
-	    pop.add(new Day(date), acum);
-	    acumDays.add(new Day(date));
-	    date = org.apache.commons.lang.time.DateUtils.addDays(date, 1);
+	if(period.getMonth() <  now().getMonth() )
+	{
+		
+		while (date.before(dateTo)) {
+		    acum += campaignMetric.getMetric().execute(agent, date, date)
+			    .doubleValue();
+		    pop.add(new Day(date), acum);
+		    acumDays.add(new Day(date));
+		    date = org.apache.commons.lang.time.DateUtils.addDays(date, 1);
+		}
+		
 	}
+	else{
+		
+		while (date.before(Calendar.getInstance().getTime())) {
+			
+			dayTo=dayTo+1;
+		    acum += campaignMetric.getMetric().execute(agent, date, date)
+			    .doubleValue();
+		    pop.add(new Day(date), acum);
+		    acumDays.add(new Day(date));
+		    date = org.apache.commons.lang.time.DateUtils.addDays(date, 1);
+	
+			
+		
+		}
+		 acum=30*acum/dayTo;
+		 pop.add(new Day(dateTo), acum);
+		  acumDays.add(new Day(dateTo));
+		
+	
 
+		
+	}
+	
 	double[] linearFit = getLinearFit(acumDays,pop);
 	double startY = getY(linearFit[0],linearFit[1],date);
 	double endY = getY(linearFit[0],linearFit[1],dateTo);
