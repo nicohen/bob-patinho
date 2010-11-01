@@ -172,8 +172,9 @@ public class GraficWebController implements Serializable {
     		double metricInitValue = Double.parseDouble(metric.getMetric().execute(currentAgent,
     	    		DateUtils.getFirstDay(getCurrentPeriod()),
     	    		DateUtils.getLastDay(getCurrentPeriod())).toString());
+    		int dias=DateUtils.getLastDay(currentPeriod).getDate();
     		metricOutput2.setStyle(getStyleForMetricLevel(metric.getLevelProy(30*metricInitValue)/day));
-    		return String.valueOf((30*metricInitValue)/day)+" "+metric.getMetric().getUnit();
+    		return String.valueOf((dias*metricInitValue)/day)+" "+metric.getMetric().getUnit();
     	}
         }
     /*public String getMetricValueProy() {

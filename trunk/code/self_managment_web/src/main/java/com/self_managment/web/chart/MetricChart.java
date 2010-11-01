@@ -84,7 +84,7 @@ public class MetricChart {
 	Date date = DateUtils.getFirstDay(period);
 	Date leastSquaresFirstDate = (Date) date.clone();
 	
-	System.out.println("Este es el dia " + Calendar.getInstance().getTime());
+	System.out.println("Este es el dia " + DateUtils.getLastDay(period).getDate());
 	int dayTo=0;
 	
 	double acum = 0;
@@ -114,7 +114,8 @@ public class MetricChart {
 			
 		
 		}
-		 acum=30*acum/dayTo;
+		int dia=DateUtils.getLastDay(period).getDate();
+		 acum=(dia*acum)/dayTo;
 		 pop.add(new Day(dateTo), acum);
 		  acumDays.add(new Day(dateTo));
 		
