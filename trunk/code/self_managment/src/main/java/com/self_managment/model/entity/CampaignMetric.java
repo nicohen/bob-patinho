@@ -138,15 +138,18 @@ public class CampaignMetric implements java.io.Serializable {
     public int getLevelProy(Number result) {
 	//Number result = getMetric().execute(agent, dateFrom, dateTo);
 
-	if (applyLevel(result, optim, getMetric().getOptimSign()))
+	if (applyLevel(result, optim, getMetric().getOptimSign())) {
 	    return 3;
+	}
 	
-	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
+	if (applyLevel(result, objective, getMetric().getObjetiveSign())) {
 	    return 2;
-	
-	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
+	}
+	    
+	if (applyLevel(result, minimum, getMetric().getMinimumSign())) {
 	    return 1;
 
+	}
 	return 0;
     }
     
