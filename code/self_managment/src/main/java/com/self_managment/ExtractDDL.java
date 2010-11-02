@@ -21,6 +21,9 @@ public class ExtractDDL {
 	AnnotationSessionFactoryBean sessionFactory = (AnnotationSessionFactoryBean) apContext
 		.getBean("&sessionFactory");
 
+	sessionFactory.dropDatabaseSchema();
+	sessionFactory.createDatabaseSchema();
+	
 	final Configuration configuration = sessionFactory.getConfiguration();
 	// final Connection connection = sessionFactory.getDataSource()
 	// .getConnection();
