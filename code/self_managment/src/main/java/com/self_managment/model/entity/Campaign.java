@@ -250,5 +250,25 @@ public class Campaign implements java.io.Serializable {
 	return unsatisfactoryValue;
 
     }
+    
+    @Transient
+    public Double getHourValue(Number value) {
+	int level = 4;
+	for (CampaignMetric cm : campaignMetric) {
+	    int currentLevel = cm.getLevelProy(value);
+	    level = currentLevel > level ? level : currentLevel; // get min
+	}
+
+	if (level == 3)
+	    return optimValue;
+	if (level == 2)
+	    return objetiveValue;
+	if (level == 1)
+	    return minimumValue;
+
+	return unsatisfactoryValue;
+
+    }
+
 
 }
