@@ -2,7 +2,9 @@ package com.self_managment.importFile;
 
 import java.io.IOException;
 
+import junit.framework.Test;
 import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -13,6 +15,13 @@ public class ImportFileTTSTest extends TestCase {
 
     private ImportFile importFile;
     private TTSService ttsService;
+    
+    public static Test suite() {
+    	TestSuite suite = new TestSuite();
+    	suite.addTestSuite(ImportFileAgentTest.class);
+    	suite.addTestSuite(ImportFileTTSTest.class);
+    	return suite;
+    }
 
     @Override
     protected void setUp() throws Exception {
