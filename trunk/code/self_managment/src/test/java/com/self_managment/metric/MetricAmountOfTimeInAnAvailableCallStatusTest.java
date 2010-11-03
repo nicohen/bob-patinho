@@ -11,6 +11,7 @@ import junit.framework.TestSuite;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.self_managment.importFile.ImportFileSummaryTest;
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.metric.MetricStrategy;
 import com.self_managment.util.DateUtils;
@@ -20,8 +21,10 @@ public class MetricAmountOfTimeInAnAvailableCallStatusTest extends TestCase {
     private MetricStrategy metric;
 
     public static Test suite() {
-	return new TestSuite(
-		MetricAmountOfTimeInAnAvailableCallStatusTest.class);
+    	TestSuite suite = new TestSuite();
+    	suite.addTestSuite(ImportFileSummaryTest.class);
+    	suite.addTestSuite(MetricAmountOfTimeInAnAvailableCallStatusTest.class);
+    	return suite;	
     }
 
     @Override
