@@ -11,6 +11,8 @@ public interface SummaryDao extends GenericDao<Summary, Serializable> {
 	    Date dateFrom, Date dateTo);
 
     public Double getAverageTalkTime(Agent agent, Date dateFrom, Date dateTo);
+    public Double getNCH(Agent agent, Date dateFrom, Date dateTo);
+    public Double getTransferPCT(Agent agent, Date dateFrom, Date dateTo);
     
     public Long getTotalLoggedTime(Agent agent, Date dateFrom, Date dateTo);
 }
