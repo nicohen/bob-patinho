@@ -119,7 +119,7 @@ public class CampaignMetric implements java.io.Serializable {
 
     @Transient
     public int getLevel(Agent agent, Date dateFrom, Date dateTo) {
-	Number result = getMetric().execute(agent, dateFrom, dateTo);
+	Number result = getMetric().executeProy(agent, dateFrom, dateTo);
 	System.out.println("Este es el resultado " + result);
 
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
