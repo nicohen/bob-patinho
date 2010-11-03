@@ -79,5 +79,17 @@ public class DateUtils {
 
 	return date;
     }
+    
+    public static int getDay(Date date) {
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(date);
+	return cal.get(Calendar.DAY_OF_MONTH);
+    }
+    
+    public static Boolean isOldPeriod(Date date) {
+	Date currentPeriod = getFirstDay(new Date());
+	
+	return date.before(currentPeriod);
+    }
 
 }

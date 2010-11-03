@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.jfree.data.statistics.Statistics;
 import org.springframework.context.ApplicationContext;
 
 import com.self_managment.model.metric.MetricStrategy;
@@ -67,6 +68,34 @@ public class Metric implements Serializable {
 
 	return metric.execute(agent, dateFrom, dateTo);
     }
+           
+    @Transient
+    public Number executeProy(Agent agent, Date dateFrom, Date dateTo) {
+	if (com.self_managment.util.DateUtils.isOldPeriod(dateFrom))
+	    return execute(agent, dateFrom, dateTo);
+	
+	Date today = new Date();
+	
+	int dayCount = com.self_managment.util.DateUtils.getDay(today) - com.self_managment.util.DateUtils.getDay(dateFrom) + 1;
+	
+	Integer[] xData = new Integer[dayCount];
+	Number[] yData = new Number[dayCount];
+	Double acum = 0D;
+	while (dateFrom.before(today)) {
+	    int day = com.self_managment.util.DateUtils.getDay(dateFrom);
+	    xData[day-1] = day;
+	    acum += execute(agent, dateFrom, dateFrom).doubleValue();
+	    yData[day-1] = acum;
+	    
+	    dateFrom = org.apache.commons.lang.time.DateUtils.addDays(dateFrom, 1);
+	}
+	
+	double[] linearFit = Statistics.getLinearFit(xData, yData);
+
+	// Y = aX + b
+	return linearFit[1] * com.self_managment.util.DateUtils.getDay(dateTo) + linearFit[0];
+    }
+
 
     public Integer getId() {
 	return id;
