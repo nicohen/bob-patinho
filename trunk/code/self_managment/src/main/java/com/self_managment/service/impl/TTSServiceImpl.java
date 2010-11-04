@@ -15,6 +15,7 @@ import com.self_managment.model.entity.TTS;
 
 import com.self_managment.persistance.dao.TTSDao;
 import com.self_managment.service.TTSService;
+import com.self_managment.util.DateUtils;
 
 
 @Service("ttsService")
@@ -58,6 +59,7 @@ public class TTSServiceImpl implements TTSService {
 		ttsDao.update(transientObject);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private long getExtraHours50Percent(List<TTS> dates, int workDayHours)
 	{
 		long extraHours50Percent = 0;
@@ -89,6 +91,7 @@ public class TTSServiceImpl implements TTSService {
 		return extraHours50Percent;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private long getExtraHours100Percent(List<TTS> dates)
 	{
 		long extraHours100Percent = 0;
@@ -116,19 +119,24 @@ public class TTSServiceImpl implements TTSService {
 		return extraHours100Percent;
 	}
 
-	@SuppressWarnings("deprecation")
 	public double getOvertimeSalary(Agent agent, int month, int year)
-	{
-		List<TTS> dates = ttsDao.findByAgentMonthYear(agent.getDocket(), month, year);
+	{	
+		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), DateUtils.getFirstDay(month, year), DateUtils.getLastDay(month, year));
 		double overtimeSalary = getExtraHours50Percent(dates, agent.getWorkDayHours()) * ((agent.getGrossSalary()/(22*agent.getWorkDayHours()))*1.5);
 		overtimeSalary += getExtraHours100Percent(dates) * ((agent.getGrossSalary()/(22*agent.getWorkDayHours()))*2);		
 		return overtimeSalary;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public long getProductiveHours(Agent agent, int month, int year)
 	{
-		List<TTS> dates = ttsDao.findByAgentMonthYear(agent.getDocket(), month, year);
+		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), DateUtils.getFirstDay(month, year), DateUtils.getLastDay(month, year));
+		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
+		return productiveHours;
+	}
+	
+	public long getProductiveHours(Agent agent, Date dateFrom, Date dateTo)
+	{
+		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), dateFrom, dateTo);
 		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
 		return productiveHours;
 	}
