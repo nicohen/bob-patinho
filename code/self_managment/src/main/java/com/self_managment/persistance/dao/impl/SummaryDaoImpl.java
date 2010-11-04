@@ -46,24 +46,24 @@ public class SummaryDaoImpl extends GenericDaoImpl<Summary, Serializable>
 
     @SuppressWarnings("unchecked")
     @Override
-    public Double getNCH(Agent agent, Date dateFrom, Date dateTo) {
-	List<Double> result = getHibernateTemplate()
+    public Long getNCH(Agent agent, Date dateFrom, Date dateTo) {
+	List<Long> result = getHibernateTemplate()
 		.find(
 			"select sum(quantityOfCalls) from Summary where pk.agent=? and pk.date between ? and ?",
 			new Object[] { agent, dateFrom, dateTo });
 
-	return result.get(0) != null ? result.get(0) : 0D;
+	return result.get(0) != null ? result.get(0) : 0L;
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public Double getTransferPCT(Agent agent, Date dateFrom, Date dateTo) {
-	List<Double> result = getHibernateTemplate()
+    public Long getTransferPCT(Agent agent, Date dateFrom, Date dateTo) {
+	List<Long> result = getHibernateTemplate()
 		.find(
-			"select (sum(transferredCalls)/sum(quantityOfCalls))*100 from summary where pk.agent=? and pk.date between ? and ?",
+			"select (sum(transferredCalls)/sum(quantityOfCalls))*100 from Summary where pk.agent=? and pk.date between ? and ?",
 			new Object[] { agent, dateFrom, dateTo });
 
-	return result.get(0) != null ? result.get(0) : 0D;
+	return result.get(0) != null ? result.get(0) : 0L;
     }
     
     @SuppressWarnings("unchecked")

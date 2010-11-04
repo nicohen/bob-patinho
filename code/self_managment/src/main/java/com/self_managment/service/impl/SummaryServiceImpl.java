@@ -71,7 +71,7 @@ public class SummaryServiceImpl implements SummaryService {
     }
     
     @Override
-    public Double getNCH(Agent agent, Date dateFrom, Date dateTo) {
+    public Long getNCH(Agent agent, Date dateFrom, Date dateTo) {
 	if (agent == null || dateFrom == null || dateTo == null)
 	    return null;
 	
@@ -79,7 +79,7 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     @Override
-    public Double getTransferPCT(Agent agent, Date dateFrom, Date dateTo) {
+    public Long getTransferPCT(Agent agent, Date dateFrom, Date dateTo) {
 	if (agent == null || dateFrom == null || dateTo == null)
 	    return null;
 	
