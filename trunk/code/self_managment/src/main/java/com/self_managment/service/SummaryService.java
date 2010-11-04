@@ -24,7 +24,7 @@ public interface SummaryService extends CRUDService<Summary, Serializable> {
 	 * @return total time in minutes.
 	 */
 	public Long getTotalLoggedTime(Agent agent, Date dateFrom, Date dateTo);
-	public Double getNCH(Agent agent, Date dateFrom, Date dateTo);
-	public Double getTransferPCT(Agent agent, Date dateFrom, Date dateTo);
+	public Long getNCH(Agent agent, Date dateFrom, Date dateTo);
+	public Long getTransferPCT(Agent agent, Date dateFrom, Date dateTo);
 	
 }
