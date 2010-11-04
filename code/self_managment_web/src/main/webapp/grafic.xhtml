@@ -17,6 +17,9 @@
 		<f:view>
 			<f:loadBundle basename="messages" var="msg" />
 			
+			<!-- No sacar, esta para que la tabla tome los estilos -->
+			<rich:dataTable rendered="false"/>
+			
 			<h:form id="graphicForm">
 				
  				<rich:panel>
@@ -39,7 +42,7 @@
 						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
 		 					oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
 		 					popup="false" styleClass="special">
-		 					<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafic"/>
+		 					<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
 		 				</rich:calendar>
 	
 						<h:outputText value="#{msg['label.agent.overtimeSalary']}" style="font-weight:bold"/>
@@ -166,24 +169,15 @@
 					
 				</rich:panel>
 				
-				<h:panelGrid id="grafic" columns="1">
-					<h:panelGroup>				
-						<rich:comboBox id="cboMetric" 
-							value="#{graficBean.selectedMetricToDraw}"
-							size="25"
-							converter="com.self_managment.web.converter.CampaignMetricConverter">
-							<a4j:support event="onselect" reRender="img"/>
-							<f:selectItems value="#{graficBean.metricsCombo}" />							
-						</rich:comboBox>
-					</h:panelGroup>
-
-					<a4j:mediaOutput id="img" element="img" cacheable="false" session="false"
-						createContent="#{graficBean.generaGrafico}"
-						value="#{graficBean.selectedMetricToDraw}" mimeType="image/jpeg">
-						<f:param value="#{graficBean.timeStamp}" name="time" />
-					</a4j:mediaOutput>
-					
-				</h:panelGrid>
+				<h:panelGroup id="grafics">
+					<a4j:repeat value="#{graficBean.metrics}" var="metric">
+						<a4j:mediaOutput element="img" cacheable="false" session="false"
+							createContent="#{graficBean.generaGrafico}"
+							value="#{metric}" mimeType="image/jpeg">
+							<f:param value="#{graficBean.timeStamp}" name="time" />
+						</a4j:mediaOutput>
+					</a4j:repeat>
+				</h:panelGroup>
 			</h:form>
 
 			<a4j:status id="status" onstart="#{rich:component('wait')}.show()"
