@@ -74,14 +74,13 @@ public class MetricChart {
 	Date dateTo = DateUtils.isOldPeriod(period) ? DateUtils
 		.getLastDay(period) : new Date();
 	Date date = DateUtils.getFirstDay(period);
+	Date firstDay = DateUtils.getFirstDay(period);
 	
 	if (period.after(dateTo)) // future
 	    return new TimeSeriesCollection();
 
 	TimeSeries pop = new org.jfree.data.time.TimeSeries("Puntos Acumulados");
 	
-	double acum = 0;
-
 	int dayCount = DateUtils.getDay(dateTo) - DateUtils.getDay(date) + 1;
 
 	Integer[] xData = new Integer[dayCount];
@@ -90,11 +89,10 @@ public class MetricChart {
 
 	    int day = DateUtils.getDay(date);
 	    xData[day - 1] = day;
-	    acum += campaignMetric.getMetric().execute(agent, date, date)
+	    yData[day - 1] = campaignMetric.getMetric().execute(agent, firstDay, date)
 		    .doubleValue();
-	    yData[day - 1] = acum;
-
-	    pop.add(new Day(date), acum);
+	    
+	    pop.add(new Day(date), yData[day - 1]);
 
 	    date = org.apache.commons.lang.time.DateUtils.addDays(date, 1);
 	}
@@ -107,7 +105,6 @@ public class MetricChart {
 
 	    double[] linearFit = Statistics.getLinearFit(xData, yData);
 
-	    Date firstDay = DateUtils.getFirstDay(period);
 	    Date lastDay = DateUtils.getLastDay(period);
 
 	    // Y = aX + b
