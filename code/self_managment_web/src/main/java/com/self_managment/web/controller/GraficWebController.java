@@ -182,6 +182,30 @@ public class GraficWebController implements Serializable {
 	double aux = Double.parseDouble(nf.format(sueldoHorasExtra));
 	return aux;
     }
+    
+    public double getValorHoraExtra50() {
+	return ttsService.getOvertimeValue50(currentAgent);
+    }
+    
+    public double getValorHoraExtra100() {
+	return ttsService.getOvertimeValue100(currentAgent);
+    }
+    
+    public long getHorasExtra50() {
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(getCurrentPeriod());
+	int month = cal.get(Calendar.MONTH) + 1;
+	int year = cal.get(Calendar.YEAR);
+	return ttsService.getExtraHours50Percent(currentAgent, month, year);
+    }
+    
+    public long getHorasExtra100() {
+	Calendar cal = Calendar.getInstance();
+	cal.setTime(getCurrentPeriod());
+	int month = cal.get(Calendar.MONTH) + 1;
+	int year = cal.get(Calendar.YEAR);
+	return ttsService.getExtraHours100Percent(currentAgent, month, year);
+    }
 
     public double getSueldoTotal() {
 	return getSueldoFijo() + getSueldoHorasExtra() + getSueldoVariable();
