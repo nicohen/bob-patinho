@@ -59,6 +59,13 @@ public class TTSServiceImpl implements TTSService {
 		ttsDao.update(transientObject);
 	}
 	
+	public long getExtraHours50Percent(Agent agent, int month, int year)
+	{
+		int workDayHours = agent.getWorkDayHours();
+		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), DateUtils.getFirstDay(month, year), DateUtils.getLastDay(month, year));
+		return getExtraHours50Percent(dates, workDayHours);
+	}
+	
 	@SuppressWarnings("deprecation")
 	private long getExtraHours50Percent(List<TTS> dates, int workDayHours)
 	{
@@ -91,6 +98,12 @@ public class TTSServiceImpl implements TTSService {
 		return extraHours50Percent;
 	}
 	
+	public long getExtraHours100Percent(Agent agent, int month, int year)
+	{
+		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), DateUtils.getFirstDay(month, year), DateUtils.getLastDay(month, year));
+		return getExtraHours100Percent(dates);
+	}
+	
 	@SuppressWarnings("deprecation")
 	private long getExtraHours100Percent(List<TTS> dates)
 	{
@@ -117,27 +130,38 @@ public class TTSServiceImpl implements TTSService {
 			}
 		}
 		return extraHours100Percent;
-	}
+	}	
 
 	public double getOvertimeSalary(Agent agent, int month, int year)
 	{	
-		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), DateUtils.getFirstDay(month, year), DateUtils.getLastDay(month, year));
-		double overtimeSalary = getExtraHours50Percent(dates, agent.getWorkDayHours()) * ((agent.getGrossSalary()/(22*agent.getWorkDayHours()))*1.5);
-		overtimeSalary += getExtraHours100Percent(dates) * ((agent.getGrossSalary()/(22*agent.getWorkDayHours()))*2);		
+		
+		double overtimeSalary = getExtraHours50Percent(agent, month, year) * getOvertimeValue50(agent);
+		overtimeSalary += getExtraHours100Percent(agent, month, year) * getOvertimeValue100(agent);		
 		return overtimeSalary;
+	}
+	
+	public double getOvertimeValue50(Agent agent)
+	{
+		return (agent.getGrossSalary()/(22*agent.getWorkDayHours()))*1.5;
+	}
+	
+	public double getOvertimeValue100(Agent agent)
+	{
+		return (agent.getGrossSalary()/(22*agent.getWorkDayHours()))*2;
 	}
 	
 	public long getProductiveHours(Agent agent, int month, int year)
 	{
-		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), DateUtils.getFirstDay(month, year), DateUtils.getLastDay(month, year));
-		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
+		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(agent, month, year) + getExtraHours100Percent(agent, month, year);
 		return productiveHours;
 	}
 	
 	public long getProductiveHours(Agent agent, Date dateFrom, Date dateTo)
 	{
 		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), dateFrom, dateTo);
-		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
+		//Solo funciona si ambas fechas son del mismo mes/anio
+		int days =  DateUtils.getDay(dateTo) - DateUtils.getDay(dateFrom) + 1;
+		long productiveHours = days * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
 		return productiveHours;
 	}
 
