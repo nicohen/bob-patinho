@@ -44,7 +44,6 @@ public class GraficWebController implements Serializable {
 	    .getBean("ttsService");
 
     private Agent currentAgent = agentService.findById(100);
-    private CampaignMetric selectedMetricToDraw;
 
     private Date currentPeriod;
 
@@ -54,7 +53,7 @@ public class GraficWebController implements Serializable {
 
 	MetricChart chart = new MetricChart((CampaignMetric) data,
 		getCurrentPeriod(), currentAgent);
-	ImageIO.write(chart.createBufferedImage(500, 375), "jpeg", out);
+	ImageIO.write(chart.createBufferedImage(900, 375), "jpeg", out);
 
     }
 
@@ -65,7 +64,6 @@ public class GraficWebController implements Serializable {
     public void periodChange() {
 	FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 		.put("period", currentPeriod);
-	setSelectedMetricToDraw(null);
 	if (currentPeriod.getYear() == now().getYear()) {
 	    if (currentPeriod.getMonth() >= now().getMonth()) {
 		lblSueldoVariable = "Sueldo Variable Proyectado";
@@ -203,14 +201,6 @@ public class GraficWebController implements Serializable {
 
     public void setCurrentPeriod(Date currentPeriod) {
 	this.currentPeriod = currentPeriod;
-    }
-
-    public CampaignMetric getSelectedMetricToDraw() {
-	return selectedMetricToDraw;
-    }
-
-    public void setSelectedMetricToDraw(CampaignMetric selectedMetricToDraw) {
-	this.selectedMetricToDraw = selectedMetricToDraw;
     }
 
     public long getTimeStamp() {
