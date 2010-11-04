@@ -70,11 +70,14 @@ public class Metric implements Serializable {
     }
            
     @Transient
-    public Number executeProy(Agent agent, Date dateFrom, Date dateTo) {
+    public Number executeProjected(Agent agent, Date dateFrom, Date dateTo) {
 	if (com.self_managment.util.DateUtils.isOldPeriod(dateFrom))
 	    return execute(agent, dateFrom, dateTo);
 	
 	Date today = new Date();
+	
+	if (dateFrom.after(today)) // future
+	    return 0;
 	
 	int dayCount = com.self_managment.util.DateUtils.getDay(today) - com.self_managment.util.DateUtils.getDay(dateFrom) + 1;
 	

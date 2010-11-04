@@ -135,7 +135,7 @@
 											<h:outputText value="Fecha actual" />
 										</th>
 										<th class="dr-table-headercell rich-table-headercell">
-											<h:outputText value="Proyectado" />
+											<h:outputText value="Proyectado" rendered="#{graficBean.showProjected}" />
 										</th>
 									</tr>
 								</thead>
@@ -152,9 +152,9 @@
 												</h:outputText>
 											</td>
 											<td align="center" class="dr-subtable-cell rich-subtable-cell">
-												<h:outputText binding="#{graficBean.metricOutput2}"
-													value="#{graficBean.metricValueProy}">
-													<f:attribute name="metric2" value="#{metric2}" />
+												<h:outputText binding="#{graficBean.metricProjectedOutput}"
+													value="#{graficBean.projectedMetricValue}" rendered="#{graficBean.showProjected}">
+													<f:attribute name="metric" value="#{metric}" />
 												</h:outputText>
 											</td>
 										</tr>

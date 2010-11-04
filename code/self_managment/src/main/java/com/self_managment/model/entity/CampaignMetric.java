@@ -119,8 +119,23 @@ public class CampaignMetric implements java.io.Serializable {
 
     @Transient
     public int getLevel(Agent agent, Date dateFrom, Date dateTo) {
-	Number result = getMetric().executeProy(agent, dateFrom, dateTo);
-	System.out.println("Este es el resultado " + result);
+	Number result = getMetric().execute(agent, dateFrom, dateTo);
+
+	if (applyLevel(result, optim, getMetric().getOptimSign()))
+	    return 3;
+	
+	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
+	    return 2;
+	
+	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
+	    return 1;
+
+	return 0;
+    }
+    
+    @Transient
+    public int getLevelProjected(Agent agent, Date dateFrom, Date dateTo) {
+	Number result = getMetric().executeProjected(agent, dateFrom, dateTo);
 
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;
@@ -134,25 +149,6 @@ public class CampaignMetric implements java.io.Serializable {
 	return 0;
     }
 
-    @Transient
-    public int getLevelProy(Number result) {
-	//Number result = getMetric().execute(agent, dateFrom, dateTo);
-
-	if (applyLevel(result, optim, getMetric().getOptimSign())) {
-	    return 3;
-	}
-	
-	if (applyLevel(result, objective, getMetric().getObjetiveSign())) {
-	    return 2;
-	}
-	    
-	if (applyLevel(result, minimum, getMetric().getMinimumSign())) {
-	    return 1;
-
-	}
-	return 0;
-    }
-    
     @Transient
     private boolean applyLevel(Number value, Number valueToCompare, String sign) {
 	if (value == null || valueToCompare == null || sign == null)
