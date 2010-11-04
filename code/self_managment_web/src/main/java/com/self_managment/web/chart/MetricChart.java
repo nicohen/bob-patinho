@@ -11,6 +11,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
+import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.statistics.Statistics;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -60,7 +61,9 @@ public class MetricChart {
 	chart.getXYPlot().addRangeMarker(
 		getMarker(campaignMetric.getUnsatisfactory(), Color.RED, rb
 			.getString("label.metric.unsatisfactory")));
-
+	
+	chart.getXYPlot().setRenderer(new XYSplineRenderer());
+	
 	return chart.createBufferedImage(width, height,
 		BufferedImage.TYPE_INT_RGB, null);
 
