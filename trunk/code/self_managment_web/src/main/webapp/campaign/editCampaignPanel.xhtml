@@ -157,18 +157,6 @@
 							</f:facet>
 						</rich:message>
 
-						<h:outputText value="#{msg['label.metric.valueunsatisfactory']}" />
-						<h:inputText id="unsatisfactoryValue"
-							value="#{campaignBean.campaign.unsatisfactoryValue}" size="15"
-							maxlength="10" required="true"
-							label="#{msg['label.metric.valueunsatisfactory']}">
-							<f:validateDoubleRange minimum="0" />
-						</h:inputText>
-						<rich:message for="unsatisfactoryValue" errorClass="error">
-							<f:facet name="errorMarker">
-								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
-							</f:facet>
-						</rich:message>
 					</h:panelGrid>
 				</rich:panel>
 

@@ -28,23 +28,26 @@
 					</f:facet>
 
 					<h:panelGrid id="AgentData" columns="6" width="100%">
+
+						<h:outputText value="Período" style="font-weight:bold"/>
+						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
+	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
+	 						popup="false" styleClass="special">
+	 						<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
+	 					</rich:calendar>
 	
 						<h:outputText value="#{msg['label.agent']}" style="font-weight:bold" />
 						<h:outputText value="#{graficBean.currentAgent.surname}, #{graficBean.currentAgent.name}" />
+
+						<h:outputText value="#{msg['label.campaign']}: " style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
 	
 						<h:outputText value="#{msg['label.agent.grossSalary']}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoFijo}" />
 	
 						<h:outputText value="#{graficBean.lblSueldoVariable}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoVariable}" />
-	
-						<h:outputText value="Período" style="font-weight:bold"/>
-						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
-		 					oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
-		 					popup="false" styleClass="special">
-		 					<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
-		 				</rich:calendar>
-	
+		
 						<h:outputText value="#{msg['label.agent.overtimeSalary']}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoHorasExtra}" />
 						
@@ -62,14 +65,6 @@
 	
 						<h:outputText value="#{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
 						<h:outputText value="$ #{graficBean.sueldoTotal}" />
-	
-					</h:panelGrid>
-
- 				
-					<h:panelGrid id="CampaignData" columns="2">
-	
-						<h:outputText value="#{msg['label.campaign']}: " style="font-weight:bold"/>
-						<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
 						
 					</h:panelGrid>
 
