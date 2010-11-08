@@ -54,7 +54,6 @@ public class CampaignCRUDTest extends TestCase {
 	campaign.setOptimValue(0d);
 	campaign.setObjetiveValue(0d);
 	campaign.setMinimumValue(0d);
-	campaign.setUnsatisfactoryValue(0d);
 	campaign.setStartDate(new Date());
 
 	service.save(campaign);

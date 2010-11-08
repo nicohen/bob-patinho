@@ -26,6 +26,10 @@ public class Campaign implements java.io.Serializable {
 	INBOUND, OUTBOUND;
     }
 
+    public Campaign() {
+	unsatisfactoryValue = 0.0;
+    }
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -203,10 +207,6 @@ public class Campaign implements java.io.Serializable {
 
     public void setType(CampaignType type) {
 	this.type = type;
-    }
-
-    public void setUnsatisfactoryValue(Double unsatisfactoryValue) {
-	this.unsatisfactoryValue = unsatisfactoryValue;
     }
 
     public void setStartDate(Date startDate) {
