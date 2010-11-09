@@ -11,23 +11,36 @@
 	<f:loadBundle basename="messages" var="msg" />
 	<a4j:form>
 		<rich:toolBar>
-			<rich:menuItem submitMode="none">
-				<h:outputLink value="/self_managment_web/campaign/campaignCRUD.jsf">
-					<h:outputText value="#{msg['menu.campaigns']}" />
-				</h:outputLink>
-			</rich:menuItem>
+			
+			<acegijsf:authorize ifAllGranted="AccountManager">
+		
+				<rich:menuItem submitMode="none">
+					<h:outputLink value="/self_managment_web/campaign/campaignCRUD.jsf">
+						<h:outputText value="#{msg['menu.campaigns']}" />
+					</h:outputLink>
+				</rich:menuItem>
+				
+			</acegijsf:authorize>
+				
+			<acegijsf:authorize ifAllGranted="AccountManager">
+	
+				<rich:menuItem submitMode="none">
+					<h:outputLink value="/self_managment_web/supervisorCRUD.jsf?refresh=true">
+						<h:outputText value="#{msg['menu.supervisors']}" />
+					</h:outputLink>
+				</rich:menuItem>
+			
+			</acegijsf:authorize>
 
-			<rich:menuItem submitMode="none">
-				<h:outputLink value="/self_managment_web/supervisorCRUD.jsf?refresh=true">
-					<h:outputText value="#{msg['menu.supervisors']}" />
-				</h:outputLink>
-			</rich:menuItem>
-
-			<rich:menuItem submitMode="none">
-				<h:outputLink value="/self_managment_web/grafic.jsf">
-					<h:outputText value="Salario" />
-				</h:outputLink>
-			</rich:menuItem>
+			<acegijsf:authorize ifAnyGranted="Agent, Supervisor">
+			
+				<rich:menuItem submitMode="none">
+					<h:outputLink value="/self_managment_web/grafic.jsf">
+						<h:outputText value="Salario" />
+					</h:outputLink>
+				</rich:menuItem>
+				
+			</acegijsf:authorize>
 			
 			<rich:toolBarGroup location="right">
 				<rich:menuItem submitMode="none">
@@ -38,11 +51,6 @@
 			</rich:toolBarGroup>
 		</rich:toolBar>
 	</a4j:form>
-	<acegijsf:authorize ifAllGranted="ROLE_ADMIN">
-   Agregar los componentes que solo seran visibles para ROLE_ADMIN.
-</acegijsf:authorize>
-
-
 	<rich:spacer height="5" />
 </f:view>
 </body>

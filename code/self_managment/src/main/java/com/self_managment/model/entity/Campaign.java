@@ -26,10 +26,6 @@ public class Campaign implements java.io.Serializable {
 	INBOUND, OUTBOUND;
     }
 
-    public Campaign() {
-	unsatisfactoryValue = 0.0;
-    }
-
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -59,9 +55,6 @@ public class Campaign implements java.io.Serializable {
 
     @Column(name = "MINIMUM_VALUE", nullable = false)
     private Double minimumValue;
-
-    @Column(name = "UNSATISFACTORY_VALUE", nullable = false)
-    private Double unsatisfactoryValue;
 
     @Column(name = "START_DATE", nullable = false)
     private Date startDate;
@@ -150,7 +143,7 @@ public class Campaign implements java.io.Serializable {
     }
 
     public Double getUnsatisfactoryValue() {
-	return unsatisfactoryValue;
+	return 0.0;
     }
 
     @Override
@@ -247,7 +240,7 @@ public class Campaign implements java.io.Serializable {
 	if (level == 1)
 	    return minimumValue;
 
-	return unsatisfactoryValue;
+	return 0.0;
 
     }
 }
