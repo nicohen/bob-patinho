@@ -16,7 +16,6 @@
 		<intercept-url pattern="/images/**" filters="none" />
 		
 		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		
 		<intercept-url pattern="/**" access="ROLE_USER" />
  
 		<form-login
@@ -30,12 +29,14 @@
 
 	<authentication-provider>
 		<user-service>
-			<user name="duilio" password="duilio"
-				authorities="ROLE_USER, ROLE_ADMIN" />
-			<user name="sergio" password="sergio"
-				authorities="ROLE_USER" />
-			<user name="nico" password="nico" authorities="ROLE_USER" />
-			<user name="nacho" password="nacho" authorities="ROLE_USER" />
+			<user name="duilio" password="duilio" authorities="ROLE_USER, AccountManager" />
+			<user name="sergio" password="sergio" authorities="ROLE_USER, AccountManager" />
+			<user name="nico" password="nico" authorities="ROLE_USER, AccountManager" />
+			<user name="nacho" password="nacho" authorities="ROLE_USER, AccountManager" />
+			<user name="juan" password="juan" authorities="ROLE_USER, Agent" />
+			<user name="jose" password="jose" authorities="ROLE_USER, Agent" />
+			<user name="lorena" password="lorena" authorities="ROLE_USER, Agent" />
+			<user name="pepe" password="pepe" authorities="ROLE_USER, Supervisor" />
 		</user-service>
 	</authentication-provider>
 

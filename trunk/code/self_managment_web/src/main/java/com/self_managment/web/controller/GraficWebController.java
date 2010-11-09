@@ -15,6 +15,8 @@ import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.self_managment.model.entity.Agent;
@@ -37,13 +39,11 @@ public class GraficWebController implements Serializable {
     private Integer metricaCalculadaProy;
     private List<CampaignMetric> metrics;
     private double sueldoHorasExtra;
-
+    private Agent currentAgent;
     private static AgentService agentService = (AgentService) JSFUtil
 	    .getBean("agentService");
     private static TTSService ttsService = (TTSService) JSFUtil
 	    .getBean("ttsService");
-
-    private Agent currentAgent = agentService.findById(100);
 
     private Date currentPeriod;
 
@@ -52,8 +52,8 @@ public class GraficWebController implements Serializable {
 	    return;
 
 	MetricChart chart = new MetricChart((CampaignMetric) data,
-		getCurrentPeriod(), currentAgent);
-	ImageIO.write(chart.createBufferedImage(900, 375), "jpeg", out);
+		getCurrentPeriod(), getCurrentAgent());
+	ImageIO.write(chart.createBufferedImage(415, 375), "jpeg", out);
 
     }
 
@@ -80,6 +80,16 @@ public class GraficWebController implements Serializable {
     }
 
     public Agent getCurrentAgent() {
+    if(currentAgent == null){
+	Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	String username;
+	if (obj instanceof UserDetails) {
+	  username = ((UserDetails)obj).getUsername();
+	} else {
+	  username = obj.toString();
+	}
+	currentAgent = agentService.findAllByProperty("name", username).get(0);
+    }
 	return currentAgent;
     }
 
@@ -99,7 +109,7 @@ public class GraficWebController implements Serializable {
 
     public List<CampaignMetric> getMetrics() {
 	if (metrics == null) {
-	    metrics = currentAgent.getCampaign().getCampaignMetric();
+	    metrics = getCurrentAgent().getCampaign().getCampaignMetric();
 	}
 	return metrics;
     }
@@ -121,9 +131,9 @@ public class GraficWebController implements Serializable {
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
 		.get("metric");
 
-	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(currentAgent, dateFrom, dateTo)));
+	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(getCurrentAgent(), dateFrom, dateTo)));
 
-	return metric.getMetric().execute(currentAgent,
+	return metric.getMetric().execute(getCurrentAgent(),
 		DateUtils.getFirstDay(getCurrentPeriod()),
 		DateUtils.getLastDay(getCurrentPeriod())).toString()
 		+ " " + metric.getMetric().getUnit();
@@ -136,15 +146,15 @@ public class GraficWebController implements Serializable {
 	CampaignMetric metric = (CampaignMetric) metricProjectedOutput.getAttributes()
 		.get("metric");
 
-	metricProjectedOutput.setStyle(getStyleForMetricLevel(metric.getLevelProjected(currentAgent, dateFrom, dateTo)));
+	metricProjectedOutput.setStyle(getStyleForMetricLevel(metric.getLevelProjected(getCurrentAgent(), dateFrom, dateTo)));
 
-	return metric.getMetric().executeProjected(currentAgent, dateFrom,
+	return metric.getMetric().executeProjected(getCurrentAgent(), dateFrom,
 		dateTo).toString()
 		+ " " + metric.getMetric().getUnit();
     }
 
     public double getSueldoFijo() {
-	return currentAgent.getGrossSalary();
+	return getCurrentAgent().getGrossSalary();
     }
 
     public double getSueldoVariable() {
@@ -153,17 +163,13 @@ public class GraficWebController implements Serializable {
 	int month = cal.get(Calendar.MONTH) + 1;
 	int year = cal.get(Calendar.YEAR);
 
-	return ttsService.getProductiveHours(currentAgent, month, year)
-		* currentAgent.getHourValue(DateUtils.getFirstDay(month, year),
+	return ttsService.getProductiveHours(getCurrentAgent(), month, year)
+		* getCurrentAgent().getHourValue(DateUtils.getFirstDay(month, year),
 			DateUtils.getLastDay(month, year));
     }
 
     private Date now() {
 	return Calendar.getInstance().getTime();
-    }
-
-    public void setCurrentAgent(Agent currentAgent) {
-	this.currentAgent = currentAgent;
     }
 
     public void setMetricOutput(HtmlOutputText metricOutput) {
@@ -175,7 +181,7 @@ public class GraficWebController implements Serializable {
 	cal.setTime(getCurrentPeriod());
 	int month = cal.get(Calendar.MONTH) + 1;
 	int year = cal.get(Calendar.YEAR);
-	sueldoHorasExtra = ttsService.getOvertimeSalary(currentAgent, month,
+	sueldoHorasExtra = ttsService.getOvertimeSalary(getCurrentAgent(), month,
 		year);
 	NumberFormat nf = NumberFormat.getInstance(Locale.US);
 	nf.setMaximumFractionDigits(2);
@@ -184,11 +190,17 @@ public class GraficWebController implements Serializable {
     }
     
     public double getValorHoraExtra50() {
-	return ttsService.getOvertimeValue50(currentAgent);
+	NumberFormat nf = NumberFormat.getInstance(Locale.US);
+	nf.setMaximumFractionDigits(2);
+	double aux = Double.parseDouble(nf.format(ttsService.getOvertimeValue50(getCurrentAgent())));
+	return aux;
     }
     
     public double getValorHoraExtra100() {
-	return ttsService.getOvertimeValue100(currentAgent);
+	NumberFormat nf = NumberFormat.getInstance(Locale.US);
+	nf.setMaximumFractionDigits(2);
+	double aux = Double.parseDouble(nf.format(ttsService.getOvertimeValue100(getCurrentAgent())));
+	return aux;
     }
     
     public long getHorasExtra50() {
@@ -196,7 +208,7 @@ public class GraficWebController implements Serializable {
 	cal.setTime(getCurrentPeriod());
 	int month = cal.get(Calendar.MONTH) + 1;
 	int year = cal.get(Calendar.YEAR);
-	return ttsService.getExtraHours50Percent(currentAgent, month, year);
+	return ttsService.getExtraHours50Percent(getCurrentAgent(), month, year);
     }
     
     public long getHorasExtra100() {
@@ -204,7 +216,7 @@ public class GraficWebController implements Serializable {
 	cal.setTime(getCurrentPeriod());
 	int month = cal.get(Calendar.MONTH) + 1;
 	int year = cal.get(Calendar.YEAR);
-	return ttsService.getExtraHours100Percent(currentAgent, month, year);
+	return ttsService.getExtraHours100Percent(getCurrentAgent(), month, year);
     }
 
     public double getSueldoTotal() {
