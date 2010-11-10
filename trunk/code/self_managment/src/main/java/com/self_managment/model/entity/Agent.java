@@ -179,5 +179,12 @@ public class Agent implements Serializable {
 			workDayHours = 7;
 		return workDayHours;
     }
+    
+    @Override
+    public String toString() {
+	if (this.docket == null)
+	    return "";
+	return this.name.toString() + ", " + this.surname;
+    }
 
 }

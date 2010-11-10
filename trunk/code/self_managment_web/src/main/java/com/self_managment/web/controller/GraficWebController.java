@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Component;
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.service.AgentService;
+import com.self_managment.service.SupervisorService;
 import com.self_managment.service.TTSService;
 import com.self_managment.util.DateUtils;
 import com.self_managment.web.chart.MetricChart;
@@ -40,8 +44,11 @@ public class GraficWebController implements Serializable {
     private List<CampaignMetric> metrics;
     private double sueldoHorasExtra;
     private Agent currentAgent;
+    private List<SelectItem> agents;
     private static AgentService agentService = (AgentService) JSFUtil
 	    .getBean("agentService");
+    private static SupervisorService supervisorService = (SupervisorService) JSFUtil
+    .getBean("supervisorService");
     private static TTSService ttsService = (TTSService) JSFUtil
 	    .getBean("ttsService");
 
@@ -78,20 +85,56 @@ public class GraficWebController implements Serializable {
 	lblSueldoVariable = "Sueldo Variable";
 	lblSueldoTotal = "Sueldo Total";
     }
-
+    
     public Agent getCurrentAgent() {
-    if(currentAgent == null){
-	Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	String username;
-	if (obj instanceof UserDetails) {
-	  username = ((UserDetails)obj).getUsername();
-	} else {
-	  username = obj.toString();
+	if(currentAgent == null) {
+    	Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String username;
+    	if (obj instanceof UserDetails) {
+    		username = ((UserDetails)obj).getUsername();
+			for(GrantedAuthority aut : (((UserDetails)obj)).getAuthorities()) {
+				if(aut.getAuthority().equalsIgnoreCase("Agent")) {
+					currentAgent = agentService.findAllByProperty("name", username).get(0);
+					break;
+				}
+				else if(aut.getAuthority().equalsIgnoreCase("Supervisor")) {
+			    	//Aca deberia ir solo los agentes supervisados
+					currentAgent = agentService.findAll().get(0);
+					break;
+				}
+			}
+    	}
+    	
 	}
-	currentAgent = agentService.findAllByProperty("name", username).get(0);
-    }
 	return currentAgent;
     }
+
+    public void setCurrentAgent(Agent selected) {
+	currentAgent = selected;
+    }
+    
+    public List<SelectItem> getAgents() {
+	if(agents == null) {
+    	Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	String username;
+    	if (obj instanceof UserDetails){
+    		for(GrantedAuthority aut : (((UserDetails)obj)).getAuthorities()) {
+    			if(aut.getAuthority().equalsIgnoreCase("Agent")) {
+    				agents = new ArrayList<SelectItem>();
+    				agents.add(new SelectItem(currentAgent));
+    				break;
+    			}
+    			else if(aut.getAuthority().equalsIgnoreCase("Supervisor")) {
+    		    	//Aca deberia ir solo los agentes supervisados
+    				agents = JSFUtil.getSelectItems(agentService.findAll());
+    				break;
+    			}
+    		}
+    	}
+	}
+	return agents;
+	}
+
 
     public Integer getMetricCalculateProy() {
 
