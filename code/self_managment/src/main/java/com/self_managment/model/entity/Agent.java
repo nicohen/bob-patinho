@@ -46,7 +46,7 @@ public class Agent implements Serializable {
     @Column(name = "GROSS_SALARY", nullable = false)
     private Double grossSalary;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "SUPERVISOR_ID", nullable = false)
     private Supervisor supervisor;
 
