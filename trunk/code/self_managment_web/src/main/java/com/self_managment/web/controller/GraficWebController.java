@@ -98,6 +98,8 @@ public class GraficWebController implements Serializable {
 					break;
 				}
 				else if(aut.getAuthority().equalsIgnoreCase("Supervisor")) {
+					//Duilio: me tira el mismo error de hibernate: GRAVE: failed to lazily initialize a collection of role: com.self_managment.model.entity.Supervisor.agents, no session or session was closed
+					//currentAgent = supervisorService.findAllByProperty("name", username).get(0).getAgents().get(0);
 			    	//Aca deberia ir solo los agentes supervisados
 					currentAgent = agentService.findAll().get(0);
 					break;
@@ -125,6 +127,9 @@ public class GraficWebController implements Serializable {
     				break;
     			}
     			else if(aut.getAuthority().equalsIgnoreCase("Supervisor")) {
+    				//Duilio: me tira el mismo error de hibernate: GRAVE: failed to lazily initialize a collection of role: com.self_managment.model.entity.Supervisor.agents, no session or session was closed
+    				//username = ((UserDetails)obj).getUsername();
+    				//agents = JSFUtil.getSelectItems(supervisorService.findAllByProperty("name", username).get(0).getAgents());
     		    	//Aca deberia ir solo los agentes supervisados
     				agents = JSFUtil.getSelectItems(agentService.findAll());
     				break;

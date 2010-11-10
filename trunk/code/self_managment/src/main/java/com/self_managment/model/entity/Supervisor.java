@@ -1,14 +1,20 @@
 package com.self_managment.model.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "supervisor", catalog = "self_managment", uniqueConstraints = {
@@ -38,6 +44,10 @@ public class Supervisor implements Serializable{
 	@JoinColumn(name = "CAMPAIGN_ID")
 	private Campaign campaign;
 	
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supervisor")
+    @Cascade( { org.hibernate.annotations.CascadeType.SAVE_UPDATE })
+    private List<Agent> agents;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -49,6 +59,10 @@ public class Supervisor implements Serializable{
 	public Long getDni() {
 		return dni;
 	}
+	
+	public List<Agent> getAgents() {
+		return agents;
+    }
 	
 	public void setDni(Long dni) {
 		this.dni = dni;
@@ -77,6 +91,10 @@ public class Supervisor implements Serializable{
 	public void setCampaign(Campaign campaign) {
 		this.campaign = campaign;
 	}
+	
+	public void setSupervisors(List<Agent> agents) {
+		this.agents = agents;
+    }
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
