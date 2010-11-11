@@ -27,10 +27,9 @@ public class ImportFileQA implements ImportFile {
 	}
 
 	@Override
-	public void importFile() throws IOException {
-		ICsvBeanReader inFile = new CsvBeanReader(new FileReader(new File(
-				"src/main/resources/test/files/QA_20100809.csv")),
-				CsvPreference.EXCEL_PREFERENCE);
+	public void importFile(String name) throws IOException {
+		ICsvBeanReader inFile = new CsvBeanReader(
+				new FileReader(new File(name)), CsvPreference.EXCEL_PREFERENCE);
 		try {
 			String[] header = inFile.getCSVHeader(true);
 			header = new String[] { "agent", "date", "evaluationsQuantity",

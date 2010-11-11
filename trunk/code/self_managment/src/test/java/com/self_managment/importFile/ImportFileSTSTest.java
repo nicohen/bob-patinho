@@ -29,7 +29,7 @@ public class ImportFileSTSTest extends TestCase {
 	// Save agent
 	// agents are load from hf test
 
-	importFile.importFile();
+	importFile.importFile("src/main/resources/test/files/STS_Septiembre2010.csv");
 
 	assertEquals(stsService.findAllByProperty("pk.agent.docket", 100).get(0)
 		.getAgent().getDocket(), new Integer(100));

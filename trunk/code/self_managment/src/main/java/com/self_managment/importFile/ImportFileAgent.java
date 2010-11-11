@@ -30,9 +30,9 @@ public class ImportFileAgent implements ImportFile {
 	}
 
 	@Override
-	public void importFile() throws IOException {
+	public void importFile(String name) throws IOException {
 		ICsvBeanReader inFile = new CsvBeanReader(new FileReader(new File(
-				"src/main/resources/test/files/HF System.csv")),
+				name)),
 				CsvPreference.EXCEL_PREFERENCE);
 		try {
 			String[] header = inFile.getCSVHeader(true);

@@ -7,16 +7,13 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.supercsv.cellprocessor.ParseDate;
-import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
 import com.self_managment.importFile.parser.ParseAgent;
-
 import com.self_managment.model.entity.TTS;
-
 import com.self_managment.service.TTSService;
 
 @Component("importFileTTS")
@@ -29,9 +26,9 @@ public class ImportFileTTS implements ImportFile {
 	}
 
 	@Override
-	public void importFile() throws IOException {
+	public void importFile(String name) throws IOException {
 		ICsvBeanReader inFile = new CsvBeanReader(new FileReader(new File(
-				"src/main/resources/test/files/TTS_20100809.csv")),
+				name)),
 				CsvPreference.EXCEL_PREFERENCE);
 		try {
 			String[] header = inFile.getCSVHeader(true);

@@ -25,7 +25,7 @@ public class ImportFileAgentTest extends TestCase {
 
     public void testImportFile() throws IOException {
 
-	importFile.importFile();
+	importFile.importFile("src/main/resources/test/files/HF System.csv");
 
 	assertEquals(agentService.findById(100).getDni(), new Long(30345235L));
 
