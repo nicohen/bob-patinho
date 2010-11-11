@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.GrantedAuthority;
 import org.springframework.security.context.SecurityContextHolder;
@@ -87,32 +86,42 @@ public class GraficWebController implements Serializable {
     }
     
     public Agent getCurrentAgent() {
-	if(currentAgent == null) {
-    	Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	String username;
-    	if (obj instanceof UserDetails) {
-    		username = ((UserDetails)obj).getUsername();
-			for(GrantedAuthority aut : (((UserDetails)obj)).getAuthorities()) {
-				if(aut.getAuthority().equalsIgnoreCase("Agent")) {
-					currentAgent = agentService.findAllByProperty("name", username).get(0);
-					break;
-				}
-				else if(aut.getAuthority().equalsIgnoreCase("Supervisor")) {
-					//Duilio: me tira el mismo error de hibernate: GRAVE: failed to lazily initialize a collection of role: com.self_managment.model.entity.Supervisor.agents, no session or session was closed
-					//currentAgent = supervisorService.findAllByProperty("name", username).get(0).getAgents().get(0);
-			    	//Aca deberia ir solo los agentes supervisados
-					currentAgent = agentService.findAll().get(0);
-					break;
-				}
-			}
-    	}
-    	
+	if (FacesContext.getCurrentInstance().getExternalContext()
+		.getSessionMap().get("currentAgent") == null) {
+
+	    Object obj = SecurityContextHolder.getContext().getAuthentication()
+		    .getPrincipal();
+	    String username;
+	    if (obj instanceof UserDetails) {
+		username = ((UserDetails) obj).getUsername();
+		for (GrantedAuthority aut : (((UserDetails) obj))
+			.getAuthorities()) {
+		    if (aut.getAuthority().equalsIgnoreCase("Agent")) {
+			currentAgent = agentService.findAllByProperty("name",
+				username).get(0);
+			break;
+		    } else if (aut.getAuthority()
+			    .equalsIgnoreCase("Supervisor")) {
+			currentAgent = supervisorService.findAllByProperty(
+				"name", username).get(0).getAgents().get(0);
+			break;
+		    }
+		}
+	    }
+
+	    FacesContext.getCurrentInstance().getExternalContext()
+		    .getSessionMap().put("currentAgent", currentAgent);
 	}
-	return currentAgent;
+
+	return (Agent) FacesContext.getCurrentInstance().getExternalContext()
+		.getSessionMap().get("currentAgent");
+
     }
 
-    public void setCurrentAgent(Agent selected) {
+    public void setCurrentAgent(Agent selected) {	
 	currentAgent = selected;
+	FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+	.put("currentAgent", currentAgent);
     }
     
     public List<SelectItem> getAgents() {
@@ -123,15 +132,12 @@ public class GraficWebController implements Serializable {
     		for(GrantedAuthority aut : (((UserDetails)obj)).getAuthorities()) {
     			if(aut.getAuthority().equalsIgnoreCase("Agent")) {
     				agents = new ArrayList<SelectItem>();
-    				agents.add(new SelectItem(currentAgent));
+    				agents.add(new SelectItem(getCurrentAgent()));
     				break;
     			}
     			else if(aut.getAuthority().equalsIgnoreCase("Supervisor")) {
-    				//Duilio: me tira el mismo error de hibernate: GRAVE: failed to lazily initialize a collection of role: com.self_managment.model.entity.Supervisor.agents, no session or session was closed
-    				//username = ((UserDetails)obj).getUsername();
-    				//agents = JSFUtil.getSelectItems(supervisorService.findAllByProperty("name", username).get(0).getAgents());
-    		    	//Aca deberia ir solo los agentes supervisados
-    				agents = JSFUtil.getSelectItems(agentService.findAll());
+    				username = ((UserDetails)obj).getUsername();
+    				agents = JSFUtil.getSelectItems(supervisorService.findAllByProperty("name", username).get(0).getAgents());
     				break;
     			}
     		}
