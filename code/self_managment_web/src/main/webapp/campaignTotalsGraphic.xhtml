@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -24,52 +24,18 @@
 				
  				<rich:panel>
 					<f:facet name="header">
-						<h:outputText value="#{msg['label.agent.fields']}" />
+						<h:outputText value="#{msg['label.supervisor.fields']}" />
 					</f:facet>
 
 					<h:panelGrid id="AgentData" columns="6" width="100%">
 
-						<h:outputText value="Período" style="font-weight:bold"/>
-						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
+						<h:outputText value="Periodo" style="font-weight:bold"/>
+						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{campaignTotalsGraphicBean.currentPeriod}"
 	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
 	 						popup="false" styleClass="special">
-	 						<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
+	 						<a4j:support action="#{campaignTotalsGraphicBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
 	 					</rich:calendar>
 	
-						<h:outputText value="#{msg['label.agent']}" style="font-weight:bold" />
-<!--						<rich:comboBox id="agent" value="#{graficBean.currentAgent}" size="25" -->
-<!--							converter="com.self_managment.web.converter.AgentConverter">-->
-<!--							<a4j:support event="onselect" reRender="CampaignData, AgentData, metricValues, grafics" />-->
-<!--							<f:selectItems value="#{graficBean.agents}" />-->
-<!--						</rich:comboBox>-->
-
-						<h:outputText value="#{msg['label.campaign']}: " style="font-weight:bold"/>
-						<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
-	
-						<h:outputText value="#{msg['label.agent.grossSalary']}" style="font-weight:bold"/>
-						<h:outputText value="$ #{graficBean.sueldoFijo}" />
-	
-						<h:outputText value="#{graficBean.lblSueldoVariable}" style="font-weight:bold"/>
-						<h:outputText value="$ #{graficBean.sueldoVariable}" />
-		
-						<h:outputText value="#{msg['label.agent.overtimeSalary']}" style="font-weight:bold"/>
-						<h:outputText value="$ #{graficBean.sueldoHorasExtra}" />
-						
-						<h:outputText value="#{msg['label.agent.extraHour50Value']}" style="font-weight:bold"/>
-						<h:outputText value="$ #{graficBean.valorHoraExtra50}" />
-						
-						<h:outputText value="#{msg['label.agent.extraHour100Value']}" style="font-weight:bold"/>
-						<h:outputText value="$ #{graficBean.valorHoraExtra100}" />
-						
-						<h:outputText value="#{msg['label.agent.extraHour50']}" style="font-weight:bold"/>
-						<h:outputText value="#{graficBean.horasExtra50} hs" />
-						
-						<h:outputText value="#{msg['label.agent.extraHour100']}" style="font-weight:bold"/>
-						<h:outputText value="#{graficBean.horasExtra100} hs" />
-	
-						<h:outputText value="#{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
-						<h:outputText value="$ #{graficBean.sueldoTotal}" />
-						
 					</h:panelGrid>
 
 					<h:panelGrid columns="2" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
@@ -97,24 +63,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
-											<h:outputText value="Valor Hora ($)"/>
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{graficBean.currentAgent.campaign.optimValue}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{graficBean.currentAgent.campaign.objetiveValue}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{graficBean.currentAgent.campaign.minimumValue}" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="#{graficBean.currentAgent.campaign.unsatisfactoryValue}" />
-										</td>
-									</tr>
-									<a4j:repeat value="#{graficBean.metrics}" var="metric">
+									<a4j:repeat value="#{campaignTotalsGraphicBean.metrics}" var="metric">
 										<tr>
 											<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
 												<h:outputText value="#{metric.pk.metric}" />
@@ -149,25 +98,25 @@
 											<h:outputText value="Fecha actual" />
 										</th>
 										<th class="dr-table-headercell rich-table-headercell">
-											<h:outputText value="Proyectado" rendered="#{graficBean.showProjected}" />
+											<h:outputText value="Proyectado" rendered="#{campaignTotalsGraphicBean.showProjected}" />
 										</th>
 									</tr>
 								</thead>
 								<tbody>
-									<a4j:repeat value="#{graficBean.metrics}" var="metric">
+									<a4j:repeat value="#{campaignTotalsGraphicBean.metrics}" var="metric">
 										<tr>
-											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
 												<h:outputText value="#{metric.pk.metric}" />
 											</td>
 											<td align="center" class="dr-subtable-cell rich-subtable-cell">
-												<h:outputText binding="#{graficBean.metricOutput}"
-													value="#{graficBean.metricValue}">
+												<h:outputText binding="#{campaignTotalsGraphicBean.metricOutput}"
+													value="#{campaignTotalsGraphicBean.metricValue}">
 													<f:attribute name="metric" value="#{metric}" />
 												</h:outputText>
 											</td>
 											<td align="center" class="dr-subtable-cell rich-subtable-cell">
-												<h:outputText binding="#{graficBean.metricProjectedOutput}"
-													value="#{graficBean.projectedMetricValue}" rendered="#{graficBean.showProjected}">
+												<h:outputText binding="#{campaignTotalsGraphicBean.metricProjectedOutput}"
+													value="#{campaignTotalsGraphicBean.projectedMetricValue}" rendered="#{campaignTotalsGraphicBean.showProjected}">
 													<f:attribute name="metric" value="#{metric}" />
 												</h:outputText>
 											</td>
@@ -181,11 +130,11 @@
 				</rich:panel>
 				
 				<h:panelGroup id="grafics">
-					<a4j:repeat value="#{graficBean.metrics}" var="metric">
+					<a4j:repeat value="#{campaignTotalsGraphicBean.metrics}" var="metric">
 						<a4j:mediaOutput element="img" cacheable="false" session="false"
-							createContent="#{graficBean.generaGrafico}"
+							createContent="#{campaignTotalsGraphicBean.generaGrafico}"
 							value="#{metric}" mimeType="image/jpeg">
-							<f:param value="#{graficBean.timeStamp}" name="time" />
+							<f:param value="#{campaignTotalsGraphicBean.timeStamp}" name="time" />
 						</a4j:mediaOutput>
 					</a4j:repeat>
 				</h:panelGroup>

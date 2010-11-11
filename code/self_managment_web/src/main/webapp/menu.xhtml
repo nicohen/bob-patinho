@@ -42,6 +42,16 @@
 				
 			</acegijsf:authorize>
 			
+			<acegijsf:authorize ifAnyGranted="Supervisor">
+			
+				<rich:menuItem submitMode="none">
+					<h:outputLink value="/self_managment_web/campaignTotalsGraphic.jsf">
+						<h:outputText value="Totales" />
+					</h:outputLink>
+				</rich:menuItem>
+				
+			</acegijsf:authorize>
+			
 			<rich:toolBarGroup location="right">
 				<rich:menuItem submitMode="none">
 					<h:outputLink value="/self_managment_web/logout.jsp">

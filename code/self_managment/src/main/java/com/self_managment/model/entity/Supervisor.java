@@ -44,7 +44,7 @@ public class Supervisor implements Serializable{
 	@JoinColumn(name = "CAMPAIGN_ID")
 	private Campaign campaign;
 	
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supervisor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "supervisor")
     @Cascade( { org.hibernate.annotations.CascadeType.SAVE_UPDATE })
     private List<Agent> agents;
 	
