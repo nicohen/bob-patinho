@@ -37,7 +37,7 @@ public class ImportFileTTSTest extends TestCase {
 	// Save agent
 	// agents are load from hf test
 
-	importFile.importFile();
+	importFile.importFile("src/main/resources/test/files/TTS_20100809.csv");
 
 	assertEquals(ttsService.findAllByProperty("pk.agent.docket", 100).get(0)
 		.getAgent().getDocket(), new Integer(100));

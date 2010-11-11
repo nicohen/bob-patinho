@@ -40,7 +40,7 @@ public class ImportFileQATest extends TestCase {
 	// Save agent
 	// agents are load from hf test
 
-	importFile.importFile();
+	importFile.importFile("src/main/resources/test/files/QA_20100809.csv");
 
 	assertEquals(qaService.findAllByProperty("achievedPointsQuantity", 27)
 		.get(0).getPosiblePointsQuantity(), new Integer(35));
