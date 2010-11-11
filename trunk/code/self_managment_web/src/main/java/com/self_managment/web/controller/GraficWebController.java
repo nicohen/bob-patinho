@@ -1,5 +1,7 @@
 package com.self_managment.web.controller;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -56,10 +58,14 @@ public class GraficWebController implements Serializable {
     public void generaGrafico(OutputStream out, Object data) throws IOException {
 	if (data == null)
 	    return;
+	
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	int width = (screenSize.width - 60) / getMetrics().size();
+	int height = (int) (screenSize.height * 0.5);
 
 	MetricChart chart = new MetricChart((CampaignMetric) data,
 		getCurrentPeriod(), getCurrentAgent());
-	ImageIO.write(chart.createBufferedImage(415, 375), "jpeg", out);
+	ImageIO.write(chart.createBufferedImage(width, height), "jpeg", out);
 
     }
 
