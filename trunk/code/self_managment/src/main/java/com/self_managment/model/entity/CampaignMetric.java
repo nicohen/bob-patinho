@@ -132,11 +132,39 @@ public class CampaignMetric implements java.io.Serializable {
 
 	return 0;
     }
-    
+
+    @Transient
+    public int getCampaignLevel(Number result, Date dateFrom, Date dateTo) {
+	if (applyLevel(result, optim, getMetric().getOptimSign()))
+	    return 3;
+	
+	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
+	    return 2;
+	
+	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
+	    return 1;
+
+	return 0;
+    }
+
     @Transient
     public int getLevelProjected(Agent agent, Date dateFrom, Date dateTo) {
 	Number result = getMetric().executeProjected(agent, dateFrom, dateTo);
 
+	if (applyLevel(result, optim, getMetric().getOptimSign()))
+	    return 3;
+	
+	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
+	    return 2;
+	
+	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
+	    return 1;
+
+	return 0;
+    }
+
+    @Transient
+    public int getCampaignLevelProjected(Number result, Date dateFrom, Date dateTo) {
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;
 	
