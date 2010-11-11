@@ -13,11 +13,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.metric.MetricStrategy;
+import com.self_managment.service.QAService;
 import com.self_managment.util.DateUtils;
 
 public class MetricQAAchievedPointsTest extends TestCase {
 
     private MetricStrategy metric;
+    private QAService qaService;
 
     public static Test suite() {
 	return new TestSuite(MetricQAAchievedPointsTest.class);
@@ -29,14 +31,17 @@ public class MetricQAAchievedPointsTest extends TestCase {
 		"spring/config/beanlocations.xml");
 
 	metric = (MetricStrategy) appContext.getBean("QA_PTS_ACHIEVED");
+	qaService = (QAService) appContext.getBean("qaService");
     }
 
     public void testMetricWithResult() throws ParseException {
 	Agent agent = new Agent();
 	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(430L, metric.execute(agent, DateUtils.getFirstDay(date),
-		DateUtils.getLastDay(date)));
+	Date dateFrom = DateUtils.getFirstDay(date);
+	Date dateTo = DateUtils.getLastDay(date);
+	assertEquals(qaService.sumAchievedPoints(agent.getDocket(), dateFrom, dateTo), metric.execute(agent, dateFrom,
+			dateTo));
     }
 
     public void testMetricWithoutResult() throws ParseException {

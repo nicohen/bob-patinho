@@ -14,11 +14,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.self_managment.importFile.ImportFileSummaryTest;
 import com.self_managment.model.entity.Agent;
 import com.self_managment.model.metric.MetricStrategy;
+import com.self_managment.service.SummaryService;
 import com.self_managment.util.DateUtils;
 
 public class MetricAmountOfTimeInAnAvailableCallStatusTest extends TestCase {
 
     private MetricStrategy metric;
+    private SummaryService summaryService;
 
     public static Test suite() {
     	TestSuite suite = new TestSuite();
@@ -33,14 +35,17 @@ public class MetricAmountOfTimeInAnAvailableCallStatusTest extends TestCase {
 		"spring/config/beanlocations.xml");
 
 	metric = (MetricStrategy) appContext.getBean("AVAIL_TM");
+	summaryService = (SummaryService) appContext.getBean("summaryService");
     }
 
     public void testMetricWithResult() throws ParseException {
 	Agent agent = new Agent();
 	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(4600L, metric.execute(agent, DateUtils.getFirstDay(date),
-		DateUtils.getLastDay(date)));
+	Date dateFrom = DateUtils.getFirstDay(date);
+	Date dateTo = DateUtils.getLastDay(date); 
+	assertEquals(summaryService.getAmountOfTimeInAnAvailableCallStatus(agent, dateFrom, dateTo), metric.execute(agent, dateFrom,
+		dateTo));
     }
 
     public void testMetricWithoutResult() throws ParseException {
