@@ -18,14 +18,14 @@
 		<message-bundle>messages</message-bundle>
 	</application>
 	
-<!--	<converter>-->
-<!--		<converter-id>-->
-<!--			com.self_managment.web.converter.AgentConverter-->
-<!--		</converter-id>-->
-<!--		<converter-class>-->
-<!--			com.self_managment.web.converter.AgentConverter-->
-<!--		</converter-class>-->
-<!--	</converter>-->
+	<converter>
+		<converter-id>
+			com.self_managment.web.converter.AgentConverter
+		</converter-id>
+		<converter-class>
+			com.self_managment.web.converter.AgentConverter
+		</converter-class>
+	</converter>
 
 	<converter>
 		<converter-id>

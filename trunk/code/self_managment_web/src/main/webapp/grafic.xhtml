@@ -37,11 +37,11 @@
 	 					</rich:calendar>
 	
 						<h:outputText value="#{msg['label.agent']}" style="font-weight:bold" />
-<!--						<rich:comboBox id="agent" value="#{graficBean.currentAgent}" size="25" -->
-<!--							converter="com.self_managment.web.converter.AgentConverter">-->
-<!--							<a4j:support event="onselect" reRender="CampaignData, AgentData, metricValues, grafics" />-->
-<!--							<f:selectItems value="#{graficBean.agents}" />-->
-<!--						</rich:comboBox>-->
+						<rich:comboBox id="agent" value="#{graficBean.currentAgent}" size="25" 
+							converter="com.self_managment.web.converter.AgentConverter">
+							<a4j:support event="onselect" reRender="CampaignData, AgentData, metricValues, grafics" />
+							<f:selectItems value="#{graficBean.agents}" />
+						</rich:comboBox>
 
 						<h:outputText value="#{msg['label.campaign']}: " style="font-weight:bold"/>
 						<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
