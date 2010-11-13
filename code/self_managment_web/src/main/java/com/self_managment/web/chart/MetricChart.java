@@ -2,6 +2,7 @@ package com.self_managment.web.chart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Paint;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.statistics.Statistics;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -45,21 +47,26 @@ public class MetricChart {
 	JFreeChart chart = ChartFactory.createTimeSeriesChart(campaignMetric
 		.getMetric().getCode().toUpperCase(), "Dias",
 		"Proyeccion Metrica", getDataSet(), true, true, false);
+	
+	chart.setBorderPaint(new Color(0,0,0));
+	chart.getTitle().setPaint(new Color(0,0,0));
+	chart.getXYPlot().setBackgroundPaint(new Color(220,220,220));
+	chart.getXYPlot().setRangeGridlinePaint(new Color(220,220,220));
+	chart.getXYPlot().setDomainGridlinePaint(new Color(0,0,0));
 
 	ResourceBundle rb = ResourceBundle.getBundle("messages");
 
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getOptim(),
-			ChartColor.VERY_DARK_GREEN, rb
+		getMarker(campaignMetric.getOptim(),new Color(198,246,196), rb
 				.getString("label.metric.optim")));
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getObjective(), Color.YELLOW, rb
+		getMarker(campaignMetric.getObjective(), new Color(254,244,156), rb
 			.getString("label.metric.objective")));
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getMinimum(), Color.ORANGE, rb
+		getMarker(campaignMetric.getMinimum(), new Color(254,221,156), rb
 			.getString("label.metric.minimum")));
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getUnsatisfactory(), Color.RED, rb
+		getMarker(campaignMetric.getUnsatisfactory(), new Color(254,156,157), rb
 			.getString("label.metric.unsatisfactory")));
 	
 	chart.getXYPlot().setRenderer(new XYSplineRenderer());

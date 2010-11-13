@@ -1,5 +1,7 @@
 package com.self_managment.web.controller;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -60,7 +62,11 @@ public class CampaignTotalsGraphicWebController implements Serializable {
 
 		MetricChart chart = new MetricChart((CampaignMetric) data,
 				getCurrentPeriod(), getCurrentAgent());
-		ImageIO.write(chart.createBufferedImage(415, 375), "jpeg", out);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//int width = (screenSize.width - 60) / getMetrics().size();
+		int width = (screenSize.width - 60) / 3;
+		int height = (int) (screenSize.height * 0.4);
+		ImageIO.write(chart.createBufferedImage(width, height), "jpeg", out);
 
 	}
 
