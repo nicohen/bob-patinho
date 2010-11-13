@@ -173,12 +173,12 @@ public class CampaignTotalsGraphicWebController implements Serializable {
 
 	private String getStyleForMetricLevel(int level) {
 		if (level == 3)
-			return "background-color:green";
+			return "background-color:#C6F6C4";
 		if (level == 2)
-			return "background-color:yellow";
+			return "background-color:#FEF49C";
 		if (level == 1)
-			return "background-color:orange";
-		return "background-color:red";
+			return "background-color:#FEDD9C";
+		return "background-color:#FE9C9D";
 	}
 
 	public String getMetricValue() {
