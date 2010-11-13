@@ -73,6 +73,8 @@ public class MetricChart {
 	chart.getXYPlot().setRenderer(new XYSplineRenderer());
 	chart.getXYPlot().getRenderer().setSeriesPaint(0, new Color(0,0,0));
 	chart.getXYPlot().getRenderer().setSeriesShape(0, new Rectangle(-1,-1,2,2));
+	chart.getXYPlot().getRenderer().setSeriesPaint(1, new Color(200,200,200));
+	chart.getXYPlot().getRenderer().setSeriesShape(1, new Rectangle(-1,-1,2,2));
 	
 	return chart.createBufferedImage(width, height,
 		BufferedImage.TYPE_INT_RGB, null);
