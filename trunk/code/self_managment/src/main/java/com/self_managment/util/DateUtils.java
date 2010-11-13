@@ -86,6 +86,27 @@ public class DateUtils {
 	return cal.get(Calendar.DAY_OF_MONTH);
     }
     
+    public static int getWorkingDaysCount(Date dateFrom, Date dateTo)
+    {
+    	Calendar calFrom = Calendar.getInstance();
+    	Calendar calTo = Calendar.getInstance();
+    	calFrom.setTime(dateFrom);
+    	calTo.setTime(dateTo);
+    	int dayOffset = 0;
+    	int dayFrom = getDay(dateFrom);
+    	int dayTo = getDay(dateTo);
+    	if(dayFrom > dayTo)
+    		return 0;
+    	while(dayFrom<=dayTo)
+    	{
+    		if((calFrom.get(Calendar.DAY_OF_WEEK)!=Calendar.SATURDAY)&&(calFrom.get(Calendar.DAY_OF_WEEK)!=Calendar.SUNDAY))
+    			dayOffset++;
+			calFrom.add(Calendar.DATE, 1);
+			dayFrom++;
+    	}
+    	return dayOffset;
+    }
+    
     public static Boolean isOldPeriod(Date date) {
 	Date currentPeriod = getFirstDay(new Date());
 	
