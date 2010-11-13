@@ -50,20 +50,20 @@ public class MetricChart {
 	
 	chart.setBorderPaint(new Color(0,0,0));
 	chart.getTitle().setPaint(new Color(0,0,0));
-	chart.getXYPlot().setBackgroundPaint(new Color(220,220,220));
-	chart.getXYPlot().setRangeGridlinePaint(new Color(220,220,220));
+	chart.getXYPlot().setBackgroundPaint(new Color(255,255,255));
+	chart.getXYPlot().setRangeGridlinePaint(new Color(255,255,255));
 	chart.getXYPlot().setDomainGridlinePaint(new Color(0,0,0));
 
 	ResourceBundle rb = ResourceBundle.getBundle("messages");
 
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getOptim(),new Color(198,246,196), rb
+		getMarker(campaignMetric.getOptim(),new Color(170,241,167), rb
 				.getString("label.metric.optim")));
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getObjective(), new Color(254,244,156), rb
+		getMarker(campaignMetric.getObjective(), new Color(254,215,125), rb
 			.getString("label.metric.objective")));
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getMinimum(), new Color(254,221,156), rb
+		getMarker(campaignMetric.getMinimum(), new Color(248,247,81), rb
 			.getString("label.metric.minimum")));
 	chart.getXYPlot().addRangeMarker(
 		getMarker(campaignMetric.getUnsatisfactory(), new Color(254,156,157), rb
