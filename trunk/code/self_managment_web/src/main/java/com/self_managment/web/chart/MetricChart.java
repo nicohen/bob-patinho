@@ -3,6 +3,7 @@ package com.self_managment.web.chart;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -70,6 +71,8 @@ public class MetricChart {
 			.getString("label.metric.unsatisfactory")));
 	
 	chart.getXYPlot().setRenderer(new XYSplineRenderer());
+	chart.getXYPlot().getRenderer().setSeriesPaint(0, new Color(0,0,0));
+	chart.getXYPlot().getRenderer().setSeriesShape(0, new Rectangle(-1,-1,2,2));
 	
 	return chart.createBufferedImage(width, height,
 		BufferedImage.TYPE_INT_RGB, null);
