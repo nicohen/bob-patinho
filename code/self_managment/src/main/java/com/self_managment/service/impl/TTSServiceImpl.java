@@ -159,8 +159,7 @@ public class TTSServiceImpl implements TTSService {
 	public long getProductiveHours(Agent agent, Date dateFrom, Date dateTo)
 	{
 		List<TTS> dates = ttsDao.findByAgentDateFromDateTo(agent.getDocket(), dateFrom, dateTo);
-		//Solo funciona si ambas fechas son del mismo mes/anio
-		int days =  DateUtils.getDay(dateTo) - DateUtils.getDay(dateFrom) + 1;
+		int days =  DateUtils.getWorkingDaysCount(dateFrom, dateTo);
 		long productiveHours = days * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
 		return productiveHours;
 	}
