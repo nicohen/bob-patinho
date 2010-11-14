@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.self_managment.model.entity.Agent;
 import com.self_managment.service.SummaryService;
 
 @Component("TPCT")
@@ -14,8 +13,10 @@ public class MetricTransferPCT implements MetricStrategy {
     private SummaryService summaryService;
 
     @Override
-    public Number execute(Agent agent, Date dateFrom, Date dateTo) {
-	return summaryService.getTransferPCT(agent, dateFrom, dateTo);
+    public Number execute(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	return summaryService.getTransferPCT(campaignId, supervisorId, docket,
+		dateFrom, dateTo);
     }
 
 }

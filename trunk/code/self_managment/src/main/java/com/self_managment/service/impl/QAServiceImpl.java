@@ -53,18 +53,18 @@ public class QAServiceImpl implements QAService {
     }
 
     @Override
-    public Number sumPossiblePoints(Integer docket, Date dateFrom, Date dateTo) {
-	return qaDao.sumPossiblePoints(docket, dateFrom, dateTo);
+    public Number sumPossiblePoints(Integer campaignId, Integer supervisorId, Integer docket, Date dateFrom, Date dateTo) {
+	return qaDao.sumPossiblePoints(campaignId, supervisorId, docket, dateFrom, dateTo);
     }
 
     @Override
-    public Number sumQAMonitors(Integer docket, Date dateFrom, Date dateTo) {
-	return qaDao.sumQAMonitors(docket, dateFrom, dateTo);
+    public Number sumQAMonitors(Integer campaignId, Integer supervisorId, Integer docket, Date dateFrom, Date dateTo) {
+	return qaDao.sumQAMonitors(campaignId, supervisorId, docket, dateFrom, dateTo);
     }
 
     @Override
-    public Number sumAchievedPoints(Integer docket, Date dateFrom, Date dateTo) {
-	return qaDao.sumAchievedPoints(docket, dateFrom, dateTo);
+    public Number sumAchievedPoints(Integer campaignId, Integer supervisorId, Integer docket, Date dateFrom, Date dateTo) {
+	return qaDao.sumAchievedPoints(campaignId, supervisorId, docket, dateFrom, dateTo);
     }
 
 }

@@ -226,10 +226,10 @@ public class Campaign implements java.io.Serializable {
     }
 
     @Transient
-    public Double getHourValue(Agent agent, Date dateFrom, Date dateTo) {
+    public Double getHourValue(Integer docket, Date dateFrom, Date dateTo) {
 	int level = 4;
 	for (CampaignMetric cm : campaignMetric) {
-	    int currentLevel = cm.getLevelProjected(agent, dateFrom, dateTo);
+	    int currentLevel = cm.getLevelProjected(null, null, docket, dateFrom, dateTo);
 	    level = currentLevel > level ? level : currentLevel; // get min
 	}
 

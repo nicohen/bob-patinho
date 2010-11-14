@@ -5,7 +5,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.self_managment.model.entity.Agent;
 import com.self_managment.service.QAService;
 
 @Component("QA_MONITORS")
@@ -14,8 +13,10 @@ public class MetricQAMonitors implements MetricStrategy {
     private QAService qaService;
 
     @Override
-    public Number execute(Agent agent, Date dateFrom, Date dateTo) {
-	return qaService.sumQAMonitors(agent.getDocket(), dateFrom, dateTo);
+    public Number execute(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	return qaService.sumQAMonitors(campaignId, supervisorId, docket,
+		dateFrom, dateTo);
     }
 
 }

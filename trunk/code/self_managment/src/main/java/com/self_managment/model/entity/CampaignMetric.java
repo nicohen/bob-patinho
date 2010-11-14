@@ -118,15 +118,17 @@ public class CampaignMetric implements java.io.Serializable {
     }
 
     @Transient
-    public int getLevel(Agent agent, Date dateFrom, Date dateTo) {
-	Number result = getMetric().execute(agent, dateFrom, dateTo);
+    public int getLevel(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	Number result = getMetric().execute(campaignId, supervisorId, docket,
+		dateFrom, dateTo);
 
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;
-	
+
 	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
 	    return 2;
-	
+
 	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
 	    return 1;
 
@@ -137,10 +139,10 @@ public class CampaignMetric implements java.io.Serializable {
     public int getCampaignLevel(Number result, Date dateFrom, Date dateTo) {
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;
-	
+
 	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
 	    return 2;
-	
+
 	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
 	    return 1;
 
@@ -148,15 +150,17 @@ public class CampaignMetric implements java.io.Serializable {
     }
 
     @Transient
-    public int getLevelProjected(Agent agent, Date dateFrom, Date dateTo) {
-	Number result = getMetric().executeProjected(agent, dateFrom, dateTo);
+    public int getLevelProjected(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	Number result = getMetric().executeProjected(campaignId, supervisorId,
+		docket, dateFrom, dateTo);
 
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;
-	
+
 	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
 	    return 2;
-	
+
 	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
 	    return 1;
 
@@ -164,13 +168,14 @@ public class CampaignMetric implements java.io.Serializable {
     }
 
     @Transient
-    public int getCampaignLevelProjected(Number result, Date dateFrom, Date dateTo) {
+    public int getCampaignLevelProjected(Number result, Date dateFrom,
+	    Date dateTo) {
 	if (applyLevel(result, optim, getMetric().getOptimSign()))
 	    return 3;
-	
+
 	if (applyLevel(result, objective, getMetric().getObjetiveSign()))
 	    return 2;
-	
+
 	if (applyLevel(result, minimum, getMetric().getMinimumSign()))
 	    return 1;
 
