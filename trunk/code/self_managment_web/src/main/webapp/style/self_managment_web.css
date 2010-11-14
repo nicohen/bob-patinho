@@ -1,3 +1,13 @@
+.rich-calendar-tool
+{
+	background-color: white;
+}
+
+.rich-calendar-month
+{
+	background-color: white;
+}
+
 .rich-messages-marker img {
 	padding-right: 7px;
 }
@@ -34,4 +44,3 @@
 .alignTop {
 	vertical-align:top;
 }
-
