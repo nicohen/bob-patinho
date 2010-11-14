@@ -12,6 +12,8 @@
 	<a4j:form>
 		<rich:toolBar>
 			
+			<h:outputLabel value="Self Management Web" style="font-weight:normal; color:gray; font-size:medium;"/>
+			
 			<acegijsf:authorize ifAllGranted="AccountManager">
 		
 				<rich:menuItem submitMode="none">
@@ -61,6 +63,12 @@
 				</rich:menuItem>
 			
 			</acegijsf:authorize>
+			
+			<rich:menuItem submitMode="none">
+				<h:outputLink value="/self_managment_web/help.jsf?refresh=true">
+					<h:outputText value="Ayuda" />
+				</h:outputLink>
+			</rich:menuItem>
 			
 			<rich:toolBarGroup location="right">
 				<rich:menuItem submitMode="none">
