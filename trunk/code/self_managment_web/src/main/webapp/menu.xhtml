@@ -45,11 +45,21 @@
 			<acegijsf:authorize ifAnyGranted="Supervisor">
 			
 				<rich:menuItem submitMode="none">
-					<h:outputLink value="/self_managment_web/supervisorTotal.jsf">
+					<h:outputLink value="/self_managment_web/supervisorTotal.jsf?refresh=true">
 						<h:outputText value="Totales Supervisor" />
 					</h:outputLink>
 				</rich:menuItem>
 				
+			</acegijsf:authorize>
+			
+			<acegijsf:authorize ifAllGranted="AccountManager">
+	
+				<rich:menuItem submitMode="none">
+					<h:outputLink value="/self_managment_web/campaignTotal.jsf?refresh=true">
+						<h:outputText value="Totales Campania" />
+					</h:outputLink>
+				</rich:menuItem>
+			
 			</acegijsf:authorize>
 			
 			<rich:toolBarGroup location="right">

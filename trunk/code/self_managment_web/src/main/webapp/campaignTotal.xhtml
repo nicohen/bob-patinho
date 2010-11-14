@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+<link rel="stylesheet" type="text/css"
+	href="style/self_managment_web.css" />
+</head>
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="body">
+
+		<f:view>
+			<f:loadBundle basename="messages" var="msg" />
+			
+			<!-- No sacar, esta para que la tabla tome los estilos -->
+			<rich:dataTable rendered="false"/>
+			
+			<h:form id="graphicForm">
+				
+ 				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.supervisor.fields']}" />
+					</f:facet>
+
+					<h:panelGrid id="AgentData" columns="6" width="100%">
+
+						<h:outputText value="Periodo" style="font-weight:bold"/>
+						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{campaignTotalBean.currentPeriod}"
+	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
+	 						popup="false" styleClass="special">
+	 						<a4j:support action="#{campaignTotalBean.periodChange}" event="onchanged" reRender="AgentData, metrics, grafics"/>
+	 					</rich:calendar>
+	 					
+	 					<h:outputText value="#{msg['label.campaign']}" style="font-weight:bold" />
+						<rich:comboBox id="supervisor" value="#{campaignTotalBean.currentCampaign}" size="25" 
+							converter="com.self_managment.web.converter.CampaignConverter"
+							valueChangeListener="#{campaignTotalBean.campaignChanged}" inmediate="true">
+							<a4j:support event="onselect" reRender="AgentData, metrics, grafics" />
+							<f:selectItems value="#{campaignTotalBean.campaigns}" />
+						</rich:comboBox>
+	
+					</h:panelGrid>
+
+					<h:panelGrid id="metrics"  columns="2" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
+
+						<h:panelGroup width="70%">
+
+							<table border="1" class="dr-table rich-table" width="100%">
+								<thead class="dr-table-thead">
+									<tr class="dr-table-header rich-table-header">
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell" style="background-color:#C6F6C4">
+											<h:outputText value="#{msg['label.metric.optim']}"/>
+										</th>
+										<th class="dr-table-headercell rich-table-headercell" style="background-color:#FEF49C">
+											<h:outputText value="#{msg['label.metric.objective']}" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell" style="background-color:#FEDD9C">
+											<h:outputText value="#{msg['label.metric.minimum']}" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell" style="background-color:#FE9C9D">
+											<h:outputText value="#{msg['label.metric.unsatisfactory']}" />
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<a4j:repeat value="#{campaignTotalBean.metrics}" var="metric">
+										<tr>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
+												<h:outputText value="#{metric.pk.metric}" />
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText value="#{metric.pk.metric.optimSign} #{metric.optim} #{metric.pk.metric.unit}" />
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText value="#{metric.pk.metric.objetiveSign} #{metric.objective} #{metric.pk.metric.unit}" />
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText value="#{metric.pk.metric.minimumSign} #{metric.minimum} #{metric.pk.metric.unit}" />
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText value="#{metric.pk.metric.unsatisfactorySign} #{metric.unsatisfactory} #{metric.pk.metric.unit}" />
+											</td>
+										</tr>
+									</a4j:repeat>
+								</tbody>
+							</table>
+							
+						</h:panelGroup>
+						
+						<h:panelGroup id="metricValues" width="30%">
+							<table border="1" class="dr-table rich-table" width="100%">
+								<thead class="dr-table-thead">
+									<tr class="dr-table-header rich-table-header">
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="#{msg['label.metric']}" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="Fecha actual" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="Proyectado" rendered="#{campaignTotalBean.showProjected}" />
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<a4j:repeat value="#{campaignTotalBean.metrics}" var="metric">
+										<tr>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
+												<h:outputText value="#{metric.pk.metric}" />
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText binding="#{campaignTotalBean.metricOutput}"
+													value="#{campaignTotalBean.metricValue}">
+													<f:attribute name="metric" value="#{metric}" />
+												</h:outputText>
+											</td>
+											<td align="center" class="dr-subtable-cell rich-subtable-cell">
+												<h:outputText binding="#{campaignTotalBean.metricProjectedOutput}"
+													value="#{campaignTotalBean.projectedMetricValue}" rendered="#{campaignTotalBean.showProjected}">
+													<f:attribute name="metric" value="#{metric}" />
+												</h:outputText>
+											</td>
+										</tr>
+									</a4j:repeat>
+								</tbody>
+							</table>
+						</h:panelGroup>
+					</h:panelGrid>
+					
+				</rich:panel>
+				
+				<h:panelGroup id="grafics">
+					<a4j:repeat value="#{campaignTotalBean.metrics}" var="metric">
+						<a4j:mediaOutput element="img" cacheable="false" session="false"
+							createContent="#{campaignTotalBean.generaGrafico}"
+							value="#{metric}" mimeType="image/jpeg">
+							<f:param value="#{campaignTotalBean.timeStamp}" name="time" />
+						</a4j:mediaOutput>
+					</a4j:repeat>
+				</h:panelGroup>
+			</h:form>
+
+			<a4j:status id="status" onstart="#{rich:component('wait')}.show()"
+				onstop="#{rich:component('wait')}.hide()" />
+
+
+			<rich:modalPanel id="wait" autosized="true" width="32" height="32"
+				moveable="false" resizeable="false">
+				<h:graphicImage value="/images/Busy-icon.gif" />
+			</rich:modalPanel>
+		</f:view>
+
+	</ui:define>
+</ui:composition>
+</html>
