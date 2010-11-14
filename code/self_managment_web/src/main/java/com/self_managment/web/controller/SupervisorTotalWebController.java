@@ -46,6 +46,7 @@ public class SupervisorTotalWebController implements Serializable {
     private List<SelectItem> supervisors;
     private static SupervisorService supervisorService = (SupervisorService) JSFUtil
 	    .getBean("supervisorService");
+    private Integer imageSize = 0;
 
     private Date currentPeriod = new Date();
 
@@ -54,7 +55,10 @@ public class SupervisorTotalWebController implements Serializable {
 	    return;
 
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int width = (screenSize.width - 60) / getMetrics().size();
+	
+	double inc = imageSize == 100 ? getMetrics().size() : (100.0 + imageSize) / 100.0;	
+	
+	int width = (int) (((screenSize.width - 60) / getMetrics().size()) * inc);
 	int height = (int) (screenSize.height * 0.4);
 
 	MetricChart chart = new MetricChart(null, getCurrentSupervisor()
@@ -271,6 +275,14 @@ public class SupervisorTotalWebController implements Serializable {
     	if (reachedLevelCode == 1)
     	    return "Minimo";
     	return "No satisfactorio";
+    }
+
+    public Integer getImageSize() {
+        return imageSize;
+    }
+
+    public void setImageSize(Integer imageSize) {
+        this.imageSize = imageSize;
     }
 
 }

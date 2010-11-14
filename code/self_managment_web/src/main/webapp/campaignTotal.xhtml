@@ -161,6 +161,19 @@
 					
 				</rich:panel>
 				
+				<div>
+		            <rich:inputNumberSlider value="#{campaignTotalBean.imageSize}"		
+		                        minValue="0"		
+		                        maxValue="100"		
+		                        step="20"		
+		                        enableManualInput="false"		
+		                        showArrows="false"		
+		                        showBoundaryValues="true"		
+		                        showInput="false">		
+		                  <a4j:support event="onchange" reRender="grafics"/>		
+		            </rich:inputNumberSlider>		
+		      	</div>
+				
 				<h:panelGroup id="grafics">
 					<a4j:repeat value="#{campaignTotalBean.metrics}" var="metric">
 						<a4j:mediaOutput element="img" cacheable="false" session="false"
