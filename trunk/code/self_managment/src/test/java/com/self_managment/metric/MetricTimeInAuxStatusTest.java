@@ -44,7 +44,7 @@ public class MetricTimeInAuxStatusTest extends TestCase {
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
 	SummaryService summaryService = (SummaryService)appContext.getBean("summaryService");
 	TTSService ttsService = (TTSService)appContext.getBean("ttsService");
-	assertEquals((ttsService.getProductiveHours(agent, 10, 2010)* 60) - summaryService.getTotalLoggedTime(null, null, agent.getDocket(), DateUtils.getFirstDay(date),
+	assertEquals((ttsService.getProductiveHours(agent, DateUtils.getFirstDay(date), DateUtils.getLastDay(date))* 60) - summaryService.getTotalLoggedTime(null, null, agent.getDocket(), DateUtils.getFirstDay(date),
 			DateUtils.getLastDay(date)), metric.execute(null, null, agent.getDocket(), DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
@@ -55,7 +55,7 @@ public class MetricTimeInAuxStatusTest extends TestCase {
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
 	SummaryService summaryService = (SummaryService)appContext.getBean("summaryService");
 	TTSService ttsService = (TTSService)appContext.getBean("ttsService");
-	assertEquals((ttsService.getProductiveHours(agent, 10, 2010)* 60) - summaryService.getTotalLoggedTime(null, null, agent.getDocket(), DateUtils.getFirstDay(date),
+	assertEquals((ttsService.getProductiveHours(agent, DateUtils.getFirstDay(date), DateUtils.getLastDay(date))* 60) - summaryService.getTotalLoggedTime(null, null, agent.getDocket(), DateUtils.getFirstDay(date),
 			DateUtils.getLastDay(date)), metric.execute(null, null, agent.getDocket(), DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
