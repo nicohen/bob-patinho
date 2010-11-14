@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.self_managment.model.entity.Agent;
 import com.self_managment.model.metric.MetricStrategy;
 import com.self_managment.service.SummaryService;
 import com.self_managment.util.DateUtils;
@@ -35,20 +34,16 @@ public class MetricAverageTalkTimeTest extends TestCase {
     }
 
     public void testMetricWithResult() throws ParseException {
-	Agent agent = new Agent();
-	agent.setDocket(100);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
 	Date dateFrom = DateUtils.getFirstDay(date);
 	Date dateTo = DateUtils.getLastDay(date); 
-	assertEquals(summaryService.getAverageTalkTime(agent, dateFrom, dateTo), metric.execute(agent, dateFrom,
+	assertEquals(summaryService.getAverageTalkTime(null, null, 100, dateFrom, dateTo), metric.execute(null, null, 100, dateFrom,
 		dateTo));
     }
 
     public void testMetricWithoutResult() throws ParseException {
-	Agent agent = new Agent();
-	agent.setDocket(999);
 	Date date = new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2010");
-	assertEquals(0D, metric.execute(agent, DateUtils.getFirstDay(date),
+	assertEquals(0D, metric.execute(null, null, -1, DateUtils.getFirstDay(date),
 		DateUtils.getLastDay(date)));
     }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.Summary;
 import com.self_managment.persistance.dao.SummaryDao;
 import com.self_managment.service.SummaryService;
@@ -54,45 +53,38 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     @Override
-    public Long getAmountOfTimeInAnAvailableCallStatus(Agent agent,
-	    Date dateFrom, Date dateTo) {
-	if (agent == null || dateFrom == null || dateTo == null)
-	    return null;
-	return summaryDao.getAmountOfTimeInAnAvailableCallStatus(agent,
+    public Long getAmountOfTimeInAnAvailableCallStatus(Integer campaignId,
+	    Integer supervisorId, Integer docket, Date dateFrom, Date dateTo) {
+	return summaryDao.getAmountOfTimeInAnAvailableCallStatus(campaignId,
+		supervisorId, docket, dateFrom, dateTo);
+    }
+
+    @Override
+    public Double getAverageTalkTime(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	return summaryDao.getAverageTalkTime(campaignId, supervisorId, docket,
 		dateFrom, dateTo);
     }
 
     @Override
-    public Double getAverageTalkTime(Agent agent, Date dateFrom, Date dateTo) {
-	if (agent == null || dateFrom == null || dateTo == null)
-	    return null;
-	
-	return summaryDao.getAverageTalkTime(agent, dateFrom, dateTo);
-    }
-    
-    @Override
-    public Long getNCH(Agent agent, Date dateFrom, Date dateTo) {
-	if (agent == null || dateFrom == null || dateTo == null)
-	    return null;
-	
-	return summaryDao.getNCH(agent, dateFrom, dateTo);
+    public Long getNCH(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	return summaryDao.getNCH(campaignId, supervisorId, docket, dateFrom,
+		dateTo);
     }
 
     @Override
-    public Long getTransferPCT(Agent agent, Date dateFrom, Date dateTo) {
-	if (agent == null || dateFrom == null || dateTo == null)
-	    return null;
-	
-	return summaryDao.getTransferPCT(agent, dateFrom, dateTo);
+    public Long getTransferPCT(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	return summaryDao.getTransferPCT(campaignId, supervisorId, docket,
+		dateFrom, dateTo);
     }
 
-    
     @Override
-    public Long getTotalLoggedTime(Agent agent, Date dateFrom, Date dateTo) {
-	if (agent == null || dateFrom == null || dateTo == null)
-	    return null;
-	
-	return summaryDao.getTotalLoggedTime(agent, dateFrom, dateTo);
+    public Long getTotalLoggedTime(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
+	return summaryDao.getTotalLoggedTime(campaignId, supervisorId, docket,
+		dateFrom, dateTo);
     }
 
 }

@@ -2,19 +2,16 @@ package com.self_managment.web.chart;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Marker;
 import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
-import org.jfree.chart.title.TextTitle;
 import org.jfree.data.statistics.Statistics;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -22,25 +19,23 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.RectangleAnchor;
 import org.jfree.ui.TextAnchor;
 
-import com.self_managment.model.entity.Agent;
 import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.util.DateUtils;
 
 public class MetricChart {
     private CampaignMetric campaignMetric;
     private Date period;
-    private Agent agent;
-    private double endY;
+    private Integer campaignId;
+    private Integer supervisorId;
+    private Integer docket;
 
-    public double getEndY() {
-	return endY;
-    }
-
-    public MetricChart(CampaignMetric campaignMetric, Date period, Agent agent) {
+    public MetricChart(Integer campaignId, Integer supervisorId, Integer docket, CampaignMetric campaignMetric, Date period) {
 	super();
 	this.campaignMetric = campaignMetric;
 	this.period = period;
-	this.agent = agent;
+	this.campaignId = campaignId;
+	this.supervisorId = supervisorId;
+	this.docket = docket;
     }
 
     public BufferedImage createBufferedImage(int width, int height) {
@@ -56,9 +51,9 @@ public class MetricChart {
 	chart.getXYPlot().setDomainGridlinePaint(new Color(0,0,0));
 
 	ResourceBundle rb = ResourceBundle.getBundle("messages");
-
+	
 	chart.getXYPlot().addRangeMarker(
-		getMarker(campaignMetric.getOptim(),new Color(170,241,167), rb
+		getMarker(campaignMetric.getOptim(), new Color(170,241,167), rb
 				.getString("label.metric.optim")));
 	chart.getXYPlot().addRangeMarker(
 		getMarker(campaignMetric.getObjective(), new Color(254,215,125), rb
@@ -101,7 +96,7 @@ public class MetricChart {
 
 	    int day = DateUtils.getDay(date);
 	    xData[day - 1] = day;
-	    yData[day - 1] = campaignMetric.getMetric().execute(agent, firstDay, date)
+	    yData[day - 1] = campaignMetric.getMetric().execute(campaignId, supervisorId, docket, firstDay, date)
 		    .doubleValue();
 	    
 	    pop.add(new Day(date), yData[day - 1]);

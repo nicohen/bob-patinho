@@ -2,8 +2,6 @@ package com.self_managment.model.metric;
 
 import java.util.Date;
 
-import com.self_managment.model.entity.Agent;
-
 public interface MetricStrategy {
-	Number execute(Agent agent, Date dateFrom, Date dateTo);
+	Number execute(Integer campaignId, Integer supervisorId, Integer docket, Date dateFrom, Date dateTo);
 }

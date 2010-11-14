@@ -19,14 +19,19 @@ public class MetricTimeInAuxStatus implements MetricStrategy {
     private TTSService ttService;
 
     @Override
-    public Number execute(Agent agent, Date dateFrom, Date dateTo) {
+    public Number execute(Integer campaignId, Integer supervisorId,
+	    Integer docket, Date dateFrom, Date dateTo) {
 	Calendar cal = Calendar.getInstance();
 	cal.setTime(dateFrom);
+	// TODO ver de cambiar la firma de getProductiveHours
 	// out hour - in hour
+	Agent agent = new Agent();
+	agent.setDocket(docket);
 	long productiveHours = ttService.getProductiveHours(agent, cal
 		.get(Calendar.MONTH) + 1, cal.get(Calendar.YEAR));
 
-	return productiveHours * 60 - summaryService.getTotalLoggedTime(agent, dateFrom, dateTo);
+	return productiveHours * 60 - summaryService.getTotalLoggedTime(campaignId, supervisorId,
+			docket, dateFrom, dateTo);
 
     }
 

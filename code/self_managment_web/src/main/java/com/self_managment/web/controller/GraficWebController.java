@@ -63,8 +63,8 @@ public class GraficWebController implements Serializable {
 	int width = (screenSize.width - 60) / getMetrics().size();
 	int height = (int) (screenSize.height * 0.4);
 
-	MetricChart chart = new MetricChart((CampaignMetric) data,
-		getCurrentPeriod(), getCurrentAgent());
+	MetricChart chart = new MetricChart(null, null, getCurrentAgent().getDocket(), (CampaignMetric) data,
+		getCurrentPeriod());
 	ImageIO.write(chart.createBufferedImage(width, height), "jpeg", out);
 
     }
@@ -191,9 +191,9 @@ public class GraficWebController implements Serializable {
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
 		.get("metric");
 
-	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(getCurrentAgent(), dateFrom, dateTo)));
+	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo)));
 
-	return metric.getMetric().execute(getCurrentAgent(),
+	return metric.getMetric().execute(null, null, getCurrentAgent().getDocket(),
 		DateUtils.getFirstDay(getCurrentPeriod()),
 		DateUtils.getLastDay(getCurrentPeriod())).toString()
 		+ " " + metric.getMetric().getUnit();
@@ -206,9 +206,9 @@ public class GraficWebController implements Serializable {
 	CampaignMetric metric = (CampaignMetric) metricProjectedOutput.getAttributes()
 		.get("metric");
 
-	metricProjectedOutput.setStyle(getStyleForMetricLevel(metric.getLevelProjected(getCurrentAgent(), dateFrom, dateTo)));
+	metricProjectedOutput.setStyle(getStyleForMetricLevel(metric.getLevelProjected(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo)));
 
-	return metric.getMetric().executeProjected(getCurrentAgent(), dateFrom,
+	return metric.getMetric().executeProjected(null, null, getCurrentAgent().getDocket(), dateFrom,
 		dateTo).toString()
 		+ " " + metric.getMetric().getUnit();
     }
