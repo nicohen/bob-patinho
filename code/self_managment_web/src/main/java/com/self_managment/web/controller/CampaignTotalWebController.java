@@ -30,7 +30,8 @@ import com.self_managment.web.util.JSFUtil;
 @Scope("session")
 public class CampaignTotalWebController implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    private int reachedLevelCode = 3;
+    private HtmlOutputText reachedLevelOutput;
     private HtmlOutputText metricOutput;
     private HtmlOutputText metricProjectedOutput;
     private String lblSueldoVariable = "Sueldo Variable Proyectado";
@@ -133,8 +134,12 @@ public class CampaignTotalWebController implements Serializable {
 		DateUtils.getFirstDay(getCurrentPeriod()),
 		DateUtils.getLastDay(getCurrentPeriod()));
 
-	metricOutput.setStyle(getStyleForMetricLevel(metric.getCampaignLevel(
-		metricValue, dateFrom, dateTo)));
+	int level = metric.getCampaignLevel(metricValue, dateFrom, dateTo);
+	
+	if((!getShowProjected())&&(level < reachedLevelCode))
+		reachedLevelCode = level;
+	
+	metricOutput.setStyle(getStyleForMetricLevel(level));
 
 	NumberFormat nf = NumberFormat.getInstance(Locale.US);
 	nf.setMaximumFractionDigits(2);
@@ -153,9 +158,13 @@ public class CampaignTotalWebController implements Serializable {
 		getCurrentCampaign().getId(), null, null,
 		DateUtils.getFirstDay(getCurrentPeriod()),
 		DateUtils.getLastDay(getCurrentPeriod()));
+	
+	int level = metric.getCampaignLevelProjected(metricValue, dateFrom, dateTo);
 
-	metricProjectedOutput.setStyle(getStyleForMetricLevel(metric
-		.getCampaignLevelProjected(metricValue, dateFrom, dateTo)));
+	if((getShowProjected())&&(level < reachedLevelCode))
+		reachedLevelCode = level;
+	
+	metricProjectedOutput.setStyle(getStyleForMetricLevel(level));
 
 	NumberFormat nf = NumberFormat.getInstance(Locale.US);
 	nf.setMaximumFractionDigits(2);
@@ -208,6 +217,26 @@ public class CampaignTotalWebController implements Serializable {
 
     public void setCurrentCampaign(Campaign currentCampaign) {
 	this.currentCampaign = currentCampaign;
+    }
+    
+    public HtmlOutputText getReachedLevelOutput() {
+        return reachedLevelOutput;
+    }
+    
+    public void setReachedLevelOutput(HtmlOutputText reachedLevelOutput) {
+        this.reachedLevelOutput = reachedLevelOutput;
+    }
+    
+    public String getReachedLevel()
+    {
+    	reachedLevelOutput.setStyle(getStyleForMetricLevel(reachedLevelCode));
+    	if (reachedLevelCode == 3)
+    	    return "Optimo";
+    	if (reachedLevelCode == 2)
+    	    return "Objetivo";
+    	if (reachedLevelCode == 1)
+    	    return "Minimo";
+    	return "No satisfactorio";
     }
 
 }

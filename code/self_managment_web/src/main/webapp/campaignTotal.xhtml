@@ -71,6 +71,23 @@
 									</tr>
 								</thead>
 								<tbody>
+									<tr>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
+											<h:outputText value="Valor Hora"/>
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="$ #{campaignTotalBean.currentCampaign.optimValue}" />
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="$ #{campaignTotalBean.currentCampaign.objetiveValue}" />
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="$ #{campaignTotalBean.currentCampaign.minimumValue}" />
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="$ #{campaignTotalBean.currentCampaign.unsatisfactoryValue}" />
+										</td>
+									</tr>
 									<a4j:repeat value="#{campaignTotalBean.metrics}" var="metric">
 										<tr>
 											<td align="center" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
@@ -131,6 +148,13 @@
 										</tr>
 									</a4j:repeat>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="3" align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText binding="#{campaignTotalBean.reachedLevelOutput}" value="Nivel alcanzado: #{campaignTotalBean.reachedLevel}" />
+										</td>
+									</tr>
+								</tfoot>
 							</table>
 						</h:panelGroup>
 					</h:panelGrid>
