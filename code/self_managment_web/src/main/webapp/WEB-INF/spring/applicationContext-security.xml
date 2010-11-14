@@ -36,7 +36,12 @@
 			<user name="juan" password="juan" authorities="ROLE_USER, Agent" />
 			<user name="jose" password="jose" authorities="ROLE_USER, Agent" />
 			<user name="lorena" password="lorena" authorities="ROLE_USER, Agent" />
-			<user name="pepe" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="Romualdo" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="Aristobulo" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="Sabrina" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="Gerardo" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="German" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="Tatiana" password="pepe" authorities="ROLE_USER, Supervisor" />
 		</user-service>
 	</authentication-provider>
 

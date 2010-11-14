@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -261,23 +262,20 @@ public class GraficWebController implements Serializable {
 	int year = cal.get(Calendar.YEAR);
 	sueldoHorasExtra = ttsService.getOvertimeSalary(getCurrentAgent(), month,
 		year);
-	NumberFormat nf = NumberFormat.getInstance(Locale.US);
-	nf.setMaximumFractionDigits(2);
-	double aux = Double.parseDouble(nf.format(sueldoHorasExtra));
+	DecimalFormat df = new DecimalFormat("####.##");
+	double aux = Double.parseDouble(String.valueOf(df.format(sueldoHorasExtra)).replace(",", "."));
 	return aux;
     }
     
     public double getValorHoraExtra50() {
-	NumberFormat nf = NumberFormat.getInstance(Locale.US);
-	nf.setMaximumFractionDigits(2);
-	double aux = Double.parseDouble(nf.format(ttsService.getOvertimeValue50(getCurrentAgent())));
+	DecimalFormat df = new DecimalFormat("####.##");
+	double aux = Double.parseDouble(String.valueOf(df.format(ttsService.getOvertimeValue50(getCurrentAgent()))).replace(",", "."));
 	return aux;
     }
     
     public double getValorHoraExtra100() {
-	NumberFormat nf = NumberFormat.getInstance(Locale.US);
-	nf.setMaximumFractionDigits(2);
-	double aux = Double.parseDouble(nf.format(ttsService.getOvertimeValue100(getCurrentAgent())));
+	DecimalFormat df = new DecimalFormat("####.##");
+	double aux = Double.parseDouble(String.valueOf(df.format(ttsService.getOvertimeValue100(getCurrentAgent()))).replace(",", "."));
 	return aux;
     }
     
