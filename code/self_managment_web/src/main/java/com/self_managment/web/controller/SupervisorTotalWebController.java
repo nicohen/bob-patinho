@@ -126,12 +126,12 @@ public class SupervisorTotalWebController implements Serializable {
 
     private String getStyleForMetricLevel(int level) {
 	if (level == 3)
-	    return "background-color:#C6F6C4";
+	    return "background-color: green; color: white;";
 	if (level == 2)
-	    return "background-color:#FEF49C";
+	    return "background-color: yellow";
 	if (level == 1)
-	    return "background-color:#FEDD9C";
-	return "background-color:#FE9C9D";
+	    return "background-color: orange";
+	return "background-color: red; color: white;";
     }
 
     public String getMetricValue() {
