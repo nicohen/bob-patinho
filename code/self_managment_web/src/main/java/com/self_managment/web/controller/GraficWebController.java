@@ -191,12 +191,16 @@ public class GraficWebController implements Serializable {
 	CampaignMetric metric = (CampaignMetric) metricOutput.getAttributes()
 		.get("metric");
 
+	Number metricValue = metric.getMetric().execute(null, null, getCurrentAgent().getDocket(),
+			DateUtils.getFirstDay(getCurrentPeriod()),
+			DateUtils.getLastDay(getCurrentPeriod()));
+	
 	metricOutput.setStyle(getStyleForMetricLevel(metric.getLevel(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo)));
+	
+	NumberFormat nf = NumberFormat.getInstance(Locale.US);
+	nf.setMaximumFractionDigits(2);
 
-	return metric.getMetric().execute(null, null, getCurrentAgent().getDocket(),
-		DateUtils.getFirstDay(getCurrentPeriod()),
-		DateUtils.getLastDay(getCurrentPeriod())).toString()
-		+ " " + metric.getMetric().getUnit();
+	return nf.format(metricValue) + " " + metric.getMetric().getUnit();
     }
 
     public String getProjectedMetricValue() {
@@ -206,11 +210,14 @@ public class GraficWebController implements Serializable {
 	CampaignMetric metric = (CampaignMetric) metricProjectedOutput.getAttributes()
 		.get("metric");
 
+	Number metricValue = metric.getMetric().executeProjected(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo);
+	
 	metricProjectedOutput.setStyle(getStyleForMetricLevel(metric.getLevelProjected(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo)));
+	
+	NumberFormat nf = NumberFormat.getInstance(Locale.US);
+	nf.setMaximumFractionDigits(2);
 
-	return metric.getMetric().executeProjected(null, null, getCurrentAgent().getDocket(), dateFrom,
-		dateTo).toString()
-		+ " " + metric.getMetric().getUnit();
+	return nf.format(metricValue) + " " + metric.getMetric().getUnit();
     }
 
     public double getSueldoFijo() {
