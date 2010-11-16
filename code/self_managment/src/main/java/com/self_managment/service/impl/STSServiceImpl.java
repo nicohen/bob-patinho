@@ -135,6 +135,10 @@ public class STSServiceImpl implements STSService {
 		long productiveHours = 22 * agent.getWorkDayHours() + getExtraHours50Percent(dates, agent.getWorkDayHours()) + getExtraHours100Percent(dates);
 		return productiveHours;
 	}
+	
+	public Double getScheduledAdherence(Integer campaignId, Integer supervisorId, Integer docket, Date dateFrom, Date dateTo) {
+		return stsDao.getScheduledAdherence(campaignId, supervisorId, docket, dateFrom, dateTo);
+	}
 
 }
 
