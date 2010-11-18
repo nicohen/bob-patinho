@@ -72,8 +72,9 @@ public class Metric implements Serializable {
 
     @Transient
     public Boolean isAccumulated() {
-	if ("%".equals(unit))
+	if ("%".equals(unit) || "AVG_TALK_TM".equals(code)) {
 	    return Boolean.FALSE;
+	}
 	return Boolean.TRUE;
     }
 
