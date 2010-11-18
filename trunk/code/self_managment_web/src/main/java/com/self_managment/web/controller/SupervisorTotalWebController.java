@@ -47,8 +47,17 @@ public class SupervisorTotalWebController implements Serializable {
     private static SupervisorService supervisorService = (SupervisorService) JSFUtil
 	    .getBean("supervisorService");
     private Integer imageSize = 0;
+    private String currentCampaign;
 
-    private Date currentPeriod = new Date();
+    public String getCurrentCampaign() {
+		return currentSupervisor.getCampaign().getName();
+	}
+
+	public void setCurrentCampaign(String currentCampaign) {
+		this.currentCampaign = currentCampaign;
+	}
+
+	private Date currentPeriod = new Date();
 
     public void generaGrafico(OutputStream out, Object data) throws IOException {
 	if (data == null)
