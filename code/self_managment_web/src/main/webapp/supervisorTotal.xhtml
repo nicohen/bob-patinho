@@ -21,29 +21,31 @@
 			<rich:dataTable rendered="false"/>
 			
 			<h:form id="graphicForm">
-				
  				<rich:panel>
-					<f:facet name="header">
-						<h:outputText value="#{msg['label.supervisor.fields']}" />
-					</f:facet>
+					<h:panelGrid id="AgentData" columns="6" width="70%">
 
-					<h:panelGrid id="AgentData" columns="6" width="100%">
-
-						<h:outputText value="Periodo" style="font-weight:bold"/>
-						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{supervisorTotalBean.currentPeriod}"
-	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
-	 						popup="false" styleClass="special">
-	 						<a4j:support action="#{supervisorTotalBean.periodChange}" event="onchanged" reRender="AgentData, metricValues, grafics"/>
-	 					</rich:calendar>
-	 					
-	 					<h:outputText value="#{msg['label.supervisor']}" style="font-weight:bold" />
+	 					<h:outputText value="Supervisor actual:" style="font-weight:bold" />
 						<rich:comboBox id="supervisor" value="#{supervisorTotalBean.currentSupervisor}" size="25" 
 							converter="com.self_managment.web.converter.SupervisorConverter">
 							<a4j:support event="onselect" reRender="AgentData, metricValues, grafics" />
 							<f:selectItems value="#{supervisorTotalBean.supervisors}" />
 						</rich:comboBox>
-	
+
+						<h:outputText value="Período:" style="font-weight:bold"/>
+						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{supervisorTotalBean.currentPeriod}"
+	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
+	 						popup="false" styleClass="special">
+	 						<a4j:support action="#{supervisorTotalBean.periodChange}" event="onchanged" reRender="AgentData, metricValues, grafics"/>
+	 					</rich:calendar>
+	 					<h:outputText value="Campaña:" />
+	 					<h:outputText value="#{supervisorTotalBean.currentCampaign}" style="font-weight:bold" />
+	 					
 					</h:panelGrid>
+				</rich:panel>
+ 				<rich:panel>
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.supervisor.fields']}" />
+					</f:facet>
 
 					<h:panelGrid columns="2" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
 
