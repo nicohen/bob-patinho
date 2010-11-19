@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.self_managment.model.entity.Agent;
-import com.self_managment.service.CampaignService;
+import com.self_managment.service.AgentService;
 import com.self_managment.service.SummaryService;
-import com.self_managment.service.SupervisorService;
 import com.self_managment.service.TTSService;
 
 @Component("AUX_TM")
@@ -19,9 +18,7 @@ public class MetricTimeInAuxStatus implements MetricStrategy {
     @Autowired
     private SummaryService summaryService;
     @Autowired
-    private CampaignService campaignService;
-    @Autowired
-    private SupervisorService supervisorService;
+    private AgentService agentService;
 
     @Autowired
     private TTSService ttService;
@@ -34,9 +31,9 @@ public class MetricTimeInAuxStatus implements MetricStrategy {
 	
 	List<Agent> agents;
 	if (campaignId != null) {
-	    agents = campaignService.findById(campaignId).getAgents();
+	    agents = agentService.findAllByProperty("campaign.id", campaignId);
 	} else if (supervisorId != null) {
-	    agents = supervisorService.findById(supervisorId).getAgents();
+	    agents = agentService.findAllByProperty("supervisor.id", supervisorId);
 	} else {
 	    Agent agent = new Agent();
 	    agent.setDocket(docket);
