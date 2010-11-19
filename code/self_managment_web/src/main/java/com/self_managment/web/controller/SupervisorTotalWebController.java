@@ -65,10 +65,15 @@ public class SupervisorTotalWebController implements Serializable {
 
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
-	double inc = imageSize == 100 ? getMetrics().size() : (100.0 + imageSize) / 100.0;	
-	
-	int width = (int) (((screenSize.width - 60) / getMetrics().size()) * inc);
-	int height = (int) (screenSize.height * 0.4);
+	int width = 0;
+	int height = 0;
+	if (imageSize == 0) {
+		width = (int) ((screenSize.width - 60) / getMetrics().size());
+		height = (int) (screenSize.height * 0.4);
+	} else {
+		width = screenSize.width - 60;
+		height = (int) (screenSize.height * 0.6);
+	}
 
 	MetricChart chart = new MetricChart(null, getCurrentSupervisor()
 		.getId(), null, (CampaignMetric) data, getCurrentPeriod());
