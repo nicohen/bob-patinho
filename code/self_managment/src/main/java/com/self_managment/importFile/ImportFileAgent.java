@@ -59,19 +59,17 @@ public class ImportFileAgent implements ImportFile {
 
 					if (agent == null)
 						break;
-				} catch (Throwable e) {
-					errors.add(ImportFileError.getParseError(inFile
-							.getLineNumber(), e.getMessage().replaceAll("\n",
-							" - ")));
-				}
-
-				if (agent != null) {
+					
 					try {
 						agentService.saveOrUpdate(agent);
 					} catch (Throwable e) {
 						errors.add(ImportFileError.getPersistError(inFile
 								.getLineNumber(), e.getMessage()));
 					}
+				} catch (Throwable e) {
+					errors.add(ImportFileError.getParseError(inFile
+							.getLineNumber(), e.getMessage().replaceAll("\n",
+							" - ")));
 				}
 			}
 		} finally {
