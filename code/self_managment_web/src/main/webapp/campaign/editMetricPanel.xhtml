@@ -65,12 +65,12 @@
 						<h:inputText id="metricOptim"
 							value="#{campaignBean.campaignMetric.optim}"
 							label="#{msg['label.metric.optim']}" size="5" maxlength="10"
-							required="true" validator="#{campaignBean.validateMetric}">
+							required="true" validator="#{campaignBean.validateMetricOptim}">
 						</h:inputText>
 						<rich:toolTip for="metricOptim">
 							<h:outputFormat value="#{msg['error.metric.range']}">
-								<f:param value="#{campaignBean.metric.minValue}" />
-								<f:param value="#{campaignBean.metric.maxValue}" />
+								<f:param value="#{campaignBean.metric.optimMinValue}" />
+								<f:param value="#{campaignBean.metric.optimMaxValue}" />
 							</h:outputFormat>
 						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
@@ -89,12 +89,12 @@
 						<h:inputText id="metricObjective"
 							value="#{campaignBean.campaignMetric.objective}"
 							label="#{msg['label.metric.objective']}" size="5" maxlength="10"
-							required="true" validator="#{campaignBean.validateMetric}">
+							required="true" validator="#{campaignBean.validateMetricObjetive}">
 						</h:inputText>
 						<rich:toolTip for="metricObjective">
 							<h:outputFormat value="#{msg['error.metric.range']}">
-								<f:param value="#{campaignBean.metric.minValue}" />
-								<f:param value="#{campaignBean.metric.maxValue}" />
+								<f:param value="#{campaignBean.metric.objetiveMinValue}" />
+								<f:param value="#{campaignBean.metric.objetiveMaxValue}" />
 							</h:outputFormat>
 						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
@@ -113,12 +113,12 @@
 						<h:inputText id="metricMinimum"
 							value="#{campaignBean.campaignMetric.minimum}"
 							label="#{msg['label.metric.minimum']}" size="5" maxlength="10"
-							required="true" validator="#{campaignBean.validateMetric}">
+							required="true" validator="#{campaignBean.validateMetricMinimum}">
 						</h:inputText>
 						<rich:toolTip for="metricMinimum">
 							<h:outputFormat value="#{msg['error.metric.range']}">
-								<f:param value="#{campaignBean.metric.minValue}" />
-								<f:param value="#{campaignBean.metric.maxValue}" />
+								<f:param value="#{campaignBean.metric.minimumMinValue}" />
+								<f:param value="#{campaignBean.metric.minimumMaxValue}" />
 							</h:outputFormat>
 						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
@@ -138,12 +138,12 @@
 							value="#{campaignBean.campaignMetric.unsatisfactory}"
 							label="#{msg['label.metric.unsatisfactory']}" size="5"
 							maxlength="10" required="true"
-							validator="#{campaignBean.validateMetric}">
+							validator="#{campaignBean.validateMetricUnsatisfactory}">
 						</h:inputText>
 						<rich:toolTip for="metricUnsatisfactory">
 							<h:outputFormat value="#{msg['error.metric.range']}">
-								<f:param value="#{campaignBean.metric.minValue}" />
-								<f:param value="#{campaignBean.metric.maxValue}" />
+								<f:param value="#{campaignBean.metric.unsatisfactoryMinValue}" />
+								<f:param value="#{campaignBean.metric.unsatisfactoryMaxValue}" />
 							</h:outputFormat>
 						</rich:toolTip>
 						<h:outputText value="#{campaignBean.metric.unit}" />
