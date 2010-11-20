@@ -56,11 +56,11 @@
 						</rich:message>
 
 						<h:outputText value="#{msg['label.campaign.startDate']}" />
-						<rich:calendar id="startDate"
+						<rich:calendar id="startDate" showWeekDaysBar="false" showFooter="false"
 							value="#{campaignBean.campaign.startDate}" locale="ES"
-							popup="true" datePattern="MMMMMMMMMMM yyyy"
-							showApplyButton="false" cellWidth="24px" cellHeight="22px"
-							style="width:200px" required="true" inputSize="15" />
+							datePattern="MMMMMMMMMMM yyyy" styleClass="special"
+							showApplyButton="false" cellWidth="24px" cellHeight="22px" popup="false"
+							required="false" />
 						<rich:message for="startDate" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
@@ -78,11 +78,11 @@
 						</rich:message>
 
 						<h:outputText value="#{msg['label.campaign.endDate']}" />
-						<rich:calendar id="endDate"
-							value="#{campaignBean.campaign.endDate}" locale="ES" popup="true"
+						<rich:calendar id="endDate" showWeekDaysBar="false" showFooter="false"
+							value="#{campaignBean.campaign.endDate}" locale="ES" popup="false"
 							datePattern="MMMMMMMMMMM yyyy" showApplyButton="false"
-							cellWidth="24px" cellHeight="22px" style="width:200px"
-							required="false" inputSize="15" />
+							styleClass="special" cellWidth="24px" cellHeight="22px"
+							required="false" currentDate="#{campaignBean.currentNextMonth}"/>
 						<rich:message for="endDate" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
