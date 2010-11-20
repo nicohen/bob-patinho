@@ -1,6 +1,8 @@
 package com.self_managment.web.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.UIComponent;
@@ -21,6 +23,7 @@ import com.self_managment.model.entity.Supervisor;
 import com.self_managment.service.CampaignService;
 import com.self_managment.service.MetricService;
 import com.self_managment.service.SupervisorService;
+import com.self_managment.util.DateUtils;
 import com.self_managment.web.util.JSFUtil;
 import com.sun.faces.util.MessageUtils;
 
@@ -214,11 +217,29 @@ public class CampaignWebController {
 		&& campaign.getObjetiveValue() >= campaign.getMinimumValue()
 		&& campaign.getMinimumValue() >= campaign
 			.getUnsatisfactoryValue())
-	    return false;
+		if (DateUtils.getFirstDay(campaign.getStartDate()).before(DateUtils.getFirstDay(campaign.getEndDate())))
+			return false;
+		else
+		{
+			JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+		    "error.metric.dates").getSummary());
+			return true;
+		}
 	else {
-	    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+		if (DateUtils.getFirstDay(campaign.getStartDate()).before(DateUtils.getFirstDay(campaign.getEndDate())))
+		{
+		    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
 		    "error.metric.values").getSummary());
-	    return true;
+		    JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+		    "error.metric.dates").getSummary());
+		    return true;
+		}
+		else
+		{
+			JSFUtil.addErrorMessage(MessageUtils.getExceptionMessage(
+		    "error.metric.values").getSummary());
+			return true;
+		}
 	}
 
     }
@@ -274,4 +295,16 @@ public class CampaignWebController {
 			"error.metric.range", metric.getMinValue(), metric
 				.getMaxValue()));
     }
+    
+    public Date getCurrentNextMonth()
+    {
+    	Calendar cal = Calendar.getInstance();
+    	cal.add(Calendar.MONTH, 1);
+    	return cal.getTime();
+    }
+    
+    public void setCurrentNextMonth(Date value)
+    {
+    }
+    
 }
