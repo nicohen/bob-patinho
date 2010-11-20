@@ -27,7 +27,8 @@
 						<h:graphicImage url="/image/info.png" />
 					</f:facet>
 				</rich:messages>
-				<rich:panel header="Inicio de sesión" style="width:250px;">
+				<table width="100%"><tr><td align="center">
+				<rich:panel header="Inicio de sesión" style="width:250px;align:center;">
 					<h:panelGrid columns="3">
 						<h:panelGroup>
 							<label for="j_username"><h:outputText value="#{msg['label.username']}:" /></label>
@@ -57,6 +58,7 @@
 							action="#{loginBean.doLogin}" value="#{msg['label.login']}" />
 					</h:panelGrid>
 				</rich:panel>
+				</td></tr></table>
 			</h:form>
 		</f:view>
 	</ui:define>
