@@ -182,7 +182,7 @@ public class Agent implements Serializable {
     public String toString() {
 	if (this.docket == null)
 	    return "";
-	return this.name.toString() + ", " + this.surname;
+	return this.name.toString() + this.surname;
     }
 
 }
