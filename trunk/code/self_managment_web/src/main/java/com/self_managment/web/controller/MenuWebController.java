@@ -55,8 +55,8 @@ public class MenuWebController {
 	}
 
 	public String getLoginDescription() {
-		if (!"".equals(getUsername())) {
-			return "Usuario: " + getUsername() + " | Rol: " + getRole() + " | ";
+		if (!"".equals(username)) {
+			return "Usuario: " + username + " | Rol: " + role + " | ";
 		} else {
 			return "";
 		}
