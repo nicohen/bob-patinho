@@ -10,9 +10,20 @@
 <f:view>
 	<f:loadBundle basename="messages" var="msg" />
 	<a4j:form>
+		
+		<div style="position: absolute; right:10px;">
+			<h:outputText value="#{menuBean.loginDescription}" 
+			style="color:gray; font-size:short;"/>
+			<h:outputLink value="/self_managment_web/logout.jsp">
+				<h:outputText value="#{msg['menu.logout']}" />
+			</h:outputLink>
+		</div>
+		
+		<rich:spacer height="30px" />
+		
 		<rich:toolBar>
-			
-			<h:outputLabel value="Self Management Web" style="font-weight:normal; color:gray; font-size:medium;"/>
+		
+			<h:outputLabel value="Self Management Web" style="font-weight:normal; color:gray; font-size:medium;"/>			
 			
 			<acegijsf:authorize ifAllGranted="AccountManager">
 		
@@ -70,17 +81,8 @@
 				</h:outputLink>
 			</rich:menuItem>
 
-			<rich:toolBarGroup location="right">
-				<rich:menuItem submitMode="none">
-					<h:outputText value="#{menuBean.loginDescription}" 
-					style="font-weight:bold; color:gray; font-size:short;"/>
-					
-					<h:outputLink value="/self_managment_web/logout.jsp">
-						<h:outputText value="#{msg['menu.logout']}" />
-					</h:outputLink>
-				</rich:menuItem>
-			</rich:toolBarGroup>
 		</rich:toolBar>
+		
 	</a4j:form>
 	<rich:spacer height="5" />
 </f:view>

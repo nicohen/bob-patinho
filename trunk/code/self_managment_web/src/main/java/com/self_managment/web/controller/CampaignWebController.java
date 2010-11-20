@@ -284,16 +284,52 @@ public class CampaignWebController {
 	return "";
     }
 
-    public void validateMetric(FacesContext context, UIComponent component,
+    public void validateMetricOptim(FacesContext context, UIComponent component,
 	    Object input) throws ValidatorException {
 	Double var = (Double) input;
 
-	if (metric != null && metric.getMinValue() != null
-		&& metric.getMaxValue() != null)
-	    if (var < metric.getMinValue() || var > metric.getMaxValue())
+	if (metric != null && metric.getOptimMinValue() != null
+		&& metric.getOptimMaxValue() != null)
+	    if (var < metric.getOptimMinValue() || var > metric.getOptimMaxValue())
 		throw new ValidatorException(MessageUtils.getExceptionMessage(
-			"error.metric.range", metric.getMinValue(), metric
-				.getMaxValue()));
+			"error.metric.range", metric.getOptimMinValue(), metric
+				.getOptimMaxValue()));
+    }
+    
+    public void validateMetricObjetive(FacesContext context, UIComponent component,
+    	    Object input) throws ValidatorException {
+    	Double var = (Double) input;
+
+    	if (metric != null && metric.getObjetiveMinValue() != null
+    		&& metric.getObjetiveMaxValue() != null)
+    	    if (var < metric.getObjetiveMinValue() || var > metric.getObjetiveMaxValue())
+    		throw new ValidatorException(MessageUtils.getExceptionMessage(
+    			"error.metric.range", metric.getObjetiveMinValue(), metric
+    				.getObjetiveMaxValue()));
+    }
+    
+    public void validateMetricMinimum(FacesContext context, UIComponent component,
+    	    Object input) throws ValidatorException {
+    	Double var = (Double) input;
+
+    	if (metric != null && metric.getMinimumMinValue() != null
+    		&& metric.getMinimumMaxValue() != null)
+    	    if (var < metric.getMinimumMinValue() || var > metric.getMinimumMaxValue())
+    		throw new ValidatorException(MessageUtils.getExceptionMessage(
+    			"error.metric.range", metric.getMinimumMinValue(), metric
+    				.getMinimumMaxValue()));
+    }
+    
+    public void validateMetricUnsatisfactory(FacesContext context, UIComponent component,
+    	    Object input) throws ValidatorException {
+    	Double var = (Double) input;
+
+    	if (metric != null && metric.getUnsatisfactoryMinValue() != null
+    		&& metric.getUnsatisfactoryMaxValue() != null)
+    	    if (var < metric.getUnsatisfactoryMinValue() || var > metric.getUnsatisfactoryMaxValue())
+    		throw new ValidatorException(MessageUtils.getExceptionMessage(
+    			"error.metric.range", metric.getUnsatisfactoryMinValue(), metric
+    				.getUnsatisfactoryMaxValue()));
     }
     
     public Date getCurrentNextMonth()

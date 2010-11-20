@@ -46,11 +46,29 @@ public class Metric implements Serializable {
     @Column(name = "UNSATISFACTORY_SIGN", unique = false, nullable = false)
     private String unsatisfactorySign;
 
-    @Column(name = "MIN_VALUE", unique = false, nullable = false)
-    private Double minValue;
+    @Column(name = "OPTIM_MIN_VALUE", unique = false, nullable = false)
+    private Double optimMinValue;
 
-    @Column(name = "MAX_VALUE", unique = false, nullable = false)
-    private Double maxValue;
+    @Column(name = "OPTIM_MAX_VALUE", unique = false, nullable = false)
+    private Double optimMaxValue;
+    
+    @Column(name = "OBJETIVE_MIN_VALUE", unique = false, nullable = false)
+    private Double objetiveMinValue;
+
+    @Column(name = "OBJETIVE_MAX_VALUE", unique = false, nullable = false)
+    private Double objetiveMaxValue;
+    
+    @Column(name = "MINIMUM_MIN_VALUE", unique = false, nullable = false)
+    private Double minimumMinValue;
+
+    @Column(name = "MINIMUM_MAX_VALUE", unique = false, nullable = false)
+    private Double minimumMaxValue;
+    
+    @Column(name = "UNSATISFACTORY_MIN_VALUE", unique = false, nullable = false)
+    private Double unsatisfactoryMinValue;
+
+    @Column(name = "UNSATISFACTORY_MAX_VALUE", unique = false, nullable = false)
+    private Double unsatisfactoryMaxValue;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "pk.metric")
     private List<CampaignMetric> campaignMetric;
@@ -169,22 +187,70 @@ public class Metric implements Serializable {
 	this.unsatisfactorySign = unsatisfactorySign;
     }
 
-    public void setMinValue(Double minValue) {
-	this.minValue = minValue;
+    public void setOptimMinValue(Double optimMinValue) {
+	this.optimMinValue = optimMinValue;
     }
 
-    public Double getMinValue() {
-	return minValue;
+    public Double getOptimMinValue() {
+	return optimMinValue;
+    }
+    
+    public void setOptimMaxValue(Double optimMaxValue) {
+	this.optimMaxValue = optimMaxValue;
     }
 
-    public void setMaxValue(Double maxValue) {
-	this.maxValue = maxValue;
+    public Double getOptimMaxValue() {
+	return optimMaxValue;
+    }
+    
+    public void setObjetiveMinValue(Double objetiveMinValue) {
+	this.objetiveMinValue = objetiveMinValue;
+    }
+    
+    public Double getObjetiveMinValue() {
+	return objetiveMinValue;
     }
 
-    public Double getMaxValue() {
-	return maxValue;
+    public void setObjetiveMaxValue(Double objetiveMaxValue) {
+	this.objetiveMaxValue = objetiveMaxValue;
+    }
+    
+    public Double getObjetiveMaxValue() {
+	return objetiveMaxValue;
     }
 
+    public Double getMinimumMinValue() {
+	return minimumMinValue;
+    }
+    
+	public void setMinimumMinValue(Double minimumMinValue) {
+	this.minimumMinValue = minimumMinValue;
+    }
+	
+    public Double getMinimumMaxValue() {
+	return minimumMaxValue;
+    }
+    
+	public void setMinimumMaxValue(Double minimumMaxValue) {
+	this.minimumMaxValue = minimumMaxValue;
+    }
+
+    public Double getUnsatisfactoryMinValue() {
+	return unsatisfactoryMinValue;
+    }
+
+    public void setUnsatisfactoryMinValue(Double unsatisfactoryMinValue) {
+	this.unsatisfactoryMinValue = unsatisfactoryMinValue;
+    }
+    
+    public Double getUnsatisfactoryMaxValue() {
+	return unsatisfactoryMaxValue;
+    }
+
+    public void setUnsatisfactoryMaxValue(Double unsatisfactoryMaxValue) {
+	this.unsatisfactoryMaxValue = unsatisfactoryMaxValue;
+    }
+    
     public List<CampaignMetric> getCampaignMetric() {
 	return campaignMetric;
     }
