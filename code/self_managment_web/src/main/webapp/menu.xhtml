@@ -38,7 +38,7 @@
 			
 				<rich:menuItem submitMode="none">
 					<h:outputLink value="/self_managment_web/grafic.jsf">
-						<h:outputText value="Salario" />
+						<h:outputText value="Salario por Agente" />
 					</h:outputLink>
 				</rich:menuItem>
 				
@@ -48,7 +48,7 @@
 			
 				<rich:menuItem submitMode="none">
 					<h:outputLink value="/self_managment_web/supervisorTotal.jsf?refresh=true">
-						<h:outputText value="Totales Supervisor" />
+						<h:outputText value="Totales por Supervisor" />
 					</h:outputLink>
 				</rich:menuItem>
 				
@@ -58,7 +58,7 @@
 	
 				<rich:menuItem submitMode="none">
 					<h:outputLink value="/self_managment_web/campaignTotal.jsf?refresh=true">
-						<h:outputText value="Totales Campania" />
+						<h:outputText value="Totales por Campaña" />
 					</h:outputLink>
 				</rich:menuItem>
 			
@@ -69,9 +69,12 @@
 					<h:outputText value="Ayuda" />
 				</h:outputLink>
 			</rich:menuItem>
-			
+
 			<rich:toolBarGroup location="right">
 				<rich:menuItem submitMode="none">
+					<h:outputText value="#{menuBean.loginDescription}" 
+					style="font-weight:bold; color:gray; font-size:short;"/>
+					
 					<h:outputLink value="/self_managment_web/logout.jsp">
 						<h:outputText value="#{msg['menu.logout']}" />
 					</h:outputLink>
