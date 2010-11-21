@@ -11,9 +11,11 @@
 	<global-method-security secured-annotations="enabled">
 	</global-method-security>
 
-	<http auto-config="true">
-		<intercept-url pattern="/style/**" filters="none" />
+	<http auto-config="true">		
+		<intercept-url pattern="/**/*.css" filters="none" />
+		<intercept-url pattern="/**/*.js" filters="none" />
 		<intercept-url pattern="/images/**" filters="none" />
+		<intercept-url pattern="/**/*.xcss/**" filters="none" />
 		
 		<intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 		<intercept-url pattern="/**" access="ROLE_USER" />
