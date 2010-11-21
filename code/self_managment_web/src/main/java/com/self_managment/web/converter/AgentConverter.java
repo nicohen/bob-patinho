@@ -26,7 +26,7 @@ public class AgentConverter implements Converter {
 
 	try {
 	    List<Agent> l = agentService.findAllByProperty("name",
-		    string.split(", ")[0]);
+		    string.split(", ")[1]);
 	    return l.isEmpty() ? null : l.get(0);
 	} catch (NumberFormatException e) {
 	    return null;
