@@ -47,47 +47,51 @@
 						<h:outputText value="#{msg['label.agent.fields']}" />
 					</f:facet>
 
-					<table border="1" class="dr-table rich-table">
-						<tr>
-							<td align="right" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
-								<h:outputText value="#{msg['label.agent.grossSalary']}" />
-							</td>
-							<td align="left" class="dr-subtable-cell rich-subtable-cell">
-								<h:outputText value="\$#{graficBean.sueldoFijo}" />
-							</td>
-						</tr>
-						<tr>
-							<td align="right" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
-								<h:outputText value="#{msg['label.agent.overtimeSalary']}"/>
-							</td>
-							<td align="left" class="dr-subtable-cell rich-subtable-cell">
-								<h:outputText value="\$#{graficBean.sueldoHorasExtra} 
-								(#{graficBean.horasExtra50}hs extra al 50% x \$#{graficBean.valorHoraExtra50}
-								+ #{graficBean.horasExtra100}hs extra al 100% x \$#{graficBean.valorHoraExtra100})"/>
-							</td>
-						</tr>
-						<tr>
-							<td align="right" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
-								<h:outputText value="#{graficBean.lblSueldoVariable}"/>
-							</td>
-							<td align="left" class="dr-subtable-cell rich-subtable-cell">
-								<h:outputText value="\$#{graficBean.sueldoVariable}" />
-							</td>
-						</tr>
-						<tr>
-							<td align="right" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
-								<h:outputText value="#{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
-							</td>
-							<td align="left" class="dr-subtable-cell rich-subtable-cell" style="font-weight:bold">
-								<h:outputText value="\$#{graficBean.sueldoTotal}" />
-							</td>
-						</tr>
-					</table>
+					<h:panelGrid columns="1" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
+						<h:panelGroup width="100%">
+							<table border="1" class="dr-table rich-table" width="100%">
+								<thead class="dr-table-thead">
+									<tr class="dr-table-header rich-table-header">
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="#{msg['label.agent.grossSalary']}"/>
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="#{msg['label.agent.overtimeSalary']}" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="#{graficBean.lblSueldoVariable}" />
+										</th>
+										<th class="dr-table-headercell rich-table-headercell">
+											<h:outputText value="#{graficBean.lblSueldoTotal}" />
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="\$#{graficBean.sueldoFijo}" style="font-weight:bold;font-size:medium;" />
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="\$#{graficBean.sueldoHorasExtra}" style="font-weight:bold;font-size:medium;" />
+											<h:outputText value=" [hs. extra al 50%:" />
+											<h:outputText value=" #{graficBean.horasExtra50}hs x \$#{graficBean.valorHoraExtra50}" />
+											<h:outputText value=" hs. extra al 100%:" />
+											<h:outputText value=" #{graficBean.horasExtra100}hs x \$#{graficBean.valorHoraExtra100}]" />
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="\$#{graficBean.sueldoVariable}" style="font-weight:bold;font-size:medium;" />
+										</td>
+										<td align="center" class="dr-subtable-cell rich-subtable-cell">
+											<h:outputText value="\$#{graficBean.sueldoTotal}" style="font-weight:bold;font-size:medium;" />
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</h:panelGroup>
+					</h:panelGrid>
 
 					<h:panelGrid columns="2" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
-
 						<h:panelGroup width="70%">
-
 							<table border="1" class="dr-table rich-table" width="100%">
 								<thead class="dr-table-thead">
 									<tr class="dr-table-header rich-table-header">
