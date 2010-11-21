@@ -62,7 +62,7 @@ public class GraficWebController implements Serializable {
 	    return;
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int width = (screenSize.width - 60) / getMetrics().size();
+	int width = (screenSize.width - 60) / 3;
 	int height = (int) (screenSize.height * 0.4);
 
 	MetricChart chart = new MetricChart(null, null, getCurrentAgent().getDocket(), (CampaignMetric) data,
@@ -233,7 +233,8 @@ public class GraficWebController implements Serializable {
     }
 
     public double getSueldoFijo() {
-	return getCurrentAgent().getGrossSalary();
+    	DecimalFormat df = new DecimalFormat("#.##");
+    	return Double.valueOf(df.format(getCurrentAgent().getGrossSalary()));
     }
 
     public double getSueldoVariable() {
@@ -262,21 +263,18 @@ public class GraficWebController implements Serializable {
 	int year = cal.get(Calendar.YEAR);
 	sueldoHorasExtra = ttsService.getOvertimeSalary(getCurrentAgent(), month,
 		year);
-	DecimalFormat df = new DecimalFormat("####.##");
-	double aux = Double.parseDouble(String.valueOf(df.format(sueldoHorasExtra)).replace(",", "."));
-	return aux;
+	DecimalFormat df = new DecimalFormat("#.##");
+	return Double.valueOf(df.format(sueldoHorasExtra).replace(",", "."));
     }
     
     public double getValorHoraExtra50() {
-	DecimalFormat df = new DecimalFormat("####.##");
-	double aux = Double.parseDouble(String.valueOf(df.format(ttsService.getOvertimeValue50(getCurrentAgent()))).replace(",", "."));
-	return aux;
+	DecimalFormat df = new DecimalFormat("#.##");
+	return Double.valueOf(df.format(ttsService.getOvertimeValue50(getCurrentAgent())).replace(",", "."));
     }
     
     public double getValorHoraExtra100() {
-	DecimalFormat df = new DecimalFormat("####.##");
-	double aux = Double.parseDouble(String.valueOf(df.format(ttsService.getOvertimeValue100(getCurrentAgent()))).replace(",", "."));
-	return aux;
+	DecimalFormat df = new DecimalFormat("#.##");
+	return Double.valueOf(df.format(ttsService.getOvertimeValue100(getCurrentAgent())).replace(",", "."));
     }
     
     public long getHorasExtra50() {
