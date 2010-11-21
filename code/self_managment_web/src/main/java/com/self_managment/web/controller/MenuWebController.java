@@ -39,11 +39,14 @@ public class MenuWebController {
         			GrantedAuthority[] authorities = ((UserDetails) obj).getAuthorities();
         			for(int i=0; i<authorities.length; i++) {
         				if(authorities[i].equals(ACCOUNT_MANAGER)) {
-        					return "Jefe de cuentas";
+        					role = "Jefe de cuentas";
+        					return role;
         				} else if(authorities[i].equals(SUPERVISOR)) {
-        					return "Supervisor";
+        					role = "Supervisor";
+        					return role;
         				} else if(authorities[i].equals(AGENT)) {
-        					return "Agente";
+        					role = "Agente";
+        					return role;
         				}
         			}
         		}
