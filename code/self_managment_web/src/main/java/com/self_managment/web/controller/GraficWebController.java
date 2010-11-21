@@ -62,7 +62,7 @@ public class GraficWebController implements Serializable {
 	    return;
 	
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	int width = (screenSize.width - 60) / 3;
+	int width = (screenSize.width - 60) / getMetrics().size();
 	int height = (int) (screenSize.height * 0.4);
 
 	MetricChart chart = new MetricChart(null, null, getCurrentAgent().getDocket(), (CampaignMetric) data,
