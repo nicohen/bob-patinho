@@ -36,6 +36,14 @@
 			<user name="juan" password="juan" authorities="ROLE_USER, Agent" />
 			<user name="jose" password="jose" authorities="ROLE_USER, Agent" />
 			<user name="lorena" password="lorena" authorities="ROLE_USER, Agent" />
+			<user name="pablo" password="pablo" authorities="ROLE_USER, Agent" />
+			<user name="damian" password="damian" authorities="ROLE_USER, Agent" />
+			<user name="martin" password="martin" authorities="ROLE_USER, Agent" />
+			<user name="augusto" password="augusto" authorities="ROLE_USER, Agent" />
+			<user name="ernesto" password="ernesto" authorities="ROLE_USER, Agent" />
+			<user name="josefina" password="josefina" authorities="ROLE_USER, Agent" />
+			<user name="graciela" password="graciela" authorities="ROLE_USER, Agent" />
+			<user name="tamara" password="tamara" authorities="ROLE_USER, Agent" />
 			<user name="Romualdo" password="pepe" authorities="ROLE_USER, Supervisor" />
 			<user name="Aristobulo" password="pepe" authorities="ROLE_USER, Supervisor" />
 			<user name="Sabrina" password="pepe" authorities="ROLE_USER, Supervisor" />

@@ -18,22 +18,26 @@
 			<f:loadBundle basename="messages" var="msg" />
 			
 			<h:form id="loginForm" prependId="false">
-				<rich:messages errorClass="error" tooltip="true" showSummary="true"
-					globalOnly="true">
-					<f:facet name="errorMarker">
-						<h:graphicImage url="/images/Error-icon.png" style="border:0" />
-					</f:facet>
-					<f:facet name="infoMarker">
-						<h:graphicImage url="/image/info.png" />
-					</f:facet>
-				</rich:messages>
 				<table width="100%"><tr><td align="center">
 				<rich:panel header="Inicio de sesión" style="width:250px;align:center;">
-					<h:panelGrid columns="3">
+					<h:panelGroup>
+						<rich:messages errorClass="error" tooltip="true" showSummary="true"
+							globalOnly="true">
+							<f:facet name="errorMarker">
+								<h:graphicImage url="/images/Error-icon.png" style="border:0" />
+							</f:facet>
+							<f:facet name="infoMarker">
+								<h:graphicImage url="/image/info.png" />
+							</f:facet>
+						</rich:messages>
+					</h:panelGroup>
+					<h:panelGrid columns="2">
 						<h:panelGroup>
 							<label for="j_username"><h:outputText value="#{msg['label.username']}:" /></label>
 						</h:panelGroup>
 						<h:inputText id="j_username" required="true"></h:inputText>
+						<h:panelGroup>
+						</h:panelGroup>
 						<rich:message for="j_username" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
@@ -46,12 +50,13 @@
 						</h:panelGroup>
 						<h:inputSecret id="j_password" required="true">
 						</h:inputSecret>
+						<h:panelGroup>
+						</h:panelGroup>
 						<rich:message for="j_password" errorClass="error">
 							<f:facet name="errorMarker">
 								<h:graphicImage value="/images/Error-icon.png" style="border:0" />
 							</f:facet>
 						</rich:message>
-			
 						<br />
 						<br />
 						<h:commandButton type="submit" id="login"
