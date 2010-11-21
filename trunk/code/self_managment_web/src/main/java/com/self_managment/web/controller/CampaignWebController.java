@@ -88,7 +88,10 @@ public class CampaignWebController {
 
     public String create() {
 	setEditMode(false);
-	setCampaign(new Campaign());
+	Campaign campaign = new Campaign();
+	campaign.setStartDate(new Date());
+	campaign.setEndDate(getCurrentNextMonth());
+	setCampaign(campaign);
 	deletedSupervisors.clear();
 	return "";
     }
