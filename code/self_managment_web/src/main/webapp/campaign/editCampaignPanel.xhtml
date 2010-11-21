@@ -59,6 +59,7 @@
 						<rich:calendar id="startDate" showWeekDaysBar="false" showFooter="false"
 							value="#{campaignBean.campaign.startDate}" locale="ES"
 							datePattern="MMMMMMMMMMM yyyy" styleClass="special"
+							oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
 							showApplyButton="false" cellWidth="24px" cellHeight="22px" popup="false"
 							required="false" />
 						<rich:message for="startDate" errorClass="error">
@@ -82,6 +83,7 @@
 							value="#{campaignBean.campaign.endDate}" locale="ES" popup="false"
 							datePattern="MMMMMMMMMMM yyyy" showApplyButton="false"
 							styleClass="special" cellWidth="24px" cellHeight="22px"
+							oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
 							required="false" currentDate="#{campaignBean.currentNextMonth}"/>
 						<rich:message for="endDate" errorClass="error">
 							<f:facet name="errorMarker">
