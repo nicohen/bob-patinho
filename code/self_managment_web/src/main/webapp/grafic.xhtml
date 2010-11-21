@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -21,77 +21,61 @@
 			<rich:dataTable rendered="false"/>
 			
 			<h:form id="graphicForm">
+				
  				<rich:panel>
-					<h:panelGrid id="PeriodData" columns="6" width="70%">
+					<f:facet name="header">
+						<h:outputText value="#{msg['label.agent.fields']}" />
+					</f:facet>
+
+					<h:panelGrid id="AgentData" columns="6" width="100%">
+
+						<h:outputText value="Período" style="font-weight:bold"/>
+						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
+	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
+	 						popup="false" styleClass="special">
+	 						<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
+	 					</rich:calendar>
 	
-						<h:outputText value="#{msg['label.agent']}:" style="font-weight:bold" />
+						<h:outputText value="#{msg['label.agent']}" style="font-weight:bold" />
 						<rich:comboBox id="agent" value="#{graficBean.currentAgent}" size="25" 
 							converter="com.self_managment.web.converter.AgentConverter">
 							<a4j:support event="onselect" reRender="CampaignData, AgentData, metricValues, grafics" />
 							<f:selectItems value="#{graficBean.agents}" />
 						</rich:comboBox>
 
-						<h:outputText value="Período:" style="font-weight:bold"/>
-						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{graficBean.currentPeriod}"
-	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
-	 						popup="false" styleClass="special">
-	 						<a4j:support action="#{graficBean.periodChange}" event="onchanged" reRender="CampaignData, AgentData, metricValues, grafics"/>
-	 					</rich:calendar>
-
-	 					<h:outputText value="Campaña:" style="font-weight:bold" />
-	 					<h:outputText value="#{graficBean.currentAgent.campaign.name}" style="font-weight:bold" />
-	 				</h:panelGrid>
- 				</rich:panel>
- 				<rich:panel>
-					<f:facet name="header">
-						<h:outputText value="#{msg['label.agent.fields']}" />
-					</f:facet>
-
-					<h:panelGrid columns="1" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
-						<h:panelGroup width="100%">
-							<table border="1" class="dr-table rich-table" width="100%">
-								<thead class="dr-table-thead">
-									<tr class="dr-table-header rich-table-header">
-										<th class="dr-table-headercell rich-table-headercell">
-											<h:outputText value="#{msg['label.agent.grossSalary']}"/>
-										</th>
-										<th class="dr-table-headercell rich-table-headercell">
-											<h:outputText value="#{msg['label.agent.overtimeSalary']}" />
-										</th>
-										<th class="dr-table-headercell rich-table-headercell">
-											<h:outputText value="#{graficBean.lblSueldoVariable}" />
-										</th>
-										<th class="dr-table-headercell rich-table-headercell">
-											<h:outputText value="#{graficBean.lblSueldoTotal}" />
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="\$#{graficBean.sueldoFijo}" style="font-weight:bold;font-size:medium;" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="\$#{graficBean.sueldoHorasExtra}" style="font-weight:bold;font-size:medium;" />
-											<h:outputText value=" [hs. extra al 50%:" />
-											<h:outputText value=" #{graficBean.horasExtra50}hs x \$#{graficBean.valorHoraExtra50}" />
-											<h:outputText value=" hs. extra al 100%:" />
-											<h:outputText value=" #{graficBean.horasExtra100}hs x \$#{graficBean.valorHoraExtra100}]" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="\$#{graficBean.sueldoVariable}" style="font-weight:bold;font-size:medium;" />
-										</td>
-										<td align="center" class="dr-subtable-cell rich-subtable-cell">
-											<h:outputText value="\$#{graficBean.sueldoTotal}" style="font-weight:bold;font-size:medium;" />
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</h:panelGroup>
+						<h:outputText value="#{msg['label.campaign']}: " style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.currentAgent.campaign.name}" />
+	
+						<h:outputText value="#{msg['label.agent.grossSalary']}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoFijo}" />
+	
+						<h:outputText value="#{graficBean.lblSueldoVariable}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoVariable}" />
+		
+						<h:outputText value="#{msg['label.agent.overtimeSalary']}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoHorasExtra}" />
+						
+						<h:outputText value="#{msg['label.agent.extraHour50Value']}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.valorHoraExtra50}" />
+						
+						<h:outputText value="#{msg['label.agent.extraHour100Value']}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.valorHoraExtra100}" />
+						
+						<h:outputText value="#{msg['label.agent.extraHour50']}" style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.horasExtra50} hs" />
+						
+						<h:outputText value="#{msg['label.agent.extraHour100']}" style="font-weight:bold"/>
+						<h:outputText value="#{graficBean.horasExtra100} hs" />
+	
+						<h:outputText value="#{graficBean.lblSueldoTotal}" style="font-weight:bold"/>
+						<h:outputText value="$ #{graficBean.sueldoTotal}" />
+						
 					</h:panelGrid>
 
 					<h:panelGrid columns="2" style="text-align:center; max-width:1280px" columnClasses="alignTop, alignTop" width="100%">
+
 						<h:panelGroup width="70%">
+
 							<table border="1" class="dr-table rich-table" width="100%">
 								<thead class="dr-table-thead">
 									<tr class="dr-table-header rich-table-header">
