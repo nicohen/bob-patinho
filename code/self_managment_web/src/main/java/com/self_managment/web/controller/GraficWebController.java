@@ -294,7 +294,8 @@ public class GraficWebController implements Serializable {
     }
 
     public double getSueldoTotal() {
-	return getSueldoFijo() + getSueldoHorasExtra() + getSueldoVariable();
+    	DecimalFormat df = new DecimalFormat("#.##");
+    	return Double.valueOf(df.format(getSueldoFijo() + getSueldoHorasExtra() + getSueldoVariable()).replace(",", "."));
     }
 
     public Date getCurrentPeriod() {
