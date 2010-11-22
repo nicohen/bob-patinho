@@ -1,12 +1,14 @@
 package com.self_managment.persistance.dao.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.self_managment.model.entity.Supervisor;
 import com.self_managment.persistance.dao.SupervisorDao;
+import com.self_managment.util.DateUtils;
 
 @Repository("supervisorDao")
 public class SupervisorDaoImpl extends GenericDaoImpl<Supervisor, Serializable>
@@ -20,7 +22,11 @@ public class SupervisorDaoImpl extends GenericDaoImpl<Supervisor, Serializable>
     @SuppressWarnings("unchecked")
     @Override
     public List<Supervisor> findAllSupervisorsWithoutCampaign() {
-	return getHibernateTemplate().find("from Supervisor where campaign is null");
+	return getHibernateTemplate()
+		.find(
+			"from Supervisor where campaign is null or campaign.endDate < ?",
+			DateUtils.getFirstDay(new Date()));
+
 	// return
 	// this.getSession().createCriteria(Supervisor.class).add(Expression.isNull("campaign")).list();
     }
