@@ -24,7 +24,9 @@ public class SupervisorDaoImpl extends GenericDaoImpl<Supervisor, Serializable>
     public List<Supervisor> findAllSupervisorsWithoutCampaign() {
 	return getHibernateTemplate()
 		.find(
-			"from Supervisor where campaign is null or campaign.endDate < ?",
+			"select s from Supervisor s " +
+			"left join s.campaign c " +
+			"where c.id is null or c.endDate < ?",
 			DateUtils.getFirstDay(new Date()));
 
 	// return
