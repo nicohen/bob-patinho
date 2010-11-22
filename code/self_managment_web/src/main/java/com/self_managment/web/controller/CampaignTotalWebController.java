@@ -101,19 +101,21 @@ public class CampaignTotalWebController implements Serializable {
     public List<CampaignMetric> getMetrics() {
 	if (metrics == null) {
 
-	    agentsQtty = getCurrentCampaign().getAgents().size();
 	    metrics = getCurrentCampaign().getCampaignMetric();
 
 	    for (CampaignMetric metric : metrics) {
 
-		if (!metric.getMetric().isAccumulated())
-		    agentsQtty = 1;
-
-		metric.setUnsatisfactory(metric.getUnsatisfactory()
-			* agentsQtty);
-		metric.setMinimum(metric.getMinimum() * agentsQtty);
-		metric.setObjective(metric.getObjective() * agentsQtty);
-		metric.setOptim(metric.getOptim() * agentsQtty);
+		    agentsQtty = getCurrentCampaign().getAgents().size();
+	
+			if (!metric.getMetric().isAccumulated()) {
+			    agentsQtty = 1;
+			}
+		    
+			metric.setUnsatisfactory(metric.getUnsatisfactory()
+				* agentsQtty);
+			metric.setMinimum(metric.getMinimum() * agentsQtty);
+			metric.setObjective(metric.getObjective() * agentsQtty);
+			metric.setOptim(metric.getOptim() * agentsQtty);
 	    }
 	}
 
