@@ -148,14 +148,16 @@
 									</f:facet>
 								</rich:message>
 								<h:outputText value="#{msg['label.supervisor.campaign']}" />
-								<rich:comboBox id="campaignId"
-									value="#{supervisorBean.supervisor.campaign}"
-									defaultLabel="#{msg['label.comboBox.default']}" size="25"
-									required="false" label="#{msg['label.supervisor.campaign']}"
-									converter="com.self_managment.web.converter.CampaignConverter">
-									<a4j:support event="onselect"  />
-									<f:selectItems value="#{supervisorBean.campaigns}" />
-								</rich:comboBox>
+								<h:inputText value="#{supervisorBean.supervisor.campaign}"
+									size="25" disabled="true" />
+<!--								<rich:comboBox id="campaignId" enabled="false"-->
+<!--									value="#{supervisorBean.supervisor.campaign}"-->
+<!--									defaultLabel="#{msg['label.comboBox.default']}" size="25"-->
+<!--									required="false" label="#{msg['label.supervisor.campaign']}"-->
+<!--									converter="com.self_managment.web.converter.CampaignConverter">-->
+<!--									<a4j:support event="onselect"  />-->
+<!--									<f:selectItems value="#{supervisorBean.campaigns}" />-->
+<!--								</rich:comboBox>-->							
 								<rich:message for="metricCode" errorClass="error">
 									<f:facet name="errorMarker">
 										<h:graphicImage value="/images/Error-icon.png"
