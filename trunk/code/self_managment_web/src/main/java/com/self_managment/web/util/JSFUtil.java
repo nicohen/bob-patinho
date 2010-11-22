@@ -2,6 +2,7 @@ package com.self_managment.web.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -48,6 +49,11 @@ public class JSFUtil {
 	    items.add(new SelectItem(x, x.toString()));
 	}
 	return items;
+    }
+    
+    public static String getMsg(String key) {
+	ResourceBundle rb = ResourceBundle.getBundle("messages");
+	return rb.getString(key);
     }
     
     public static void main(String[] args) {
