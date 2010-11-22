@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.self_managment.model.metric.MetricStrategy;
 import com.self_managment.util.AppContext;
+import com.self_managment.util.DateUtils;
 
 @Entity
 @Table(name = "metric", catalog = "self_managment", uniqueConstraints = { @UniqueConstraint(columnNames = "METRIC_CODE") })
@@ -112,13 +113,12 @@ public class Metric implements Serializable {
 
 	Integer[] xData = new Integer[dayCount];
 	Number[] yData = new Number[dayCount];
-	Double acum = 0D;
+	Date firstDay = DateUtils.getFirstDay(today);
 	while (dateFrom.before(today)) {
 	    int day = com.self_managment.util.DateUtils.getDay(dateFrom);
 	    xData[day - 1] = day;
-	    acum += execute(campaignId, supervisorId, docket, dateFrom,
+	    yData[day - 1] = execute(campaignId, supervisorId, docket, firstDay,
 		    dateFrom).doubleValue();
-	    yData[day - 1] = acum;
 
 	    dateFrom = org.apache.commons.lang.time.DateUtils.addDays(dateFrom,
 		    1);
