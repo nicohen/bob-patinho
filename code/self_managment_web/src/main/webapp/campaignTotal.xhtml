@@ -29,14 +29,14 @@
 
 					<h:panelGrid id="AgentData" columns="6" width="100%">
 
-						<h:outputText value="Periodo" style="font-weight:bold"/>
+						<h:outputText value="#{msg['label.period']}:" style="font-weight:bold"/>
 						<rich:calendar id="period" showWeekDaysBar="false" showFooter="false" value="#{campaignTotalBean.currentPeriod}"
 	 						oncurrentdateselected="event.rich.component.selectDate(event.rich.date)"
 	 						popup="false" styleClass="special">
 	 						<a4j:support action="#{campaignTotalBean.periodChange}" event="onchanged" reRender="AgentData, metrics, grafics"/>
 	 					</rich:calendar>
 	 					
-	 					<h:outputText value="#{msg['label.campaign']}" style="font-weight:bold" />
+	 					<h:outputText value="#{msg['label.campaign']}:" style="font-weight:bold" />
 						<rich:comboBox id="supervisor" value="#{campaignTotalBean.currentCampaign}" size="25" 
 							converter="com.self_managment.web.converter.CampaignConverter"
 							valueChangeListener="#{campaignTotalBean.campaignChanged}" inmediate="true">
