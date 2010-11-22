@@ -146,8 +146,9 @@ public class CampaignTotalWebController implements Serializable {
 
 	int level = metric.getCampaignLevel(metricValue, dateFrom, dateTo);
 	
-	if((!getShowProjected())&&(level < reachedLevelCode))
+	if(!getShowProjected()) {
 		reachedLevelCode = level;
+	}
 	
 	metricOutput.setStyle(getStyleForMetricLevel(level));
 
@@ -171,8 +172,9 @@ public class CampaignTotalWebController implements Serializable {
 	
 	int level = metric.getCampaignLevelProjected(metricValue, dateFrom, dateTo);
 
-	if((getShowProjected())&&(level < reachedLevelCode))
+	if(getShowProjected()) {
 		reachedLevelCode = level;
+	}
 	
 	metricProjectedOutput.setStyle(getStyleForMetricLevel(level));
 
