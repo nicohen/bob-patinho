@@ -31,27 +31,26 @@
 
 	<authentication-provider>
 		<user-service>
-			<user name="duilio" password="duilio" authorities="ROLE_USER, AccountManager" />
-			<user name="sergio" password="sergio" authorities="ROLE_USER, AccountManager" />
-			<user name="nico" password="nico" authorities="ROLE_USER, AccountManager" />
-			<user name="nacho" password="nacho" authorities="ROLE_USER, AccountManager" />
-			<user name="juan" password="juan" authorities="ROLE_USER, Agent" />
-			<user name="jose" password="jose" authorities="ROLE_USER, Agent" />
-			<user name="lorena" password="lorena" authorities="ROLE_USER, Agent" />
-			<user name="pablo" password="pablo" authorities="ROLE_USER, Agent" />
-			<user name="damian" password="damian" authorities="ROLE_USER, Agent" />
-			<user name="martin" password="martin" authorities="ROLE_USER, Agent" />
-			<user name="augusto" password="augusto" authorities="ROLE_USER, Agent" />
-			<user name="ernesto" password="ernesto" authorities="ROLE_USER, Agent" />
-			<user name="josefina" password="josefina" authorities="ROLE_USER, Agent" />
-			<user name="graciela" password="graciela" authorities="ROLE_USER, Agent" />
-			<user name="tamara" password="tamara" authorities="ROLE_USER, Agent" />
-			<user name="Romualdo" password="pepe" authorities="ROLE_USER, Supervisor" />
-			<user name="Aristobulo" password="pepe" authorities="ROLE_USER, Supervisor" />
-			<user name="Sabrina" password="pepe" authorities="ROLE_USER, Supervisor" />
-			<user name="Gerardo" password="pepe" authorities="ROLE_USER, Supervisor" />
-			<user name="German" password="pepe" authorities="ROLE_USER, Supervisor" />
-			<user name="Tatiana" password="pepe" authorities="ROLE_USER, Supervisor" />
+			<user name="jefe1" password="123" authorities="ROLE_USER, AccountManager" />
+			<user name="jefe2" password="123" authorities="ROLE_USER, AccountManager" />
+			<user name="jefe3" password="123" authorities="ROLE_USER, AccountManager" />
+			<user name="acoca1" password="123" authorities="ROLE_USER, Agent" />
+			<user name="acoca2" password="123" authorities="ROLE_USER, Agent" />
+			<user name="acoca3" password="123" authorities="ROLE_USER, Agent" />
+			<user name="aclarin1" password="123" authorities="ROLE_USER, Agent" />
+			<user name="aclarin2" password="123" authorities="ROLE_USER, Agent" />
+			<user name="aclarin3" password="123" authorities="ROLE_USER, Agent" />
+			<user name="aclarin4" password="123" authorities="ROLE_USER, Agent" />
+			<user name="alanacion1" password="123" authorities="ROLE_USER, Agent" />
+			<user name="alanacion2" password="123" authorities="ROLE_USER, Agent" />
+			<user name="alanacion3" password="123" authorities="ROLE_USER, Agent" />
+			<user name="alanacion4" password="123" authorities="ROLE_USER, Agent" />
+			<user name="scoca1" password="123" authorities="ROLE_USER, Supervisor" />
+			<user name="scoca2" password="123" authorities="ROLE_USER, Supervisor" />
+			<user name="sclarin1" password="123" authorities="ROLE_USER, Supervisor" />
+			<user name="sclarin2" password="123" authorities="ROLE_USER, Supervisor" />
+			<user name="slanacion1" password="123" authorities="ROLE_USER, Supervisor" />
+			<user name="slanacion2" password="123" authorities="ROLE_USER, Supervisor" />
 		</user-service>
 	</authentication-provider>
 
