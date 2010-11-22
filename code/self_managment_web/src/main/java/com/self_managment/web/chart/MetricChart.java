@@ -21,6 +21,7 @@ import org.jfree.ui.TextAnchor;
 
 import com.self_managment.model.entity.CampaignMetric;
 import com.self_managment.util.DateUtils;
+import com.self_managment.web.util.JSFUtil;
 
 public class MetricChart {
     private CampaignMetric campaignMetric;
@@ -41,8 +42,8 @@ public class MetricChart {
     public BufferedImage createBufferedImage(int width, int height) {
 
 	JFreeChart chart = ChartFactory.createTimeSeriesChart(campaignMetric
-		.getMetric().getCode().toUpperCase(), "Dias",
-		"Proyeccion Metrica", getDataSet(), true, true, false);
+		.getMetric().getCode().toUpperCase(), JSFUtil.getMsg("label.days"),
+		JSFUtil.getMsg("label.metricProjection"), getDataSet(), true, true, false);
 	
 	chart.setBorderPaint(new Color(0,0,0));
 	chart.getTitle().setPaint(new Color(0,0,0));
@@ -86,7 +87,7 @@ public class MetricChart {
 	if (period.after(dateTo)) // future
 	    return new TimeSeriesCollection();
 
-	TimeSeries pop = new org.jfree.data.time.TimeSeries("Puntos Acumulados");
+	TimeSeries pop = new org.jfree.data.time.TimeSeries(JSFUtil.getMsg("label.acumulatedPoints"));
 	
 	int dayCount = DateUtils.getDay(dateTo) - DateUtils.getDay(date) + 1;
 
@@ -108,7 +109,7 @@ public class MetricChart {
 	dataset.addSeries(pop);
 
 	if (!DateUtils.isOldPeriod(period)) {
-	    TimeSeries popLeastSquares = new TimeSeries("Proyeccion");
+	    TimeSeries popLeastSquares = new TimeSeries(JSFUtil.getMsg("label.projection"));
 
 	    double[] linearFit = Statistics.getLinearFit(xData, yData);
 
