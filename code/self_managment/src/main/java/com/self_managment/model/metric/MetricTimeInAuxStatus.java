@@ -35,8 +35,7 @@ public class MetricTimeInAuxStatus implements MetricStrategy {
 	} else if (supervisorId != null) {
 	    agents = agentService.findAllByProperty("supervisor.id", supervisorId);
 	} else {
-	    Agent agent = new Agent();
-	    agent.setDocket(docket);
+	    Agent agent = agentService.findById(docket);
 	    agents = new ArrayList<Agent>();
 	    agents.add(agent);
 	}
