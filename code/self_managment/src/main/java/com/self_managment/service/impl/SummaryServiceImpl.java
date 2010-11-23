@@ -74,7 +74,7 @@ public class SummaryServiceImpl implements SummaryService {
     }
 
     @Override
-    public Long getTransferPCT(Integer campaignId, Integer supervisorId,
+    public Double getTransferPCT(Integer campaignId, Integer supervisorId,
 	    Integer docket, Date dateFrom, Date dateTo) {
 	return summaryDao.getTransferPCT(campaignId, supervisorId, docket,
 		dateFrom, dateTo);
