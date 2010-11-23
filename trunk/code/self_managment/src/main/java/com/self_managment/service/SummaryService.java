@@ -37,7 +37,7 @@ public interface SummaryService extends CRUDService<Summary, Serializable> {
     public Long getNCH(Integer campaignId, Integer supervisorId,
 	    Integer docket, Date dateFrom, Date dateTo);
 
-    public Long getTransferPCT(Integer campaignId, Integer supervisorId,
+    public Double getTransferPCT(Integer campaignId, Integer supervisorId,
 	    Integer docket, Date dateFrom, Date dateTo);
 
 }

@@ -65,18 +65,18 @@ public class SummaryDaoImpl extends GenericDaoImpl<Summary, Serializable>
 
     @SuppressWarnings("unchecked")
     @Override
-    public Long getTransferPCT(Integer campaignId, Integer supervisorId,
+    public Double getTransferPCT(Integer campaignId, Integer supervisorId,
 	    Integer docket, Date dateFrom, Date dateTo) {
 
 	String query = getQuery(
-		"(sum(summary.transferredCalls)/sum(summary.quantityOfCalls))*100", campaignId,
+		"(sum(summary.transferredCalls)/sum(summary.quantityOfCalls))*100.00", campaignId,
 		supervisorId, docket);
 	Integer id = getId(campaignId, supervisorId, docket);
-
-	List<Long> result = getHibernateTemplate().find(query,
+	
+	List<Number> result = getHibernateTemplate().find(query,
 		new Object[] { id, dateFrom, dateTo });
 
-	return result.get(0) != null ? result.get(0) : 0L;
+	return result.get(0) != null ? result.get(0).doubleValue() : 0D;
     }
 
     @SuppressWarnings("unchecked")
