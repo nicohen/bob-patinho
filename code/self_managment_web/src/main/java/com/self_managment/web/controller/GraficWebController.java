@@ -199,8 +199,9 @@ public class GraficWebController implements Serializable {
 	
 	int level = metric.getLevel(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo);
 	
-	if((!getShowProjected())&&(level < reachedLevelCode))
+	if(!getShowProjected()) {
 		reachedLevelCode = level;
+	}
 	
 	metricOutput.setStyle(getStyleForMetricLevel(level));
 	
@@ -221,8 +222,9 @@ public class GraficWebController implements Serializable {
 	
 	int level = metric.getLevelProjected(null, null, getCurrentAgent().getDocket(), dateFrom, dateTo);
 	
-	if((getShowProjected())&&(level < reachedLevelCode))
+	if(getShowProjected()) {
 		reachedLevelCode = level;
+	}
 	
 	metricProjectedOutput.setStyle(getStyleForMetricLevel(level));
 	
