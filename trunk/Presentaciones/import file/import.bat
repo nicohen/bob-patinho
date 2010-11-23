@@ -1,0 +1,1 @@
+java -jar self_managment-1.0-SNAPSHOT-jar-with-dependencies.jar -f "QA_20101119-29.csv" -t "QA"
